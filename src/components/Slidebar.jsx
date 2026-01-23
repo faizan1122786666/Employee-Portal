@@ -404,9 +404,9 @@ export default function Slidebar({ isOpen, handleSlidebar, userEmail, userName, 
           {/* Logout Button */}
           <button 
             onClick={handleLogoutClick}
-            className="mt-2 w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-800 bg-slate-700 transition-colors text-sm cursor-pointer">
-            <AiOutlineLogout size={16} />
-            <span>Logout</span>
+            className="mt-2 w-full flex items-center justify-center gap-2 p-2 rounded-lg hover:bg-slate-800 bg-slate-700 transition-colors text-sm cursor-pointer">
+            <AiOutlineLogout size={18}/>
+            <span className='mr-4 font-medium'>Logout</span>
           </button>
         </div>
       </div>
