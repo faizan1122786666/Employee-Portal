@@ -3,12 +3,12 @@ import { CgProfile } from 'react-icons/cg'
 function Login({onLogin}) {
   const [Email, setEmail] = useState('')
   const [Password, setPassword] = useState('')
-  const [FullName, setFullName] = useState('')
+  // const [FullName, setFullName] = useState('')
   
   const handleLogin = (e) => {
     e.preventDefault()
-    if(Email && Password && FullName) {
-      onLogin(Email, FullName)
+    if(Email && Password) {
+      onLogin(Email)
     }
   }
 
@@ -30,17 +30,17 @@ function Login({onLogin}) {
         </div>
 
         <form onSubmit={handleLogin}>
-          <div className="mb-4 sm:mb-5">
+          {/* <div className="mb-4 sm:mb-5">
             <label htmlFor="fullname" className="block mb-2 sm:mb-2.5 text-xs sm:text-sm font-bold text-heading">Full Name</label>
             <input 
               type="text" 
               value={FullName}
               onChange={(e) => setFullName(e.target.value)}
               id="fullname" 
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-xs sm:text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 sm:py-2.5 shadow-xs placeholder:text-body" 
+              className="bg-neutral-secondary-medium border border-default-medium text-heading text-xs sm:text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 sm:py-2.5 shadow-xs placeholder:text-body outline-none" 
               placeholder="Full Name" 
               required />
-          </div>
+          </div> */}
 
           <div className="mb-4 sm:mb-5">
             <label htmlFor="email" className="block mb-2 sm:mb-2.5 text-xs sm:text-sm font-bold text-heading">Email</label>
@@ -49,7 +49,7 @@ function Login({onLogin}) {
               value={Email}
               onChange={(e) => setEmail(e.target.value)}
               id="email" 
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-xs sm:text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 sm:py-2.5 shadow-xs placeholder:text-body" 
+              className="bg-neutral-secondary-medium border border-neutral-400 text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" 
               placeholder="employee@company.com" 
               required />
           </div>
@@ -61,7 +61,7 @@ function Login({onLogin}) {
               value={Password}
               onChange={(e) => setPassword(e.target.value)}
               id="password" 
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-xs sm:text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 sm:py-2.5 shadow-xs placeholder:text-body" 
+              className="bg-neutral-secondary-medium border border-neutral-400 text-heading text-xs sm:text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 sm:py-2.5 shadow-xs placeholder:text-body" 
               placeholder="••••••••" 
               required/>
           </div>

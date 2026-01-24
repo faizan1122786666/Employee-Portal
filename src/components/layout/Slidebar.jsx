@@ -3,7 +3,7 @@ import { AiOutlineClose, AiOutlineDashboard, AiOutlineClockCircle, AiOutlineCale
 import { CgProfile } from 'react-icons/cg';
 import { NavLink } from 'react-router-dom';
 
-export default function Slidebar({ isOpen, handleSlidebar, userEmail, userName, onLogout }) {
+export default function Slidebar({ isOpen, handleSlidebar, userEmail, onLogout }) {
   const menuItems = [
     { name: 'Dashboard', icon: AiOutlineDashboard, path: '/' },
     { name: 'Attendance', icon: AiOutlineClockCircle, path: '/attendance' },
@@ -75,7 +75,7 @@ export default function Slidebar({ isOpen, handleSlidebar, userEmail, userName, 
               <CgProfile size={24} className="text-white" />
             </div>
             <div className="flex-1 overflow-hidden">
-              <p className="text-sm font-medium text-white truncate">{userName}</p>
+              {/* <p className="text-sm font-medium text-white truncate">{userName}</p> */}
               <p className="text-xs text-gray-300 truncate">{userEmail}</p>
             </div>
           </div>
