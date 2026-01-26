@@ -18,7 +18,7 @@ function Login({onLogin}) {
         <div className="text-center mb-6 sm:mb-8">
           <div className="mb-4">
             <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[#2C5282] mb-3">
-              <CgProfile size={38} className="text-white" />
+              <CgProfile size={50} className="text-white" />
             </div>
             <h1 className="text-xl sm:text-2xl font-bold text-heading mb-2">
               Employee Portal
@@ -93,3 +93,7 @@ function Login({onLogin}) {
 }
 
 export default Login
+
+
+
+
