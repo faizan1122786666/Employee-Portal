@@ -1,16 +1,16 @@
 import React from 'react'
 import { useEffect } from 'react';
 
-function Leave({setTitle}) {
+function AdminLeave({setTitle}) {
   useEffect ( () => {
   setTitle('Leave Page');
   },[setTitle])
 
   return (
     <div>
-      
+      Admin Leave
     </div>
   )
 }
 
-export default Leave
+export default AdminLeave

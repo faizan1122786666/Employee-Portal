@@ -91,12 +91,11 @@ import { useEffect, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Slidebar from './components/layout/Slidebar'
 import Header from './components/layout/Header'
-import Leave from './pages/Leave/Leave'
 import Login from './pages/Auth/Login'
 import { AuthContextProvider} from './context'
 import {AdminDashboard,UserDashboard} from './pages/Dashboard/index'
 import {AdminAttendance,UserAttendance} from './pages/Attendance/index'
-
+import { AdminLeave,UserLeave } from './pages/Leave/index'
 function App () {
   const [isOpen, setIsOpen] = useState(false)
   const [title, setTitle] = useState('Dashboard')
@@ -159,7 +158,13 @@ function App () {
             <UserAttendance setTitle={setTitle} />
             )
             } />
-           <Route path="/leave" element={<Leave setTitle={setTitle} />} />
+           <Route path="/leave" element={
+            user.role === 'admin' ? (
+              <AdminLeave setTitle={setTitle} />
+            ) : (
+              <UserLeave setTitle={setTitle} />
+            )
+           } />
            {/* Agar already logged in hai aur /login pe jaaye to dashboard pe redirect */}
            <Route path='/login' element={<Navigate to="/" replace/>} />
            {/* Unknown routes ko dashboard pe redirect */}
