@@ -1,9 +1,15 @@
 import React from 'react'
+import { useEffect } from 'react'
 
-function UserAttendance()  {
+
+function UserAttendance({setTitle}) {
+ useEffect(() => {
+    setTitle('Attendance Page')
+  }, [setTitle])
+  
   return (
     <div>
-      
+      User Attendance
     </div>
   )
 }

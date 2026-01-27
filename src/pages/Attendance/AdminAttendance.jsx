@@ -9,7 +9,7 @@ function AdminAttendance({setTitle}) {
   
   return (
     <div>
-      
+      Admin Attendance
     </div>
   )
 }
