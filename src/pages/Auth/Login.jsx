@@ -11,30 +11,30 @@ function Login() {
   const [loading, setloading] = useState(false);
   // const [FullName, setFullName] = useState('')
 
-  const  {Login} = useAuthContext();
+  const  {handleLogin} = useAuthContext();
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     setError('');
     setloading(true);
 
     const foundUser = mockUsersData.find((e) => e.email === email && e.password === password);
-
+    setTimeout(()=> {
     if(foundUser)
     {
-      Login(foundUser);
+      handleLogin(foundUser);
       navigate('/dashboard');
     }
     else{
       setError("Invalid email or password");
     }
     setloading(false);
-
+  },500 )
   }
 
   return (
-    <div className='flex items-center bg-[#2C5282] justify-center min-h-screen p-4 bg-neutral-secondary-light'>
+    <div className='flex items-center bg-[#2C5282] justify-center w-full min-h-screen p-4 bg-neutral-secondary-light'>
       <div className='w-full max-w-xs sm:max-w-sm border border-default-medium rounded-lg sm:rounded-xl shadow-lg bg-white p-6 sm:p-8'>
         <div className="text-center mb-6 sm:mb-8">
           <div className="mb-4">
@@ -55,7 +55,7 @@ function Login() {
          {error}
         </p>)}
 
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSubmit}>
           {/* <div className="mb-4 sm:mb-5">
             <label htmlFor="fullname" className="block mb-2 sm:mb-2.5 text-xs sm:text-sm font-bold text-heading">Full Name</label>
             <input 
@@ -125,3 +125,146 @@ export default Login
 
 
 
+
+// import React, { useState } from 'react'
+// import { CgProfile } from 'react-icons/cg'
+// import { useNavigate } from 'react-router-dom';
+// import { mockUsersData } from '../../data/mockUsersData';
+// import { useAuthContext } from '../../context';
+
+// function Login() {
+//   const [email, setEmail] = useState('')
+//   const [password, setPassword] = useState('')
+//   const [error, setError] = useState('');
+//   const [loading, setLoading] = useState(false);
+
+//   const { handleLogin } = useAuthContext();
+//   const navigate = useNavigate();
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault()
+//     setError('');
+//     setLoading(true);
+
+//     const foundUser = mockUsersData.find(
+//       (user) => user.email === email && user.password === password
+//     );
+
+//     setTimeout(() => {
+//       if (foundUser) {
+//         handleLogin(foundUser);
+//         navigate('/');
+//       } else {
+//         setError("Invalid email or password");
+//       }
+//       setLoading(false);
+//     }, 500);
+//   }
+
+//   return (
+//     <div className='flex items-center justify-center min-h-screen w-full p-4 bg-[#2C5282]'>
+//       <div className='w-full max-w-md bg-white rounded-xl shadow-2xl p-6 sm:p-8'>
+//         {/* Header */}
+//         <div className="text-center mb-6">
+//           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#2C5282] mb-4">
+//             <CgProfile size={50} className="text-white" />
+//           </div>
+//           <h1 className="text-2xl font-bold text-gray-900 mb-2">
+//             Employee Portal
+//           </h1>
+//           <p className="text-sm text-gray-600">
+//             Sign in to access your dashboard
+//           </p>
+//         </div>
+
+//         {/* Error Message */}
+//         {error && (
+//           <div className='bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm text-center'>
+//             {error}
+//           </div>
+//         )}
+
+//         {/* Form */}
+//         <form onSubmit={handleSubmit} className="space-y-4">
+//           {/* Email Input */}
+//           <div>
+//             <label 
+//               htmlFor="email" 
+//               className="block mb-2 text-sm font-semibold text-gray-700"
+//             >
+//               Email
+//             </label>
+//             <input 
+//               type="email" 
+//               id="email" 
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 text-sm focus:ring-2 focus:ring-[#2C5282] focus:border-transparent outline-none transition-all" 
+//               placeholder="employee@company.com" 
+//               required 
+//             />
+//           </div>
+
+//           {/* Password Input */}
+//           <div>
+//             <label 
+//               htmlFor="password" 
+//               className="block mb-2 text-sm font-semibold text-gray-700"
+//             >
+//               Password
+//             </label>
+//             <input 
+//               type="password" 
+//               id="password" 
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 text-sm focus:ring-2 focus:ring-[#2C5282] focus:border-transparent outline-none transition-all" 
+//               placeholder="••••••••" 
+//               required
+//             />
+//           </div>
+
+//           {/* Submit Button */}
+//           <button 
+//             type="submit" 
+//             disabled={loading}
+//             className={`
+//               w-full py-2.5 px-4 
+//               text-white bg-[#2C5282] 
+//               rounded-lg font-medium text-sm 
+//               transition-all duration-200
+//               ${loading 
+//                 ? 'opacity-50 cursor-not-allowed' 
+//                 : 'hover:bg-[#365F8D] active:scale-[0.98]'
+//               }
+//             `}
+//           >
+//             {loading ? 'Accessing...' : 'Access Portal'}
+//           </button>
+//         </form>
+
+//         {/* Footer Links */}
+//         <div className="mt-6 text-center">
+//           <a 
+//             href="#" 
+//             className="text-sm text-[#2C5282] hover:text-[#365F8D] hover:underline transition-colors"
+//           >
+//             Forgot employee password?
+//           </a>
+//         </div>
+
+//         {/* Copyright */}
+//         <div className="mt-8 pt-6 border-t border-gray-200 text-center space-y-1">
+//           <p className="text-xs text-gray-500">
+//             &copy; {new Date().getFullYear()} Company Name. Employee Portal v2.0
+//           </p>
+//           <p className="text-xs text-gray-500">
+//             For authorized personnel only
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default Login
