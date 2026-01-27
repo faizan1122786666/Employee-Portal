@@ -1,15 +1,36 @@
 import React, { useState } from 'react'
 import { CgProfile } from 'react-icons/cg'
-function Login({onLogin}) {
-  const [Email, setEmail] = useState('')
-  const [Password, setPassword] = useState('')
+import { useNavigate } from 'react-router-dom';
+import { mockUsersData } from '../../data/mockUsersData';
+import { useAuthContext } from '../../context';
+
+function Login() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error,setError] = useState('');
+  const [loading, setloading] = useState(false);
   // const [FullName, setFullName] = useState('')
-  
+
+  const  {Login} = useAuthContext();
+  const navigate = useNavigate();
+
   const handleLogin = (e) => {
     e.preventDefault()
-    if(Email && Password) {
-      onLogin(Email)
+    setError('');
+    setloading(true);
+
+    const foundUser = mockUsersData.find((e) => e.email === email && e.password === password);
+
+    if(foundUser)
+    {
+      Login(foundUser);
+      navigate('/dashboard');
     }
+    else{
+      setError("Invalid email or password");
+    }
+    setloading(false);
+
   }
 
   return (
@@ -29,6 +50,11 @@ function Login({onLogin}) {
           </div>
         </div>
 
+        {error && (
+        <p className='text-red-500 text-center mb-4 font-medium'>
+         {error}
+        </p>)}
+
         <form onSubmit={handleLogin}>
           {/* <div className="mb-4 sm:mb-5">
             <label htmlFor="fullname" className="block mb-2 sm:mb-2.5 text-xs sm:text-sm font-bold text-heading">Full Name</label>
@@ -46,7 +72,7 @@ function Login({onLogin}) {
             <label htmlFor="email" className="block mb-2 sm:mb-2.5 text-xs sm:text-sm font-bold text-heading">Email</label>
             <input 
               type="email" 
-              value={Email}
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               id="email" 
               className="bg-neutral-secondary-medium border border-neutral-400 text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" 
@@ -58,7 +84,7 @@ function Login({onLogin}) {
             <label htmlFor="password" className="block mb-2 sm:mb-2.5 text-xs sm:text-sm font-bold text-heading">Password</label>
             <input 
               type="password" 
-              value={Password}
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               id="password" 
               className="bg-neutral-secondary-medium border border-neutral-400 text-heading text-xs sm:text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 sm:py-2.5 shadow-xs placeholder:text-body" 
@@ -68,8 +94,10 @@ function Login({onLogin}) {
 
           <button 
             type="submit" 
-            className="w-full cursor-pointer hover:bg-[#2C520] text-white bg-[#2C5282] box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-xs sm:text-sm px-4 py-2.5 sm:py-2.5 focus:outline-none transition-colors duration-200">
-            Access Portal
+            disabled={loading}
+            className={`w-full cursor-pointer hover:bg-[#2C520] text-white bg-[#2C5282] box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-xs sm:text-sm px-4 py-2.5 sm:py-2.5 focus:outline-none transition-colors duration-200 ${loading ? "opacity-50 cursor-not-allowed" : " "}`}>
+
+            {loading ? 'Accessing...' : 'Access Portal'}
           </button>
         </form>
 
