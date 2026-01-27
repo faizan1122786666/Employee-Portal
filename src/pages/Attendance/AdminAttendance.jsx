@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 
 
-function Attendance({setTitle}) {
+function AdminAttendance({setTitle}) {
  useEffect(() => {
     setTitle('Attendance Page')
   }, [setTitle])
@@ -14,4 +14,4 @@ function Attendance({setTitle}) {
   )
 }
 
-export default Attendance
+export default AdminAttendance

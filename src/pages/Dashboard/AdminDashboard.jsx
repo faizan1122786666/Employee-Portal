@@ -87,7 +87,7 @@ const EmployeeTaskPerformanceDate = {
     },
    ],
 }
-function Dashboard({ setTitle }) {
+function AdminDashboard({ setTitle }) {
   const [data, setData] = useState(mockdata)
 
   useEffect(() => {
@@ -199,7 +199,7 @@ function Dashboard({ setTitle }) {
   )
 }
 
-export default Dashboard
+export default AdminDashboard
 
 
 
