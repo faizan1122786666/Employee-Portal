@@ -24,7 +24,7 @@ function UserAttendance({setTitle}) {
   
   return (
     <div className='max-h-screen p-4 sm:p-6 lg:p-8'>
-      <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2C5284] mb-6'>My Attendance</h1>
+      <h1 className='text-2xl sm:text-3xl lg:text-3xl font-bold text-[#2C5284] mb-6'>My Attendance</h1>
 
       <div className='mb-4'>
       <label className='block text-sm font-medium text-black mb-1 '>

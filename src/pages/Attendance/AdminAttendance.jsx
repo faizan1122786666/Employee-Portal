@@ -31,7 +31,7 @@ function AdminAttendance({setTitle}) {
   
   return (
     <div className='max-h-screen p-4 sm:p-6 lg:p-8'>
-      <div className='text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2C5284] mb-3'>
+      <div className='text-2xl sm:text-3xl lg:text-3xl font-bold text-[#2C5284] mb-3'>
       Attendance Management
       </div>
 
@@ -48,7 +48,7 @@ function AdminAttendance({setTitle}) {
             placeholder='Search employee..'
             value={searchName}
             onChange={(e) => setsearchName(e.target.value)}
-            className='w-full px-4 py-2.5 sm:py-3 border border-gray-500 
+            className='w-full px-4 py-2.5 sm:py-3 border border-gray-500 rounded-lg
              transition-all duration-200 text-sm sm:text-base'
             />
           </div>
