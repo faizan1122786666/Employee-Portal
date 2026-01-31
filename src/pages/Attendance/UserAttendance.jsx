@@ -1,144 +1,148 @@
-import React from 'react'
-import { useEffect, useState } from 'react'
-import DatePicker from 'react-datepicker'
-import mockAttendanceData from '../../data/mockAttendanceData';
+// import React from 'react'
+// import { useEffect, useState } from 'react'
+// import DatePicker from 'react-datepicker'
+// import mockAttendanceData from '../../data/mockAttendanceData';
 
 
-function UserAttendance({setTitle}) {
+// function UserAttendance({setTitle}) {
 
-  const [selectedDate,setSelectedDate] = useState(null);
-  const current_user_name = "Ali Hamza";
+//   const [selectedDate,setSelectedDate] = useState(null);
+//   const current_user_name = "Ali Hamza";
 
-  const formattedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : null;
+//   const formattedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : null;
 
-  const userRecords = mockAttendanceData.filter(record =>
-    record.name.toLowerCase() === current_user_name.toLowerCase()
-  );
+//   const userRecords = mockAttendanceData.filter(record =>
+//     record.name.toLowerCase() === current_user_name.toLowerCase()
+//   );
 
-  const filteredRecords = formattedDate ? userRecords.filter(record => record.date === formattedDate) : userRecords;
+//   const filteredRecords = formattedDate ? userRecords.filter(record => record.date === formattedDate) : userRecords;
 
 
- useEffect(() => {
-    setTitle('Attendance Page')
-  }, [setTitle])
+//  useEffect(() => {
+//     setTitle('Attendance Page')
+//   }, [setTitle])
   
-  return (
-    <div className='max-h-screen p-4 sm:p-6 lg:p-8'>
-      <h1 className='text-2xl sm:text-3xl lg:text-3xl font-bold text-[#2C5284] mb-6'>My Attendance</h1>
+//   return (
+//     <div className='max-h-screen p-4 sm:p-6 lg:p-8'>
+//       <h1 className='text-2xl sm:text-3xl lg:text-3xl font-bold text-[#2C5284] mb-6'>My Attendance</h1>
 
-      <div className='mb-4'>
-      <label className='block text-sm font-medium text-black mb-1 '>
-        Search Through Date
-      </label>
-      <DatePicker
-      selected={selectedDate}
-      onChange={setSelectedDate}
-      dateFormat="yyyy-MM-dd"
-      isClearable
-      placeholderText='Search through date(yyyy-MM-dd)..'
-      className='cursor-pointer w-full max-w-sm px-4 py-2.5
-      border border-gray-500 rounded-lg mt-1 '
-      />
-      </div>
+//       <div className='mb-4'>
+//       <label className='block text-sm font-medium text-black mb-1 '>
+//         Search Through Date
+//       </label>
+//       <DatePicker
+//       selected={selectedDate}
+//       onChange={setSelectedDate}
+//       dateFormat="yyyy-MM-dd"
+//       isClearable
+//       placeholderText='Search...'
+//       className='cursor-pointer w-full max-w-sm px-4 py-2.5
+//       border border-gray-500 rounded-lg mt-1 '
+//       />
+//       </div>
     
-      {/* For Desktop View */}
-      <div className='bg-white rounded-xl shadow-sm lg:block hidden 
-      overflow-hidden'>
-      <div className='overflow-x-auto'>
-       <table className='min-w-full divide-y divide-gray-200'>
-        <thead className='bg-[#365F8D]'>
-          <tr>
-            <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Employee Name</th>
-            <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Date</th>
-            <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Clock In</th>
-            <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Clock Out</th>
-            <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Status</th>
-            <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Work Hours</th>
-          </tr>
-        </thead>
-        <tbody className='divide-y bg-white divide-gray-200'>
-          {filteredRecords.length > 0 ? (
-          filteredRecords.map((record) => (
-            <tr key={record.id} className='hover:bg-gray-50 transition-colors duration-150'>
-              <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>
-              {record.name}</td>
-              <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>{record.date}</td>
-              <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>{record.checkIn}</td>
-              <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>{record.checkOut || '-'}</td>
-              <td className='px-6 py-4 text-sm font-medium text-black'>
-                    <span className={`px-3 py-1 inline-flex text-sm leading-5 font-medium
-                      rounded-full ${record.status.toLowerCase() === 'present' 
-                        ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                      }`}>{record.status}</span>
-                  </td>
-              <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>{record.workHours || '-'}</td>
-            </tr>
-          ))
-        ) : (
-          <tr>
-            <td colSpan={6} className="px-6 py-12 text-center text-sm text-gray-500">
-               <div className="flex flex-col items-center">
-                  <p className="font-medium text-gray-900 mb-1">No records found</p>
-                  <p className="text-gray-500">
-                  {selectedDate ? 'Try adjusting your filters' : 'No attendance data available'}
-                  </p>
-                  </div>
-           </td>
-          </tr>
-        )}
-          </tbody>
-          </table>
-          </div>
+//       {/* For Desktop View */}
+//       <div className='bg-white rounded-xl shadow-sm lg:block hidden 
+//       overflow-hidden'>
+//       <div className='overflow-x-auto'>
+//        <table className='min-w-full divide-y divide-gray-200'>
+//         <thead className='bg-[#365F8D]'>
+//           <tr>
+//             <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Employee Name</th>
+//             <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Date</th>
+//             <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Clock In</th>
+//             <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Clock Out</th>
+//             <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Status</th>
+//             <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Work Hours</th>
+//           </tr>
+//         </thead>
+//         <tbody className='divide-y bg-white divide-gray-200'>
+//           {filteredRecords.length > 0 ? (
+//           filteredRecords.map((record) => (
+//             <tr key={record.id} className='hover:bg-gray-50 transition-colors duration-150'>
+//               <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>
+//               {record.name}</td>
+//               <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>{record.date}</td>
+//               <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>{record.checkIn}</td>
+//               <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>{record.checkOut || '-'}</td>
+//               <td className='px-6 py-4 text-sm font-medium text-black'>
+//                     <span className={`px-3 py-1 inline-flex text-sm leading-5 font-medium
+//                       rounded-full ${record.status.toLowerCase() === 'present' 
+//                         ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+//                       }`}>{record.status}</span>
+//                   </td>
+//               <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>{record.workHours || '-'}</td>
+//             </tr>
+//           ))
+//         ) : (
+//           <tr>
+//             <td colSpan={6} className="px-6 py-12 text-center text-sm text-gray-500">
+//                <div className="flex flex-col items-center">
+//                   <p className="font-medium text-gray-900 mb-1">No records found</p>
+//                   <p className="text-gray-500">
+//                   {selectedDate ? 'Try adjusting your filters' : 'No attendance data available'}
+//                   </p>
+//                   </div>
+//            </td>
+//           </tr>
+//         )}
+//           </tbody>
+//           </table>
+//           </div>
           
-    </div>
+//     </div>
 
-   {/* For Mobile and Tablet View */}
-    <div className='space-y-4 lg:hidden mt-6'>
-      {filteredRecords.length > 0 ? (
-        filteredRecords.map((record) => (
-          <div key={record.id} className='bg-white rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-shadow '>
-            <div className='flex justify-between items-start mb-3'>
-            <div>
-              <h3 className='text-base sm:text-lg font-semibold text-black'>{record.name}</h3>
-              <p className='text-black text-sm mt-1'>{record.date}</p>
-            </div>
-             <span className={`px-3 py-1 inline-flex text-sm font-semibold rounded-full ${record.status.toLowerCase() === 'present' 
-              ? 'text-green-800 bg-green-100' : 'bg-red-100 text-red-800'
-            }`}>{record.status}</span>
-            </div>
+//    {/* For Mobile and Tablet View */}
+//     <div className='space-y-4 lg:hidden mt-6'>
+//       {filteredRecords.length > 0 ? (
+//         filteredRecords.map((record) => (
+//           <div key={record.id} className='bg-white rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-shadow '>
+//             <div className='flex justify-between items-start mb-3'>
+//             <div>
+//               <h3 className='text-base sm:text-lg font-semibold text-black'>{record.name}</h3>
+//               <p className='text-black text-sm mt-1'>{record.date}</p>
+//             </div>
+//              <span className={`px-3 py-1 inline-flex text-sm font-semibold rounded-full ${record.status.toLowerCase() === 'present' 
+//               ? 'text-green-800 bg-green-100' : 'bg-red-100 text-red-800'
+//             }`}>{record.status}</span>
+//             </div>
 
-            <div className='grid grid-cols-2 gap-3 sm:gap-4'>
-            <div>
-              <p className='text-black mb-1 text-sm'>Check-In</p>
-              <p className='text-sm sm:text-base font-medium text-black'>{record.checkIn}</p>
-            </div>
-            <div>
-            <p className='text-black mb-1 text-sm'>Check-Out</p>
-              <p className='text-sm sm:text-base font-medium
-              text-black'>{record.checkOut || '-'}</p>
-            </div>
-            <div className='col-span-2'>
-              <p className='text-sm text-black mb-1
-              '>Work Hours</p>
-              <p className='text-sm sm:text-base font-medium text-black'>{record.workHours || '-'}</p>
-            </div>
-            </div>
-          </div>
-        ))
-      ) : (
-         <div className="bg-white rounded-xl shadow-sm p-8 sm:p-12 text-center mt-2 items-center">
-            <p className="text-base sm:text-lg font-medium text-gray-900 mb-2">No records found</p>
-            <p className="text-sm sm:text-base text-gray-500">
-              {selectedDate ? 'Try adjusting your filters' : 'No attendance data available'}
-            </p>
-          </div>
-      )}
-    </div>
-  </div>
-  )
-}
+//             <div className='grid grid-cols-2 gap-3 sm:gap-4'>
+//             <div>
+//               <p className='text-black mb-1 text-sm'>Check-In</p>
+//               <p className='text-sm sm:text-base font-medium text-black'>{record.checkIn}</p>
+//             </div>
+//             <div>
+//             <p className='text-black mb-1 text-sm'>Check-Out</p>
+//               <p className='text-sm sm:text-base font-medium
+//               text-black'>{record.checkOut || '-'}</p>
+//             </div>
+//             <div className='col-span-2'>
+//               <p className='text-sm text-black mb-1
+//               '>Work Hours</p>
+//               <p className='text-sm sm:text-base font-medium text-black'>{record.workHours || '-'}</p>
+//             </div>
+//             </div>
+//           </div>
+//         ))
+//       ) : (
+//          <div className="bg-white rounded-xl shadow-sm p-8 sm:p-12 text-center mt-2 items-center">
+//             <p className="text-base sm:text-lg font-medium text-gray-900 mb-2">No records found</p>
+//             <p className="text-sm sm:text-base text-gray-500">
+//               {selectedDate ? 'Try adjusting your filters' : 'No attendance data available'}
+//             </p>
+//           </div>
+//       )}
+//     </div>
+//   </div>
+//   )
+// }
 
-export default UserAttendance
+// export default UserAttendance
+
+
+
+
 
 
 
@@ -151,135 +155,303 @@ export default UserAttendance
 
 
 // import React, { useEffect, useState } from 'react';
-// import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
-// import mockAttendanceData from '../../data/mockAttendanceData';
+// import { getEmployeeRecords } from '../../data/mockAttendanceData';
+// import { FaCheckCircle, FaTimesCircle, FaCalendarAlt, FaChevronDown } from 'react-icons/fa';
 
 // function UserAttendance({ setTitle }) {
-//   const [selectedDate, setSelectedDate] = useState(null);
-
+//   // In real app, get this from auth context
+//   const currentUserId = 1; // Ali Hamza
   
-//   const current_user_name = "Ali Hamza";
+//   const [records, setRecords] = useState([]);
+//   const [filteredRecords, setFilteredRecords] = useState([]);
+  
+//   // Dropdown states
+//   const [selectedYear, setSelectedYear] = useState(2026);
+//   const [selectedMonth, setSelectedMonth] = useState(1);
+//   const [selectedDate, setSelectedDate] = useState(null);
+//   const [showYearDropdown, setShowYearDropdown] = useState(false);
+//   const [showMonthDropdown, setShowMonthDropdown] = useState(false);
+//   const [showDateDropdown, setShowDateDropdown] = useState(false);
+
+//   const years = [2024, 2025, 2026];
+//   const months = [
+//     { value: 1, label: 'January' },
+//     { value: 2, label: 'February' },
+//     { value: 3, label: 'March' },
+//     { value: 4, label: 'April' },
+//     { value: 5, label: 'May' },
+//     { value: 6, label: 'June' },
+//     { value: 7, label: 'July' },
+//     { value: 8, label: 'August' },
+//     { value: 9, label: 'September' },
+//     { value: 10, label: 'October' },
+//     { value: 11, label: 'November' },
+//     { value: 12, label: 'December' }
+//   ];
 
 //   useEffect(() => {
-//     setTitle('Attendance Page');
+//     setTitle('My Attendance');
+//     const userRecords = getEmployeeRecords(currentUserId);
+//     setRecords(userRecords);
+//     filterRecords(userRecords, selectedYear, selectedMonth, selectedDate);
 //   }, [setTitle]);
 
-//   const formattedDate = selectedDate
-//     ? selectedDate.toISOString().split('T')[0]
-//     : null;
+//   useEffect(() => {
+//     filterRecords(records, selectedYear, selectedMonth, selectedDate);
+//   }, [selectedYear, selectedMonth, selectedDate, records]);
 
-//   // Filter only current user's records + optional date filter
-//   const filteredRecords = mockAttendanceData.filter((record) => {
-//     // Only this user's records
-//     const nameMatch = record.name.toLowerCase() === current_user_name.toLowerCase();
-
+//   const filterRecords = (allRecords, year, month, date) => {
+//     let filtered = allRecords.filter(record => {
+//       const recordDate = new Date(record.date);
+//       const recordYear = recordDate.getFullYear();
+//       const recordMonth = recordDate.getMonth() + 1;
+      
+//       if (year && recordYear !== year) return false;
+//       if (month && recordMonth !== month) return false;
+//       if (date && recordDate.getDate() !== date) return false;
+      
+//       return true;
+//     });
     
-//     if (!formattedDate) {
-//       return nameMatch;
-//     }
+//     setFilteredRecords(filtered);
+//   };
 
-//     // If date selected → match both name & date
-//     const dateMatch = record.date === formattedDate;
-//     return nameMatch && dateMatch;
-//   });
+//   const getDaysInMonth = (year, month) => {
+//     return new Date(year, month, 0).getDate();
+//   };
+
+//   const getStatusIcon = (status) => {
+//     if (status === 'Present') {
+//       return <FaCheckCircle className='text-green-600' size={20} />;
+//     } else if (status === 'Leave') {
+//       return <FaCalendarAlt className='text-yellow-600' size={20} />;
+//     } else {
+//       return <FaTimesCircle className='text-red-600' size={20} />;
+//     }
+//   };
+
+//   const getStatusForDate = (date) => {
+//     const dateStr = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+//     const record = records.find(r => r.date === dateStr);
+//     return record ? record.status : null;
+//   };
 
 //   return (
-//     <div className="max-h-screen p-4 sm:p-6 lg:p-8">
-//       <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2C5284] mb-3">
-//         My Attendance
-//       </div>
+//     <div className='max-h-screen p-4 sm:p-6 lg:p-8'>
+//       <h1 className='text-2xl sm:text-3xl font-bold text-[#2C5284] mb-6'>My Attendance</h1>
 
-//       <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6">
-//         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-//           <div className="w-full">
-//             <label className="block text-sm font-medium text-black mb-2">
-//               Search Date
-//             </label>
-//             <DatePicker
-//               selected={selectedDate}
-//               onChange={setSelectedDate}
-//               isClearable
-//               dateFormat="yyyy-MM-dd"
-//               placeholderText="Search through date (yyyy-MM-dd)..."
-//               className="w-full px-4 py-2.5 sm:py-3 border border-gray-500 rounded-lg transition-all duration-200 text-sm sm:text-base"
-//               wrapperClassName="w-full"
-//             />
+//       {/* Filter Section */}
+//       <div className='bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6'>
+//         <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
+//           {/* Year Dropdown */}
+//           <div className='relative'>
+//             <label className='block text-sm font-medium text-black mb-2'>Year</label>
+//             <button
+//               onClick={() => {
+//                 setShowYearDropdown(!showYearDropdown);
+//                 setShowMonthDropdown(false);
+//                 setShowDateDropdown(false);
+//               }}
+//               className='w-full px-4 py-2.5 border border-gray-500 rounded-lg text-left flex justify-between items-center hover:border-[#365F8D] transition-colors'
+//             >
+//               <span>{selectedYear}</span>
+//               <FaChevronDown size={12} />
+//             </button>
+//             {showYearDropdown && (
+//               <div className='absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto'>
+//                 {years.map(year => (
+//                   <button
+//                     key={year}
+//                     onClick={() => {
+//                       setSelectedYear(year);
+//                       setShowYearDropdown(false);
+//                       setSelectedDate(null);
+//                     }}
+//                     className={`w-full px-4 py-2 text-left hover:bg-gray-100 ${
+//                       selectedYear === year ? 'bg-[#365F8D] text-white hover:bg-[#2C5284]' : ''
+//                     }`}
+//                   >
+//                     {year}
+//                   </button>
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+
+//           {/* Month Dropdown */}
+//           <div className='relative'>
+//             <label className='block text-sm font-medium text-black mb-2'>Month</label>
+//             <button
+//               onClick={() => {
+//                 setShowMonthDropdown(!showMonthDropdown);
+//                 setShowYearDropdown(false);
+//                 setShowDateDropdown(false);
+//               }}
+//               className='w-full px-4 py-2.5 border border-gray-500 rounded-lg text-left flex justify-between items-center hover:border-[#365F8D] transition-colors'
+//             >
+//               <span>{months.find(m => m.value === selectedMonth)?.label}</span>
+//               <FaChevronDown size={12} />
+//             </button>
+//             {showMonthDropdown && (
+//               <div className='absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto'>
+//                 {months.map(month => (
+//                   <button
+//                     key={month.value}
+//                     onClick={() => {
+//                       setSelectedMonth(month.value);
+//                       setShowMonthDropdown(false);
+//                       setSelectedDate(null);
+//                     }}
+//                     className={`w-full px-4 py-2 text-left hover:bg-gray-100 ${
+//                       selectedMonth === month.value ? 'bg-[#365F8D] text-white hover:bg-[#2C5284]' : ''
+//                     }`}
+//                   >
+//                     {month.label}
+//                   </button>
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+
+//           {/* Date Dropdown */}
+//           <div className='relative'>
+//             <label className='block text-sm font-medium text-black mb-2'>Date (Optional)</label>
+//             <button
+//               onClick={() => {
+//                 setShowDateDropdown(!showDateDropdown);
+//                 setShowYearDropdown(false);
+//                 setShowMonthDropdown(false);
+//               }}
+//               className='w-full px-4 py-2.5 border border-gray-500 rounded-lg text-left flex justify-between items-center hover:border-[#365F8D] transition-colors'
+//             >
+//               <span>{selectedDate || 'All Dates'}</span>
+//               <FaChevronDown size={12} />
+//             </button>
+//             {showDateDropdown && (
+//               <div className='absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto'>
+//                 <button
+//                   onClick={() => {
+//                     setSelectedDate(null);
+//                     setShowDateDropdown(false);
+//                   }}
+//                   className={`w-full px-4 py-2 text-left hover:bg-gray-100 ${
+//                     !selectedDate ? 'bg-[#365F8D] text-white hover:bg-[#2C5284]' : ''
+//                   }`}
+//                 >
+//                   All Dates
+//                 </button>
+//                 {Array.from({ length: getDaysInMonth(selectedYear, selectedMonth) }, (_, i) => i + 1).map(date => (
+//                   <button
+//                     key={date}
+//                     onClick={() => {
+//                       setSelectedDate(date);
+//                       setShowDateDropdown(false);
+//                     }}
+//                     className={`w-full px-4 py-2 text-left hover:bg-gray-100 ${
+//                       selectedDate === date ? 'bg-[#365F8D] text-white hover:bg-[#2C5284]' : ''
+//                     }`}
+//                   >
+//                     {date}
+//                   </button>
+//                 ))}
+//               </div>
+//             )}
 //           </div>
 //         </div>
 //       </div>
 
-    
+//       {/* Icon Legend */}
+//       <div className='bg-white rounded-xl shadow-sm p-4 mb-6'>
+//         <h3 className='text-sm font-semibold text-black mb-3'>Status Legend</h3>
+//         <div className='flex flex-wrap gap-4'>
+//           <div className='flex items-center gap-2'>
+//             <FaCheckCircle className='text-green-600' size={16} />
+//             <span className='text-sm text-gray-700'>Present</span>
+//           </div>
+//           <div className='flex items-center gap-2'>
+//             <FaCalendarAlt className='text-yellow-600' size={16} />
+//             <span className='text-sm text-gray-700'>Leave</span>
+//           </div>
+//           <div className='flex items-center gap-2'>
+//             <FaTimesCircle className='text-red-600' size={16} />
+//             <span className='text-sm text-gray-700'>Absent</span>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Month View - Show all dates when no specific date selected */}
+//       {!selectedDate && (
+//         <div className='bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6'>
+//           <h3 className='text-lg font-bold text-[#2C5284] mb-4'>
+//             {months.find(m => m.value === selectedMonth)?.label} {selectedYear} - Full Month View
+//           </h3>
+//           <div className='grid grid-cols-7 gap-2'>
+//             {Array.from({ length: getDaysInMonth(selectedYear, selectedMonth) }, (_, i) => i + 1).map(date => {
+//               const status = getStatusForDate(date);
+//               return (
+//                 <div
+//                   key={date}
+//                   className='flex flex-col items-center p-3 border rounded-lg hover:shadow-md transition-shadow'
+//                 >
+//                   <span className='text-sm font-semibold text-gray-700 mb-2'>{date}</span>
+//                   {status ? (
+//                     <div className='flex items-center justify-center'>
+//                       {getStatusIcon(status)}
+//                     </div>
+//                   ) : (
+//                     <div className='text-gray-400 text-xs'>No Data</div>
+//                   )}
+//                 </div>
+//               );
+//             })}
+//           </div>
+//         </div>
+//       )}
+
 //       {/* Desktop Table View */}
-//       <div className="hidden lg:block bg-white rounded-xl shadow-sm overflow-hidden">
-//         <div className="overflow-x-auto">
-//           <table className="min-w-full divide-y divide-gray-200">
-//             <thead className="bg-[#365F8D]">
+//       <div className='bg-white rounded-xl shadow-sm lg:block hidden overflow-hidden'>
+//         <div className='overflow-x-auto'>
+//           <table className='min-w-full divide-y divide-gray-200'>
+//             <thead className='bg-[#365F8D]'>
 //               <tr>
-//                 <th className="px-6 py-4 text-white text-sm text-left font-semibold">
-//                   Date
-//                 </th>
-//                 <th className="px-6 py-4 text-white text-sm text-left font-semibold">
-//                   Clock In
-//                 </th>
-//                 <th className="px-6 py-4 text-white text-sm text-left font-semibold">
-//                   Clock Out
-//                 </th>
-//                 <th className="px-6 py-4 text-white text-sm text-left font-semibold">
-//                   Status
-//                 </th>
-//                 <th className="px-6 py-4 text-white text-sm text-left font-semibold">
-//                   Work Hours
-//                 </th>
+//                 <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Date</th>
+//                 <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Clock In</th>
+//                 <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Clock Out</th>
+//                 <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Work Hours</th>
+//                 <th className='px-6 py-4 text-white text-sm text-left font-semibold'>Status</th>
 //               </tr>
 //             </thead>
-
-//             <tbody className="divide-y bg-white divide-gray-200">
+//             <tbody className='divide-y bg-white divide-gray-200'>
 //               {filteredRecords.length > 0 ? (
 //                 filteredRecords.map((record) => (
-//                   <tr
-//                     key={record.id}
-//                     className="hover:bg-gray-50 transition-colors duration-150"
-//                   >
-//                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+//                   <tr key={record.id} className='hover:bg-gray-50 transition-colors duration-150'>
+//                     <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>
 //                       {record.date}
 //                     </td>
-//                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
-//                       {record.checkIn || '-'}
-//                     </td>
-//                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
-//                       {record.checkOut || '-'}
-//                     </td>
-//                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
-//                       <span
-//                         className={`px-3 py-1 inline-flex text-sm leading-5 font-medium rounded-full ${
-//                           record.status?.toLowerCase() === 'present'
-//                             ? 'bg-green-100 text-green-800'
+//                     <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>{record.checkIn}</td>
+//                     <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>{record.checkOut || '-'}</td>
+//                     <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-black'>{record.workHours || '-'}</td>
+//                     <td className='px-6 py-4 text-sm font-medium text-black'>
+//                       <div className='flex items-center gap-2'>
+//                         {getStatusIcon(record.status)}
+//                         <span className={`px-3 py-1 inline-flex text-sm leading-5 font-medium
+//                           rounded-full ${record.status === 'Present' 
+//                             ? 'bg-green-100 text-green-800' 
+//                             : record.status === 'Leave'
+//                             ? 'bg-yellow-100 text-yellow-800'
 //                             : 'bg-red-100 text-red-800'
-//                         }`}
-//                       >
-//                         {record.status}
-//                       </span>
-//                     </td>
-//                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
-//                       {record.workHours || '-'}
+//                           }`}>{record.status}</span>
+//                       </div>
 //                     </td>
 //                   </tr>
 //                 ))
 //               ) : (
 //                 <tr>
-//                   <td
-//                     colSpan={5}
-//                     className="px-6 py-12 text-center text-sm text-gray-500"
-//                   >
+//                   <td colSpan={5} className="px-6 py-12 text-center text-sm text-gray-500">
 //                     <div className="flex flex-col items-center">
-//                       <p className="font-medium text-gray-900 mb-1">
-//                         No records found
-//                       </p>
+//                       <p className="font-medium text-gray-900 mb-1">No records found</p>
 //                       <p className="text-gray-500">
-//                         {selectedDate
-//                           ? 'Try adjusting your date filter'
-//                           : 'No attendance data available yet'}
+//                         No attendance data available for the selected period
 //                       </p>
 //                     </div>
 //                   </td>
@@ -290,60 +462,48 @@ export default UserAttendance
 //         </div>
 //       </div>
 
-//       {/* Mobile & Tablet Card View */}
-//       <div className="space-y-4 lg:hidden">
+//       {/* Mobile and Tablet Card View */}
+//       <div className='space-y-4 lg:hidden mt-6'>
 //         {filteredRecords.length > 0 ? (
 //           filteredRecords.map((record) => (
-//             <div
-//               key={record.id}
-//               className="bg-white rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-shadow duration-200"
-//             >
-//               <div className="flex justify-between items-start mb-3">
+//             <div key={record.id} className='bg-white rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-shadow'>
+//               <div className='flex justify-between items-start mb-3'>
 //                 <div>
-//                   <p className="text-black text-sm mt-1">{record.date}</p>
+//                   <p className='text-black text-sm mt-1 font-semibold'>{record.date}</p>
 //                 </div>
-//                 <span
-//                   className={`px-3 py-1 inline-flex text-sm font-semibold rounded-full ${
-//                     record.status?.toLowerCase() === 'present'
-//                       ? 'bg-green-100 text-green-800'
+//                 <div className='flex items-center gap-2'>
+//                   {getStatusIcon(record.status)}
+//                   <span className={`px-3 py-1 inline-flex text-sm font-semibold rounded-full ${
+//                     record.status === 'Present' 
+//                       ? 'text-green-800 bg-green-100' 
+//                       : record.status === 'Leave'
+//                       ? 'bg-yellow-100 text-yellow-800'
 //                       : 'bg-red-100 text-red-800'
-//                   }`}
-//                 >
-//                   {record.status}
-//                 </span>
+//                   }`}>{record.status}</span>
+//                 </div>
 //               </div>
 
-//               <div className="grid grid-cols-2 gap-3 sm:gap-4">
+//               <div className='grid grid-cols-2 gap-3 sm:gap-4'>
 //                 <div>
-//                   <p className="text-black mb-1 text-sm">Check-In</p>
-//                   <p className="text-sm sm:text-base font-medium text-black">
-//                     {record.checkIn || '-'}
-//                   </p>
+//                   <p className='text-black mb-1 text-sm'>Check-In</p>
+//                   <p className='text-sm sm:text-base font-medium text-black'>{record.checkIn}</p>
 //                 </div>
 //                 <div>
-//                   <p className="text-black mb-1 text-sm">Check-Out</p>
-//                   <p className="text-sm sm:text-base font-medium text-black">
-//                     {record.checkOut || '-'}
-//                   </p>
+//                   <p className='text-black mb-1 text-sm'>Check-Out</p>
+//                   <p className='text-sm sm:text-base font-medium text-black'>{record.checkOut || '-'}</p>
 //                 </div>
-//                 <div className="col-span-2">
-//                   <p className="text-sm text-black mb-1">Work Hours</p>
-//                   <p className="text-sm sm:text-base font-medium text-black">
-//                     {record.workHours || '-'}
-//                   </p>
+//                 <div className='col-span-2'>
+//                   <p className='text-sm text-black mb-1'>Work Hours</p>
+//                   <p className='text-sm sm:text-base font-medium text-black'>{record.workHours || '-'}</p>
 //                 </div>
 //               </div>
 //             </div>
 //           ))
 //         ) : (
-//           <div className="bg-white rounded-xl shadow-sm p-8 sm:p-12 text-center mt-2">
-//             <p className="text-base sm:text-lg font-medium text-gray-900 mb-2">
-//               No records found
-//             </p>
+//           <div className="bg-white rounded-xl shadow-sm p-8 sm:p-12 text-center mt-2 items-center">
+//             <p className="text-base sm:text-lg font-medium text-gray-900 mb-2">No records found</p>
 //             <p className="text-sm sm:text-base text-gray-500">
-//               {selectedDate
-//                 ? 'Try adjusting your date filter'
-//                 : 'No attendance data available yet'}
+//               No attendance data available for the selected period
 //             </p>
 //           </div>
 //         )}
@@ -360,142 +520,441 @@ export default UserAttendance
 
 
 
-// import React, { useState } from 'react';
-// import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
-// import mockAttendanceData from '../../data/mockAttendanceData'; // same data file
 
-// // Assume we have the current user's name/ID from auth context, localStorage, etc.
-// // For this example we hardcode it — in real app replace with real user data
-// const CURRENT_USER_NAME = "Ali Hamza"; // ← yeh real app mein auth se aayega
 
-// function UserAttendance() {
-//   const [selectedDate, setSelectedDate] = useState(null); // null = show all
 
-//   const formattedDate = selectedDate
-//     ? selectedDate.toISOString().split('T')[0]
-//     : null;
 
-//   // Filter only THIS user's records
-//   const userRecords = mockAttendanceData.filter(record => 
-//     record.name.toLowerCase() === CURRENT_USER_NAME.toLowerCase()
-//   );
 
-//   // Then apply date filter if selected
-//   const filteredRecords = formattedDate
-//     ? userRecords.filter(record => record.date === formattedDate)
-//     : userRecords;
 
-//   // Sort by date (newest first) – optional but nice for user
-//   filteredRecords.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-//   return (
-//     <div className="p-4 sm:p-6 max-w-5xl mx-auto">
-//       <h1 className="text-2xl font-bold text-gray-800 mb-2">My Attendance</h1>
-//       <p className="text-gray-600 mb-6">Welcome back, {CURRENT_USER_NAME}</p>
 
-//       {/* Optional Date Filter */}
-//       <div className="mb-6">
-//         <label className="block text-sm font-medium text-gray-700 mb-1">
-//           Filter by Date (leave blank to see all)
-//         </label>
-//         <DatePicker
-//           selected={selectedDate}
-//           onChange={setSelectedDate}
-//           dateFormat="yyyy-MM-dd"
-//           isClearable
-//           placeholderText="Select date"
-//           className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-pointer"
-//         />
-//       </div>
 
-//       {/* Attendance Table / List */}
-//       <div className="bg-white rounded-xl shadow border border-gray-200 overflow-hidden">
-//         {filteredRecords.length > 0 ? (
-//           <div className="overflow-x-auto">
-//             <table className="min-w-full divide-y divide-gray-200">
-//               <thead className="bg-gray-50">
-//                 <tr>
-//                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-//                     Date
-//                   </th>
-//                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-//                     Check-In
-//                   </th>
-//                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-//                     Check-Out
-//                   </th>
-//                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-//                     Status
-//                   </th>
-//                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
-//                     Work Hours
-//                   </th>
-//                 </tr>
-//               </thead>
-//               <tbody className="divide-y divide-gray-200">
-//                 {filteredRecords.map(record => (
-//                   <tr key={record.id} className="hover:bg-gray-50">
-//                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
-//                       {record.date}
-//                     </td>
-//                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
-//                       {record.checkIn || '—'}
-//                     </td>
-//                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
-//                       {record.checkOut || '—'}
-//                     </td>
-//                     <td className="px-4 py-4 whitespace-nowrap">
-//                       <span
-//                         className={`px-2.5 py-1 inline-flex text-xs leading-none font-semibold rounded-full ${
-//                           record.status?.toLowerCase() === 'present'
-//                             ? 'bg-green-100 text-green-800'
-//                             : record.status?.toLowerCase() === 'absent'
-//                             ? 'bg-red-100 text-red-800'
-//                             : 'bg-yellow-100 text-yellow-800'
-//                         }`}
-//                       >
-//                         {record.status || '—'}
-//                       </span>
-//                     </td>
-//                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600 hidden sm:table-cell">
-//                       {record.workHours || '—'}
-//                     </td>
-//                   </tr>
-//                 ))}
-//               </tbody>
-//             </table>
-//           </div>
-//         ) : (
-//           <div className="p-8 text-center">
-//             <p className="text-gray-500 text-sm">
-//               {selectedDate 
-//                 ? "No attendance records found for the selected date." 
-//                 : "No attendance records found yet."}
-//             </p>
-//           </div>
-//         )}
-//       </div>
+import React, { useEffect, useState } from 'react';
+import { getEmployeeRecords } from '../../data/mockAttendanceData';
+import { FaCheckCircle, FaTimesCircle, FaCalendarAlt, FaMapMarkerAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-//       {/* Optional summary stats – nice touch */}
-//       {filteredRecords.length > 0 && (
-//         <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-//           <div className="bg-white p-4 rounded-lg shadow-sm border">
-//             <p className="text-2xl font-bold text-green-600">
-//               {filteredRecords.filter(r => r.status?.toLowerCase() === 'present').length}
-//             </p>
-//             <p className="text-xs text-gray-500 mt-1">Present Days</p>
-//           </div>
-//           <div className="bg-white p-4 rounded-lg shadow-sm border">
-//             <p className="text-2xl font-bold text-red-600">
-//               {filteredRecords.filter(r => r.status?.toLowerCase() === 'absent').length}
-//             </p>
-//             <p className="text-xs text-gray-500 mt-1">Absent Days</p>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
+function UserAttendance({ setTitle }) {
+  // In real app, get this from auth context
+  const currentUserId = 1; // Ali Hamza
+  
+  const [records, setRecords] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(1);
+  const [selectedYear, setSelectedYear] = useState(2026);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const recordsPerPage = 10;
 
-// export default UserAttendance;
+  const months = [
+    { value: 1, label: 'January', short: 'Jan' },
+    { value: 2, label: 'February', short: 'Feb' },
+    { value: 3, label: 'March', short: 'Mar' },
+    { value: 4, label: 'April', short: 'Apr' },
+    { value: 5, label: 'May', short: 'May' },
+    { value: 6, label: 'June', short: 'Jun' },
+    { value: 7, label: 'July', short: 'Jul' },
+    { value: 8, label: 'August', short: 'Aug' },
+    { value: 9, label: 'September', short: 'Sep' },
+    { value: 10, label: 'October', short: 'Oct' },
+    { value: 11, label: 'November', short: 'Nov' },
+    { value: 12, label: 'December', short: 'Dec' }
+  ];
+
+  useEffect(() => {
+    setTitle('My Attendance');
+    const userRecords = getEmployeeRecords(currentUserId);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRecords(userRecords);
+  }, [setTitle]);
+
+  const getDaysInMonth = (year, month) => {
+    return new Date(year, month, 0).getDate();
+  };
+
+  const getRecordForDate = (date) => {
+    const dateStr = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+    return records.find(r => r.date === dateStr);
+  };
+
+  const getDayName = (date) => {
+    const dateObj = new Date(selectedYear, selectedMonth - 1, date);
+    return dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+  };
+
+  const getStatusIcon = (status) => {
+    if (status === 'Present') return '✓';
+    if (status === 'Leave') return '●';
+    if (status === 'Absent') return '×';
+    return '';
+  };
+
+  const getStatusIconComponent = (status) => {
+    if (status === 'Present') {
+      return <FaCheckCircle className='text-green-600' size={18} />;
+    } else if (status === 'Leave') {
+      return <FaCalendarAlt className='text-yellow-600' size={18} />;
+    } else {
+      return <FaTimesCircle className='text-red-600' size={18} />;
+    }
+  };
+
+  const selectedRecord = selectedDate ? getRecordForDate(selectedDate) : null;
+
+  // Filter records by selected month/year
+  const filteredRecords = records.filter(record => {
+    const recordDate = new Date(record.date);
+    const recordYear = recordDate.getFullYear();
+    const recordMonth = recordDate.getMonth() + 1;
+    
+    return recordYear === selectedYear && recordMonth === selectedMonth;
+  });
+
+  // Pagination for table
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = filteredRecords.slice(indexOfFirstRecord, indexOfLastRecord);
+  const totalPages = Math.ceil(filteredRecords.length / recordsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  // Calculate work hours in hours and minutes
+  const calculateWorkDuration = (workHours) => {
+    if (!workHours || workHours === '------') return null;
+    const match = workHours.match(/(\d+)h\s*(\d+)?m?/);
+    if (match) {
+      const hours = parseInt(match[1]);
+      const minutes = match[2] ? parseInt(match[2]) : 0;
+      return { hours, minutes, total: hours + minutes / 60 };
+    }
+    return null;
+  };
+
+  const workDuration = selectedRecord ? calculateWorkDuration(selectedRecord.workHours) : null;
+
+  return (
+    <div className='max-h-screen p-4 sm:p-6 lg:p-8'>
+      <h1 className='text-2xl sm:text-3xl font-bold text-[#2C5284] mb-6'>My Attendance</h1>
+
+      {/* Month/Year Selector */}
+      <div className='bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+          <div>
+            <label className='block text-sm font-medium text-gray-700 mb-2'>Month</label>
+            <select
+              value={selectedMonth}
+              onChange={(e) => {
+                setSelectedMonth(parseInt(e.target.value));
+                setSelectedDate(null);
+                setCurrentPage(1);
+              }}
+              className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-transparent'
+            >
+              {months.map(month => (
+                <option key={month.value} value={month.value}>
+                  {month.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className='block text-sm font-medium text-gray-700 mb-2'>Year</label>
+            <select
+              value={selectedYear}
+              onChange={(e) => {
+                setSelectedYear(parseInt(e.target.value));
+                setSelectedDate(null);
+                setCurrentPage(1);
+              }}
+              className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-transparent'
+            >
+              <option value={2024}>2024</option>
+              <option value={2025}>2025</option>
+              <option value={2026}>2026</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {/* Legend */}
+      <div className='px-6 py-4 bg-white rounded-xl shadow-sm mb-6'>
+        <div className='flex flex-wrap gap-6 text-sm'>
+          <div className='flex items-center gap-2'>
+            <span className='font-bold'>Note:</span>
+          </div>
+          <div className='flex items-center gap-2'>
+            <span className='text-green-600 font-bold'>✓</span>
+            <span>→ Present</span>
+          </div>
+          <div className='flex items-center gap-2'>
+            <span className='text-yellow-600 font-bold'>●</span>
+            <span>→ Late / Leave</span>
+          </div>
+          <div className='flex items-center gap-2'>
+            <span className='text-red-600 font-bold'>×</span>
+            <span>→ Absent</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Horizontal Calendar */}
+      <div className='bg-white rounded-xl shadow-sm p-6 mb-6 overflow-x-auto'>
+        <h3 className='text-lg font-bold text-[#2C5284] mb-4'>
+          {months.find(m => m.value === selectedMonth)?.label} {selectedYear} - Full Month View
+        </h3>
+        <div className='inline-flex gap-1 min-w-full'>
+          {Array.from({ length: getDaysInMonth(selectedYear, selectedMonth) }, (_, i) => i + 1).map(date => {
+            const record = getRecordForDate(date);
+            const dayName = getDayName(date);
+            const isSelected = selectedDate === date;
+            
+            return (
+              <button
+                key={date}
+                onClick={() => setSelectedDate(date)}
+                className={`flex flex-col items-center px-3 py-2 border rounded-lg transition-all min-w-[60px] ${
+                  isSelected 
+                    ? 'bg-[#365F8D] text-white border-[#365F8D]' 
+                    : 'bg-white hover:bg-gray-50 border-gray-300'
+                }`}
+              >
+                <span className='text-xs font-medium mb-1'>{date}</span>
+                <span className='text-[10px] mb-1 opacity-70'>{dayName}</span>
+                {record ? (
+                  <span className={`text-lg font-bold ${
+                    isSelected 
+                      ? 'text-white' 
+                      : record.status === 'Present' 
+                        ? 'text-green-600' 
+                        : record.status === 'Leave'
+                        ? 'text-yellow-600'
+                        : 'text-red-600'
+                  }`}>
+                    {getStatusIcon(record.status)}
+                  </span>
+                ) : (
+                  <span className='text-gray-300 text-xs'>-</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Details Section when date selected */}
+      {selectedRecord ? (
+        <div className='bg-white rounded-xl shadow-sm p-6 mb-6'>
+          <h3 className='text-lg font-bold text-[#2C5284] mb-6'>
+            Details for {selectedDate}-{String(selectedMonth).padStart(2, '0')}-{selectedYear}
+          </h3>
+          
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+            {/* Left Side */}
+            <div className='space-y-6'>
+              <div>
+                <p className='text-sm text-gray-600 mb-1'>Clock In</p>
+                <p className='text-2xl font-bold text-gray-900'>{selectedRecord.checkIn}</p>
+              </div>
+
+              {/* Circular Progress */}
+              {workDuration && (
+                <div className='flex justify-center'>
+                  <div className='relative w-48 h-48'>
+                    <svg className='w-full h-full transform -rotate-90'>
+                      <circle
+                        cx='96'
+                        cy='96'
+                        r='88'
+                        stroke='#e5e7eb'
+                        strokeWidth='8'
+                        fill='none'
+                      />
+                      <circle
+                        cx='96'
+                        cy='96'
+                        r='88'
+                        stroke='#365F8D'
+                        strokeWidth='8'
+                        fill='none'
+                        strokeDasharray={`${(workDuration.total / 24) * 552.92} 552.92`}
+                        strokeLinecap='round'
+                      />
+                    </svg>
+                    <div className='absolute inset-0 flex items-center justify-center'>
+                      <span className='text-2xl font-bold text-gray-900'>
+                        {selectedRecord.workHours}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div>
+                <p className='text-sm text-gray-600 mb-1'>Clock Out</p>
+                <p className='text-xl font-bold text-gray-900'>
+                  {selectedRecord.checkOut === '------' 
+                    ? '00:00 pm (Did not clock out)' 
+                    : selectedRecord.checkOut}
+                </p>
+              </div>
+            </div>
+
+            {/* Right Side - Activity */}
+            <div>
+              <h4 className='text-lg font-bold text-gray-900 mb-4'>Activity</h4>
+              <div className='space-y-4'>
+                <div className='flex items-start gap-3 p-3 bg-green-50 rounded-lg border border-green-200'>
+                  <div className='mt-1'>
+                    {getStatusIconComponent(selectedRecord.status)}
+                  </div>
+                  <div className='flex-1'>
+                    <div className='flex items-center gap-2 mb-1'>
+                      <p className='font-semibold text-gray-900'>Clock In</p>
+                      <span className='px-2 py-0.5 bg-green-600 text-white text-xs rounded-full'>
+                        General Shift
+                      </span>
+                    </div>
+                    <p className='text-sm text-gray-600'>
+                      ⏰ {selectedDate}-01-{selectedYear} {selectedRecord.checkIn}
+                    </p>
+                    {selectedRecord.status === 'Present' && (
+                      <div className='flex items-center gap-1 text-sm text-gray-600 mt-1'>
+                        <FaMapMarkerAlt size={12} />
+                        <span>Lahore, Punjab</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {selectedRecord.checkOut !== '------' && (
+                  <div className='flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200'>
+                    <div className='mt-1'>
+                      <FaTimesCircle className='text-gray-600' size={18} />
+                    </div>
+                    <div className='flex-1'>
+                      <p className='font-semibold text-gray-900 mb-1'>Clock Out</p>
+                      <p className='text-sm text-gray-600'>
+                        ⏰ {selectedDate}-01-{selectedYear} {selectedRecord.checkOut}
+                      </p>
+                      <div className='flex items-center gap-1 text-sm text-gray-600 mt-1'>
+                        <FaMapMarkerAlt size={12} />
+                        <span>Lahore, Punjab</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* Records Table */}
+      <div className='bg-white rounded-xl shadow-sm overflow-hidden'>
+        <div className='p-4 bg-[#365F8D] flex justify-between items-center'>
+          <h3 className='text-lg font-bold text-white'>Monthly Records</h3>
+          {totalPages > 1 && (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+                className={`p-2 rounded-lg ${
+                  currentPage === 1
+                    ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                    : 'bg-white text-[#365F8D] hover:bg-gray-100'
+                }`}
+              >
+                <FaChevronLeft size={14} />
+              </button>
+              <span className="text-white text-sm">
+                {currentPage} / {totalPages}
+              </span>
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                className={`p-2 rounded-lg ${
+                  currentPage === totalPages
+                    ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                    : 'bg-white text-[#365F8D] hover:bg-gray-100'
+                }`}
+              >
+                <FaChevronRight size={14} />
+              </button>
+            </div>
+          )}
+        </div>
+        
+        <div className='overflow-x-auto'>
+          <table className='min-w-full divide-y divide-gray-200'>
+            <thead className='bg-gray-50'>
+              <tr>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                  Date
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                  Clock In
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                  Clock Out
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                  Work Hours
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody className='bg-white divide-y divide-gray-200'>
+              {currentRecords.length > 0 ? (
+                currentRecords.map((record) => (
+                  <tr key={record.id} className='hover:bg-gray-50'>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+                      {record.date}
+                    </td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>
+                      {record.checkIn}
+                    </td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>
+                      {record.checkOut}
+                    </td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>
+                      {record.workHours}
+                    </td>
+                    <td className='px-6 py-4 whitespace-nowrap'>
+                      <div className='flex items-center gap-2'>
+                        {getStatusIconComponent(record.status)}
+                        <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          record.status === 'Present' 
+                            ? 'bg-green-100 text-green-800' 
+                            : record.status === 'Leave'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-red-100 text-red-800'
+                        }`}>
+                          {record.status}
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5} className='px-6 py-8 text-center text-sm text-gray-500'>
+                    No records found for this month
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default UserAttendance;
