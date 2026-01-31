@@ -1612,125 +1612,236 @@
 
 
 import React, { useEffect, useState } from 'react';
-import { FaCheckCircle, FaTimesCircle, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import EmployeeAttendanceModal from './EmployeeAttendanceModal';
-import { getUniqueEmployees } from '../../data/mockAttendanceData';
+import {
+  FaCheckCircle,
+  FaTimesCircle,
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+  FaChevronLeft,
+  FaChevronRight,
+} from 'react-icons/fa';
+import { getEmployeeRecords } from '../../data/mockAttendanceData'; // your helper function
 
-function AdminAttendance({ setTitle }) {
-  const [employees, setEmployees] = useState([]);
-  const [searchName, setSearchName] = useState('');
+function UserAttendance({ setTitle }) {
+  // Replace with real user ID from AuthContext later
+  const currentUserEmployeeId = 1; // Ali Hamza (employeeId: 1)
+
+  const [records, setRecords] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedDate, setSelectedDate] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [showModal, setShowModal] = useState(false);
 
   const recordsPerPage = 10;
 
+  const months = [
+    { value: 1, label: 'January', short: 'Jan' },
+    { value: 2, label: 'February', short: 'Feb' },
+    { value: 3, label: 'March', short: 'Mar' },
+    { value: 4, label: 'April', short: 'Apr' },
+    { value: 5, label: 'May', short: 'May' },
+    { value: 6, label: 'June', short: 'Jun' },
+    { value: 7, label: 'July', short: 'Jul' },
+    { value: 8, label: 'August', short: 'Aug' },
+    { value: 9, label: 'September', short: 'Sep' },
+    { value: 10, label: 'October', short: 'Oct' },
+    { value: 11, label: 'November', short: 'Nov' },
+    { value: 12, label: 'December', short: 'Dec' },
+  ];
+
   useEffect(() => {
-    setTitle('Attendance Management');
-    setEmployees(getUniqueEmployees());
+    setTitle('My Attendance');
+    // Fetch only current user's records
+    const userRecords = getEmployeeRecords(currentUserEmployeeId);
+    setRecords(userRecords || []);
   }, [setTitle]);
 
-  const filteredEmployees = employees.filter(emp =>
-    emp.name.toLowerCase().includes(searchName.toLowerCase())
-  );
+  // Days in the selected month
+  const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+
+  // Get record for a specific day in the selected month/year
+  const getRecordForDate = (day) => {
+    const dateStr = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    return records.find(r => r.date === dateStr);
+  };
+
+  const getStatusIcon = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'present':
+        return <FaCheckCircle className="text-green-600" size={20} />;
+      case 'leave':
+        return <FaCalendarAlt className="text-amber-600" size={20} />;
+      case 'absent':
+        return <FaTimesCircle className="text-red-600" size={20} />;
+      default:
+        return <span className="text-gray-400 text-lg">-</span>;
+    }
+  };
+
+  // Selected day's record
+  const selectedRecord = selectedDate ? getRecordForDate(selectedDate) : null;
+
+  // All records for the selected month/year (for the table)
+  const filteredRecords = records.filter(r => {
+    const d = new Date(r.date);
+    return d.getFullYear() === selectedYear && (d.getMonth() + 1) === selectedMonth;
+  });
 
   // Pagination
-  const totalPages = Math.ceil(filteredEmployees.length / recordsPerPage);
-  const indexOfLast = currentPage * recordsPerPage;
-  const indexOfFirst = indexOfLast - recordsPerPage;
-  const currentRecords = filteredEmployees.slice(indexOfFirst, indexOfLast);
-
-  const handleNextPage = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
-  const handlePrevPage = () => currentPage > 1 && setCurrentPage(currentPage - 1);
-
-  const handleEmployeeClick = (employee) => {
-    setSelectedEmployee(employee);
-    setShowModal(true);
-  };
-
-  const getStatusColor = (percentage) => {
-    if (percentage >= 90) return 'bg-green-100 text-green-800';
-    if (percentage >= 75) return 'bg-yellow-100 text-yellow-800';
-    return 'bg-red-100 text-red-800';
-  };
+  const totalPages = Math.ceil(filteredRecords.length / recordsPerPage);
+  const currentRecords = filteredRecords.slice(
+    (currentPage - 1) * recordsPerPage,
+    currentPage * recordsPerPage
+  );
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
       <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2C5284] mb-6">
-        Attendance Management
+        My Attendance
       </h1>
 
-      {/* Search Bar */}
-      <div className="bg-white rounded-xl shadow p-5 sm:p-6 mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Search Employee
-        </label>
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={searchName}
-          onChange={(e) => {
-            setSearchName(e.target.value);
-            setCurrentPage(1);
-          }}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-[#365F8D] text-sm sm:text-base"
-        />
+      {/* Month & Year Selector */}
+      <div className="bg-white rounded-xl shadow p-5 sm:p-6 mb-6 grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Month</label>
+          <select
+            value={selectedMonth}
+            onChange={(e) => {
+              setSelectedMonth(Number(e.target.value));
+              setSelectedDate(null);
+              setCurrentPage(1);
+            }}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-[#365F8D] text-sm sm:text-base"
+          >
+            {months.map(m => (
+              <option key={m.value} value={m.value}>{m.label}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Year</label>
+          <select
+            value={selectedYear}
+            onChange={(e) => {
+              setSelectedYear(Number(e.target.value));
+              setSelectedDate(null);
+              setCurrentPage(1);
+            }}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-[#365F8D] text-sm sm:text-base"
+          >
+            {[2024, 2025, 2026, 2027].map(y => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      {/* Showing + Pagination */}
-      <div className="mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-600">
-        <span>
-          Showing <span className="font-semibold text-black">{indexOfFirst + 1}</span>–
-          <span className="font-semibold text-black">
-            {Math.min(indexOfLast, filteredEmployees.length)}
-          </span>{' '}
-          of <span className="font-semibold text-black">{filteredEmployees.length}</span> employees
-        </span>
-
-        {totalPages > 1 && (
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-              className={`p-2 rounded-lg ${currentPage === 1 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#365F8D] text-white hover:bg-[#2C5284]'}`}
-            >
-              <FaChevronLeft size={16} />
-            </button>
-            <span className="font-medium text-black">
-              {currentPage} / {totalPages}
-            </span>
-            <button
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-              className={`p-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#365F8D] text-white hover:bg-[#2C5284]'}`}
-            >
-              <FaChevronRight size={16} />
-            </button>
+      {/* Legend */}
+      <div className="bg-white rounded-xl shadow p-4 sm:p-5 mb-6">
+        <div className="flex flex-wrap gap-6 text-sm font-medium">
+          <div className="flex items-center gap-2">
+            <FaCheckCircle className="text-green-600" size={18} /> Present
           </div>
-        )}
+          <div className="flex items-center gap-2">
+            <FaCalendarAlt className="text-amber-600" size={18} /> Leave
+          </div>
+          <div className="flex items-center gap-2">
+            <FaTimesCircle className="text-red-600" size={18} /> Absent
+          </div>
+        </div>
       </div>
 
-      {/* Employee List – Cards (Mobile) + Table (Desktop) */}
-      <div className="bg-white rounded-xl shadow overflow-hidden">
-        {/* Header */}
-        <div className="bg-[#365F8D] p-4 sm:p-5 text-white flex justify-between items-center">
-          <h2 className="text-lg sm:text-xl font-bold">Employees</h2>
-          {totalPages > 1 && (
-            <div className="hidden sm:flex items-center gap-3">
+      {/* Horizontal Scrollable Calendar */}
+      <div className="bg-white rounded-xl shadow p-4 sm:p-6 mb-8 overflow-x-auto">
+        <h2 className="text-lg sm:text-xl font-bold text-[#2C5284] mb-4">
+          {months.find(m => m.value === selectedMonth)?.label} {selectedYear}
+        </h2>
+
+        <div className="flex gap-2 pb-4 min-w-max">
+          {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(day => {
+            const record = getRecordForDate(day);
+            const isSelected = selectedDate === day;
+
+            return (
               <button
-                onClick={handlePrevPage}
+                key={day}
+                onClick={() => setSelectedDate(day)}
+                className={`min-w-[64px] sm:min-w-[70px] flex flex-col items-center p-2 sm:p-3 border rounded-lg transition-all ${
+                  isSelected
+                    ? 'bg-[#365F8D] text-white border-[#365F8D] shadow-md'
+                    : 'border-gray-200 hover:bg-gray-50'
+                }`}
+              >
+                <span className="text-sm font-medium">{day}</span>
+                <span className="text-[10px] sm:text-xs opacity-70 mb-1">
+                  {new Date(selectedYear, selectedMonth - 1, day).toLocaleString('en-US', { weekday: 'short' })}
+                </span>
+                <div className="mt-1">{getStatusIcon(record?.status)}</div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Selected Date Details */}
+      {selectedRecord && (
+        <div className="bg-white rounded-xl shadow p-5 sm:p-6 mb-8">
+          <h3 className="text-lg sm:text-xl font-bold text-[#2C5284] mb-4">
+            Details — {selectedDate} {months.find(m => m.value === selectedMonth)?.short} {selectedYear}
+          </h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <p className="text-sm text-gray-600">Clock In</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">{selectedRecord.checkIn || '—'}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">Clock Out</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">
+                  {selectedRecord.checkOut || 'Not Clocked Out'}
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <FaMapMarkerAlt className="text-gray-500" />
+                <span>Lahore, Punjab</span>
+              </div>
+
+              {selectedRecord.workHours && selectedRecord.workHours !== '------' && (
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-sm text-gray-600 mb-1">Work Hours</p>
+                  <p className="text-xl font-bold text-gray-900">{selectedRecord.workHours}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Monthly Records Table */}
+      <div className="bg-white rounded-xl shadow overflow-hidden">
+        <div className="bg-[#365F8D] p-4 sm:p-5 text-white flex flex-col sm:flex-row justify-between items-center gap-4">
+          <h3 className="text-lg sm:text-xl font-bold">Monthly Records</h3>
+
+          {totalPages > 1 && (
+            <div className="flex items-center gap-3">
+              <button
                 disabled={currentPage === 1}
-                className={`p-2 rounded ${currentPage === 1 ? 'bg-gray-500 cursor-not-allowed' : 'bg-white text-[#365F8D] hover:bg-gray-100'}`}
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                className={`p-2 rounded-lg ${currentPage === 1 ? 'bg-gray-500 cursor-not-allowed' : 'bg-white text-[#365F8D] hover:bg-gray-100'}`}
               >
                 <FaChevronLeft size={14} />
               </button>
-              <span className="text-white font-medium">
-                {currentPage} / {totalPages}
+              <span className="font-medium">
+                Page {currentPage} of {totalPages}
               </span>
               <button
-                onClick={handleNextPage}
                 disabled={currentPage === totalPages}
-                className={`p-2 rounded ${currentPage === totalPages ? 'bg-gray-500 cursor-not-allowed' : 'bg-white text-[#365F8D] hover:bg-gray-100'}`}
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                className={`p-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-500 cursor-not-allowed' : 'bg-white text-[#365F8D] hover:bg-gray-100'}`}
               >
                 <FaChevronRight size={14} />
               </button>
@@ -1738,106 +1849,45 @@ function AdminAttendance({ setTitle }) {
           )}
         </div>
 
-        {/* Mobile Cards */}
-        <div className="lg:hidden divide-y divide-gray-200">
-          {currentRecords.length > 0 ? (
-            currentRecords.map(emp => (
-              <div
-                key={emp.employeeId}
-                onClick={() => handleEmployeeClick(emp)}
-                className="p-4 sm:p-5 hover:bg-gray-50 cursor-pointer transition-colors"
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <div>
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900">{emp.name}</h3>
-                    <p className="text-sm text-gray-600 mt-1">{emp.email}</p>
-                  </div>
-                </div>
-
-                <div className="mb-3">
-                  <div className="flex items-center justify-between mb-1 text-sm text-gray-600">
-                    <span>Attendance</span>
-                    <span className="font-semibold text-black">{emp.attendancePercentage}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5">
-                    <div
-                      className={`h-2.5 rounded-full ${
-                        emp.attendancePercentage >= 90 ? 'bg-green-500' :
-                        emp.attendancePercentage >= 75 ? 'bg-yellow-500' :
-                        'bg-red-500'
-                      }`}
-                      style={{ width: `${emp.attendancePercentage}%` }}
-                    />
-                  </div>
-                </div>
-
-                <span
-                  className={`px-3 py-1 inline-flex text-xs font-semibold rounded-full ${getStatusColor(emp.attendancePercentage)}`}
-                >
-                  {emp.attendancePercentage >= 90 ? 'Excellent' :
-                   emp.attendancePercentage >= 75 ? 'Good' : 'Needs Improvement'}
-                </span>
-              </div>
-            ))
-          ) : (
-            <div className="p-10 text-center text-gray-500">
-              No employees found
-            </div>
-          )}
-        </div>
-
-        {/* Desktop Table */}
-        <div className="hidden lg:block overflow-x-auto">
+        <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Attendance</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clock In</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clock Out</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hours</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {currentRecords.length > 0 ? (
-                currentRecords.map(emp => (
-                  <tr
-                    key={emp.employeeId}
-                    onClick={() => handleEmployeeClick(emp)}
-                    className="hover:bg-gray-50 cursor-pointer transition-colors"
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{emp.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{emp.email}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <div className="w-24 bg-gray-200 rounded-full h-2.5">
-                          <div
-                            className={`h-2.5 rounded-full ${
-                              emp.attendancePercentage >= 90 ? 'bg-green-500' :
-                              emp.attendancePercentage >= 75 ? 'bg-yellow-500' :
-                              'bg-red-500'
-                            }`}
-                            style={{ width: `${emp.attendancePercentage}%` }}
-                          />
-                        </div>
-                        <span className="text-sm font-semibold text-gray-900">
-                          {emp.attendancePercentage}%
+                currentRecords.map(record => (
+                  <tr key={record.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{record.date}</td>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{record.checkIn || '—'}</td>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{record.checkOut || '—'}</td>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{record.workHours || '—'}</td>
+                    <td className="px-4 py-4 whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        {getStatusIcon(record.status)}
+                        <span
+                          className={`px-3 py-1 inline-flex text-xs font-semibold rounded-full ${
+                            record.status === 'Present' ? 'bg-green-100 text-green-800' :
+                            record.status === 'Leave' ? 'bg-amber-100 text-amber-800' :
+                            'bg-red-100 text-red-800'
+                          }`}
+                        >
+                          {record.status}
                         </span>
                       </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-3 py-1 inline-flex text-xs font-semibold rounded-full ${getStatusColor(emp.attendancePercentage)}`}
-                      >
-                        {emp.attendancePercentage >= 90 ? 'Excellent' :
-                         emp.attendancePercentage >= 75 ? 'Good' : 'Needs Improvement'}
-                      </span>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={4} className="px-6 py-12 text-center text-gray-500">
-                    No employees found
+                  <td colSpan={5} className="px-6 py-10 text-center text-gray-500">
+                    No attendance records found for {months.find(m => m.value === selectedMonth)?.label} {selectedYear}
                   </td>
                 </tr>
               )}
@@ -1845,19 +1895,8 @@ function AdminAttendance({ setTitle }) {
           </table>
         </div>
       </div>
-
-      {/* Modal */}
-      {showModal && selectedEmployee && (
-        <EmployeeAttendanceModal
-          employee={selectedEmployee}
-          onClose={() => {
-            setShowModal(false);
-            setSelectedEmployee(null);
-          }}
-        />
-      )}
     </div>
   );
 }
 
-export default AdminAttendance;
+export default UserAttendance;
