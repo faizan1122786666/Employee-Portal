@@ -16,7 +16,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { getEmployeeLeaves, leaveTypes } from '../../data/mockLeaveData';
-// import './Leave.css';
+import './Leave.css';
 
 const UserLeave = () => {
   const [userLeaves, setUserLeaves] = useState([]);

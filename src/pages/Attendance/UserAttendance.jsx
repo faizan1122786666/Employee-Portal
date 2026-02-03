@@ -2502,479 +2502,642 @@
 
 
 
+// import React, { useEffect, useState } from 'react';
+// import { getEmployeeRecords } from '../../data/mockAttendanceData';
+// import { FaCheckCircle, FaTimesCircle, FaCalendarAlt, FaMapMarkerAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+// function UserAttendance({ setTitle }) {
+//   // In real app, get this from auth context
+//   const currentUserId = 1; // Ali Hamza
+  
+//   const [records, setRecords] = useState([]);
+//   const [selectedMonth, setSelectedMonth] = useState(1);
+//   const [selectedYear, setSelectedYear] = useState(2026);
+//   const [selectedDate, setSelectedDate] = useState(null);
+//   const [currentPage, setCurrentPage] = useState(1);
+  
+//   const recordsPerPage = 10;
+
+//   const months = [
+//     { value: 1, label: 'January', short: 'Jan' },
+//     { value: 2, label: 'February', short: 'Feb' },
+//     { value: 3, label: 'March', short: 'Mar' },
+//     { value: 4, label: 'April', short: 'Apr' },
+//     { value: 5, label: 'May', short: 'May' },
+//     { value: 6, label: 'June', short: 'Jun' },
+//     { value: 7, label: 'July', short: 'Jul' },
+//     { value: 8, label: 'August', short: 'Aug' },
+//     { value: 9, label: 'September', short: 'Sep' },
+//     { value: 10, label: 'October', short: 'Oct' },
+//     { value: 11, label: 'November', short: 'Nov' },
+//     { value: 12, label: 'December', short: 'Dec' }
+//   ];
+
+//   useEffect(() => {
+//     setTitle('My Attendance');
+//     const userRecords = getEmployeeRecords(currentUserId);
+//     // eslint-disable-next-line react-hooks/set-state-in-effect
+//     setRecords(userRecords);
+//   }, [setTitle]);
+
+//   const getDaysInMonth = (year, month) => {
+//     return new Date(year, month, 0).getDate();
+//   };
+
+//   const getRecordForDate = (date) => {
+//     const dateStr = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+//     return records.find(r => r.date === dateStr);
+//   };
+
+//   const getDayName = (date) => {
+//     const dateObj = new Date(selectedYear, selectedMonth - 1, date);
+//     return dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+//   };
+
+//   const getStatusIcon = (status) => {
+//     if (status === 'Present') return '✓';
+//     if (status === 'Leave') return '●';
+//     if (status === 'Absent') return '×';
+//     return '';
+//   };
+
+//   const getStatusIconComponent = (status) => {
+//     if (status === 'Present') {
+//       return <FaCheckCircle className='text-green-600' size={18} />;
+//     } else if (status === 'Leave') {
+//       return <FaCalendarAlt className='text-yellow-600' size={18} />;
+//     } else {
+//       return <FaTimesCircle className='text-red-600' size={18} />;
+//     }
+//   };
+
+//   const selectedRecord = selectedDate ? getRecordForDate(selectedDate) : null;
+
+//   // Filter records by selected month/year
+//   const filteredRecords = records.filter(record => {
+//     const recordDate = new Date(record.date);
+//     const recordYear = recordDate.getFullYear();
+//     const recordMonth = recordDate.getMonth() + 1;
+    
+//     return recordYear === selectedYear && recordMonth === selectedMonth;
+//   });
+
+//   // Pagination for table
+//   const indexOfLastRecord = currentPage * recordsPerPage;
+//   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+//   const currentRecords = filteredRecords.slice(indexOfFirstRecord, indexOfLastRecord);
+//   const totalPages = Math.ceil(filteredRecords.length / recordsPerPage);
+
+//   const handleNextPage = () => {
+//     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+//   };
+
+//   const handlePrevPage = () => {
+//     if (currentPage > 1) setCurrentPage(currentPage - 1);
+//   };
+
+//   // Calculate work hours in hours and minutes
+//   const calculateWorkDuration = (workHours) => {
+//     if (!workHours || workHours === '------') return null;
+//     const match = workHours.match(/(\d+)h\s*(\d+)?m?/);
+//     if (match) {
+//       const hours = parseInt(match[1]);
+//       const minutes = match[2] ? parseInt(match[2]) : 0;
+//       return { hours, minutes, total: hours + minutes / 60 };
+//     }
+//     return null;
+//   };
+
+//   const workDuration = selectedRecord ? calculateWorkDuration(selectedRecord.workHours) : null;
+
+//   return (
+//     <div className='max-h-screen p-4 sm:p-6 lg:p-8'>
+//       <h1 className='text-2xl sm:text-3xl font-bold text-[#2C5284] mb-6'>My Attendance</h1>
+
+//       {/* Month/Year Selector */}
+//       <div className='bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6'>
+//         <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+//           <div>
+//             <label className='block text-sm font-medium text-gray-700 mb-2'>Month</label>
+//             <select
+//               value={selectedMonth}
+//               onChange={(e) => {
+//                 setSelectedMonth(parseInt(e.target.value));
+//                 setSelectedDate(null);
+//                 setCurrentPage(1);
+//               }}
+//               className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-transparent'
+//             >
+//               {months.map(month => (
+//                 <option key={month.value} value={month.value}>
+//                   {month.label}
+//                 </option>
+//               ))}
+//             </select>
+//           </div>
+//           <div>
+//             <label className='block text-sm font-medium text-gray-700 mb-2'>Year</label>
+//             <select
+//               value={selectedYear}
+//               onChange={(e) => {
+//                 setSelectedYear(parseInt(e.target.value));
+//                 setSelectedDate(null);
+//                 setCurrentPage(1);
+//               }}
+//               className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-transparent'
+//             >
+//               <option value={2024}>2024</option>
+//               <option value={2025}>2025</option>
+//               <option value={2026}>2026</option>
+//             </select>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Legend */}
+//       <div className='px-6 py-4 bg-white rounded-xl shadow-sm mb-6'>
+//         <div className='flex flex-wrap gap-6 text-sm'>
+//           <div className='flex items-center gap-2'>
+//             <span className='font-bold'>Note:</span>
+//           </div>
+//           <div className='flex items-center gap-2'>
+//             <span className='text-green-600 font-bold'>✓</span>
+//             <span>→ Present</span>
+//           </div>
+//           <div className='flex items-center gap-2'>
+//             <span className='text-yellow-600 font-bold'>●</span>
+//             <span>→ Late / Leave</span>
+//           </div>
+//           <div className='flex items-center gap-2'>
+//             <span className='text-red-600 font-bold'>×</span>
+//             <span>→ Absent</span>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Horizontal Calendar */}
+//       <div className='bg-white rounded-xl shadow-sm p-6 mb-6 overflow-x-auto'>
+//         <h3 className='text-lg font-bold text-[#2C5284] mb-4'>
+//           {months.find(m => m.value === selectedMonth)?.label} {selectedYear} - Full Month View
+//         </h3>
+//         <div className='inline-flex gap-1 min-w-full'>
+//           {Array.from({ length: getDaysInMonth(selectedYear, selectedMonth) }, (_, i) => i + 1).map(date => {
+//             const record = getRecordForDate(date);
+//             const dayName = getDayName(date);
+//             const isSelected = selectedDate === date;
+            
+//             return (
+//               <button
+//                 key={date}
+//                 onClick={() => setSelectedDate(date)}
+//                 className={`flex flex-col items-center px-3 py-2 border rounded-lg transition-all min-w-[60px] ${
+//                   isSelected 
+//                     ? 'bg-[#365F8D] text-white border-[#365F8D]' 
+//                     : 'bg-white hover:bg-gray-50 border-gray-300'
+//                 }`}
+//               >
+//                 <span className='text-xs font-medium mb-1'>{date}</span>
+//                 <span className='text-[10px] mb-1 opacity-70'>{dayName}</span>
+//                 {record ? (
+//                   <span className={`text-lg font-bold ${
+//                     isSelected 
+//                       ? 'text-white' 
+//                       : record.status === 'Present' 
+//                         ? 'text-green-600' 
+//                         : record.status === 'Leave'
+//                         ? 'text-yellow-600'
+//                         : 'text-red-600'
+//                   }`}>
+//                     {getStatusIcon(record.status)}
+//                   </span>
+//                 ) : (
+//                   <span className='text-gray-300 text-xs'>-</span>
+//                 )}
+//               </button>
+//             );
+//           })}
+//         </div>
+//       </div>
+
+//       {/* Details Section when date selected */}
+//       {selectedRecord ? (
+//         <div className='bg-white rounded-xl shadow-sm p-6 mb-6'>
+//           <h3 className='text-lg font-bold text-[#2C5284] mb-6'>
+//             Details for {selectedDate}-{String(selectedMonth).padStart(2, '0')}-{selectedYear}
+//           </h3>
+          
+//           <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+//             {/* Left Side */}
+//             <div className='space-y-6'>
+//               <div>
+//                 <p className='text-sm text-gray-600 mb-1'>Clock In</p>
+//                 <p className='text-2xl font-bold text-gray-900'>{selectedRecord.checkIn}</p>
+//               </div>
+
+//               {/* Circular Progress */}
+//               {workDuration && (
+//                 <div className='flex justify-center'>
+//                   <div className='relative w-48 h-48'>
+//                     <svg className='w-full h-full transform -rotate-90'>
+//                       <circle
+//                         cx='96'
+//                         cy='96'
+//                         r='88'
+//                         stroke='#e5e7eb'
+//                         strokeWidth='8'
+//                         fill='none'
+//                       />
+//                       <circle
+//                         cx='96'
+//                         cy='96'
+//                         r='88'
+//                         stroke='#365F8D'
+//                         strokeWidth='8'
+//                         fill='none'
+//                         strokeDasharray={`${(workDuration.total / 24) * 552.92} 552.92`}
+//                         strokeLinecap='round'
+//                       />
+//                     </svg>
+//                     <div className='absolute inset-0 flex items-center justify-center'>
+//                       <span className='text-2xl font-bold text-gray-900'>
+//                         {selectedRecord.workHours}
+//                       </span>
+//                     </div>
+//                   </div>
+//                 </div>
+//               )}
+
+//               <div>
+//                 <p className='text-sm text-gray-600 mb-1'>Clock Out</p>
+//                 <p className='text-xl font-bold text-gray-900'>
+//                   {selectedRecord.checkOut === '------' 
+//                     ? '00:00 pm (Did not clock out)' 
+//                     : selectedRecord.checkOut}
+//                 </p>
+//               </div>
+//             </div>
+
+//             {/* Right Side - Activity */}
+//             <div>
+//               <h4 className='text-lg font-bold text-gray-900 mb-4'>Activity</h4>
+//               <div className='space-y-4'>
+//                 <div className='flex items-start gap-3 p-3 bg-green-50 rounded-lg border border-green-200'>
+//                   <div className='mt-1'>
+//                     {getStatusIconComponent(selectedRecord.status)}
+//                   </div>
+//                   <div className='flex-1'>
+//                     <div className='flex items-center gap-2 mb-1'>
+//                       <p className='font-semibold text-gray-900'>Clock In</p>
+//                       <span className='px-2 py-0.5 bg-green-600 text-white text-xs rounded-full'>
+//                         General Shift
+//                       </span>
+//                     </div>
+//                     <p className='text-sm text-gray-600'>
+//                       ⏰ {selectedDate}-01-{selectedYear} {selectedRecord.checkIn}
+//                     </p>
+//                     {selectedRecord.status === 'Present' && (
+//                       <div className='flex items-center gap-1 text-sm text-gray-600 mt-1'>
+//                         <FaMapMarkerAlt size={12} />
+//                         <span>Lahore, Punjab</span>
+//                       </div>
+//                     )}
+//                   </div>
+//                 </div>
+
+//                 {selectedRecord.checkOut !== '------' && (
+//                   <div className='flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200'>
+//                     <div className='mt-1'>
+//                       <FaTimesCircle className='text-gray-600' size={18} />
+//                     </div>
+//                     <div className='flex-1'>
+//                       <p className='font-semibold text-gray-900 mb-1'>Clock Out</p>
+//                       <p className='text-sm text-gray-600'>
+//                         ⏰ {selectedDate}-01-{selectedYear} {selectedRecord.checkOut}
+//                       </p>
+//                       <div className='flex items-center gap-1 text-sm text-gray-600 mt-1'>
+//                         <FaMapMarkerAlt size={12} />
+//                         <span>Lahore, Punjab</span>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 )}
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       ) : null}
+
+//       {/* Records Table */}
+//       <div className='bg-white rounded-xl shadow-sm overflow-hidden'>
+//         <div className='p-4 bg-[#365F8D] flex justify-between items-center'>
+//           <h3 className='text-lg font-bold text-white'>Monthly Records</h3>
+//           {totalPages > 1 && (
+//             <div className="flex items-center gap-2">
+//               <button
+//                 onClick={handlePrevPage}
+//                 disabled={currentPage === 1}
+//                 className={`p-2 rounded-lg ${
+//                   currentPage === 1
+//                     ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+//                     : 'bg-white text-[#365F8D] hover:bg-gray-100'
+//                 }`}
+//               >
+//                 <FaChevronLeft size={14} />
+//               </button>
+//               <span className="text-white text-sm">
+//                 {currentPage} / {totalPages}
+//               </span>
+//               <button
+//                 onClick={handleNextPage}
+//                 disabled={currentPage === totalPages}
+//                 className={`p-2 rounded-lg ${
+//                   currentPage === totalPages
+//                     ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+//                     : 'bg-white text-[#365F8D] hover:bg-gray-100'
+//                 }`}
+//               >
+//                 <FaChevronRight size={14} />
+//               </button>
+//             </div>
+//           )}
+//         </div>
+
+//         {/* Desktop Table View */}
+//         <div className='hidden lg:block overflow-x-auto'>
+//           <table className='min-w-full divide-y divide-gray-200'>
+//             <thead className='bg-gray-50'>
+//               <tr>
+//                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+//                   Date
+//                 </th>
+//                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+//                   Clock In
+//                 </th>
+//                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+//                   Clock Out
+//                 </th>
+//                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+//                   Work Hours
+//                 </th>
+//                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+//                   Status
+//                 </th>
+//               </tr>
+//             </thead>
+//             <tbody className='bg-white divide-y divide-gray-200'>
+//               {currentRecords.length > 0 ? (
+//                 currentRecords.map((record) => (
+//                   <tr key={record.id} className='hover:bg-gray-50'>
+//                     <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+//                       {record.date}
+//                     </td>
+//                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>
+//                       {record.checkIn}
+//                     </td>
+//                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>
+//                       {record.checkOut}
+//                     </td>
+//                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>
+//                       {record.workHours}
+//                     </td>
+//                     <td className='px-6 py-4 whitespace-nowrap'>
+//                       <div className='flex items-center gap-2'>
+//                         {getStatusIconComponent(record.status)}
+//                         <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+//                           record.status === 'Present' 
+//                             ? 'bg-green-100 text-green-800' 
+//                             : record.status === 'Leave'
+//                             ? 'bg-yellow-100 text-yellow-800'
+//                             : 'bg-red-100 text-red-800'
+//                         }`}>
+//                           {record.status}
+//                         </span>
+//                       </div>
+//                     </td>
+//                   </tr>
+//                 ))
+//               ) : (
+//                 <tr>
+//                   <td colSpan={5} className='px-6 py-8 text-center text-sm text-gray-500'>
+//                     No records found for this month
+//                   </td>
+//                 </tr>
+//               )}
+//             </tbody>
+//           </table>
+//         </div>
+
+//         {/* Mobile Card View */}
+//         <div className='lg:hidden divide-y divide-gray-200'>
+//           {currentRecords.length > 0 ? (
+//             currentRecords.map(record => (
+//               <div key={record.id} className='p-4'>
+//                 <div className='flex justify-between items-start mb-3'>
+//                   <div>
+//                     <p className='font-semibold text-gray-900'>{record.date}</p>
+//                   </div>
+//                   <div className='flex items-center gap-2'>
+//                     {getStatusIconComponent(record.status)}
+//                     <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
+//                       record.status === 'Present' 
+//                         ? 'bg-green-100 text-green-800' 
+//                         : record.status === 'Leave'
+//                         ? 'bg-yellow-100 text-yellow-800'
+//                         : 'bg-red-100 text-red-800'
+//                     }`}>
+//                       {record.status}
+//                     </span>
+//                   </div>
+//                 </div>
+//                 <div className='grid grid-cols-2 gap-3'>
+//                   <div>
+//                     <p className='text-xs text-gray-500'>Clock In</p>
+//                     <p className='font-medium text-gray-900'>{record.checkIn}</p>
+//                   </div>
+//                   <div>
+//                     <p className='text-xs text-gray-500'>Clock Out</p>
+//                     <p className='font-medium text-gray-900'>{record.checkOut}</p>
+//                   </div>
+//                   <div className='col-span-2'>
+//                     <p className='text-xs text-gray-500'>Work Hours</p>
+//                     <p className='font-medium text-gray-900'>{record.workHours}</p>
+//                   </div>
+//                 </div>
+//               </div>
+//             ))
+//           ) : (
+//             <div className='p-8 text-center text-gray-500'>
+//               No records found for this month
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default UserAttendance;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useEffect, useState } from 'react';
-import { getEmployeeRecords } from '../../data/mockAttendanceData';
-import { FaCheckCircle, FaTimesCircle, FaCalendarAlt, FaMapMarkerAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import EmployeeAttendanceModal from './EmployeeAttendanceModal';
+import { getUniqueEmployees } from '../../data/mockAttendanceData';
+
+// For demo: current logged-in user ka employeeId (real mein auth se aayega)
+const CURRENT_USER_EMPLOYEE_ID = 1; // Ali Hamza (change as needed)
 
 function UserAttendance({ setTitle }) {
-  // In real app, get this from auth context
-  const currentUserId = 1; // Ali Hamza
-  
-  const [records, setRecords] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState(1);
-  const [selectedYear, setSelectedYear] = useState(2026);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  
-  const recordsPerPage = 10;
-
-  const months = [
-    { value: 1, label: 'January', short: 'Jan' },
-    { value: 2, label: 'February', short: 'Feb' },
-    { value: 3, label: 'March', short: 'Mar' },
-    { value: 4, label: 'April', short: 'Apr' },
-    { value: 5, label: 'May', short: 'May' },
-    { value: 6, label: 'June', short: 'Jun' },
-    { value: 7, label: 'July', short: 'Jul' },
-    { value: 8, label: 'August', short: 'Aug' },
-    { value: 9, label: 'September', short: 'Sep' },
-    { value: 10, label: 'October', short: 'Oct' },
-    { value: 11, label: 'November', short: 'Nov' },
-    { value: 12, label: 'December', short: 'Dec' }
-  ];
+  const [user, setUser] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setTitle('My Attendance');
-    const userRecords = getEmployeeRecords(currentUserId);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setRecords(userRecords);
+
+    // Current user ka data nikaalo
+    const allEmployees = getUniqueEmployees();
+    const currentUserData = allEmployees.find(emp => emp.employeeId === CURRENT_USER_EMPLOYEE_ID);
+
+    if (currentUserData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setUser(currentUserData);
+    }
   }, [setTitle]);
 
-  const getDaysInMonth = (year, month) => {
-    return new Date(year, month, 0).getDate();
+  const handleCardClick = () => {
+    if (user) setShowModal(true);
   };
 
-  const getRecordForDate = (date) => {
-    const dateStr = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-    return records.find(r => r.date === dateStr);
+  const getStatusColor = (percentage) => {
+    if (percentage >= 90) return 'bg-green-100 text-green-800 border border-green-300';
+    if (percentage >= 75) return 'bg-yellow-100 text-yellow-800 border border-yellow-300';
+    return 'bg-red-100 text-red-800 border border-red-300';
   };
 
-  const getDayName = (date) => {
-    const dateObj = new Date(selectedYear, selectedMonth - 1, date);
-    return dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+  const getProgressColor = (percentage) => {
+    if (percentage >= 90) return 'bg-green-500 shadow-green-400/40';
+    if (percentage >= 75) return 'bg-yellow-500 shadow-yellow-400/40';
+    return 'bg-red-500 shadow-red-400/40';
   };
 
-  const getStatusIcon = (status) => {
-    if (status === 'Present') return '✓';
-    if (status === 'Leave') return '●';
-    if (status === 'Absent') return '×';
-    return '';
-  };
-
-  const getStatusIconComponent = (status) => {
-    if (status === 'Present') {
-      return <FaCheckCircle className='text-green-600' size={18} />;
-    } else if (status === 'Leave') {
-      return <FaCalendarAlt className='text-yellow-600' size={18} />;
-    } else {
-      return <FaTimesCircle className='text-red-600' size={18} />;
-    }
-  };
-
-  const selectedRecord = selectedDate ? getRecordForDate(selectedDate) : null;
-
-  // Filter records by selected month/year
-  const filteredRecords = records.filter(record => {
-    const recordDate = new Date(record.date);
-    const recordYear = recordDate.getFullYear();
-    const recordMonth = recordDate.getMonth() + 1;
-    
-    return recordYear === selectedYear && recordMonth === selectedMonth;
-  });
-
-  // Pagination for table
-  const indexOfLastRecord = currentPage * recordsPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = filteredRecords.slice(indexOfFirstRecord, indexOfLastRecord);
-  const totalPages = Math.ceil(filteredRecords.length / recordsPerPage);
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  // Calculate work hours in hours and minutes
-  const calculateWorkDuration = (workHours) => {
-    if (!workHours || workHours === '------') return null;
-    const match = workHours.match(/(\d+)h\s*(\d+)?m?/);
-    if (match) {
-      const hours = parseInt(match[1]);
-      const minutes = match[2] ? parseInt(match[2]) : 0;
-      return { hours, minutes, total: hours + minutes / 60 };
-    }
-    return null;
-  };
-
-  const workDuration = selectedRecord ? calculateWorkDuration(selectedRecord.workHours) : null;
+  if (!user) {
+    return (
+      <div className="min-h-screen p-6 flex items-center justify-center bg-gray-50">
+        <div className="text-lg font-medium text-gray-600 animate-pulse">
+          Loading your attendance...
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className='max-h-screen p-4 sm:p-6 lg:p-8'>
-      <h1 className='text-2xl sm:text-3xl font-bold text-[#2C5284] mb-6'>My Attendance</h1>
+    <div className="min-h-screen p-4 sm:p-6 lg:p-8 bg-gray-50">
+      <h1 className="text-2xl sm:text-3xl font-bold text-[#2C5284] mb-8">
+        My Attendance
+      </h1>
 
-      {/* Month/Year Selector */}
-      <div className='bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-          <div>
-            <label className='block text-sm font-medium text-gray-700 mb-2'>Month</label>
-            <select
-              value={selectedMonth}
-              onChange={(e) => {
-                setSelectedMonth(parseInt(e.target.value));
-                setSelectedDate(null);
-                setCurrentPage(1);
-              }}
-              className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-transparent'
-            >
-              {months.map(month => (
-                <option key={month.value} value={month.value}>
-                  {month.label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className='block text-sm font-medium text-gray-700 mb-2'>Year</label>
-            <select
-              value={selectedYear}
-              onChange={(e) => {
-                setSelectedYear(parseInt(e.target.value));
-                setSelectedDate(null);
-                setCurrentPage(1);
-              }}
-              className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-transparent'
-            >
-              <option value={2024}>2024</option>
-              <option value={2025}>2025</option>
-              <option value={2026}>2026</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Legend */}
-      <div className='px-6 py-4 bg-white rounded-xl shadow-sm mb-6'>
-        <div className='flex flex-wrap gap-6 text-sm'>
-          <div className='flex items-center gap-2'>
-            <span className='font-bold'>Note:</span>
-          </div>
-          <div className='flex items-center gap-2'>
-            <span className='text-green-600 font-bold'>✓</span>
-            <span>→ Present</span>
-          </div>
-          <div className='flex items-center gap-2'>
-            <span className='text-yellow-600 font-bold'>●</span>
-            <span>→ Late / Leave</span>
-          </div>
-          <div className='flex items-center gap-2'>
-            <span className='text-red-600 font-bold'>×</span>
-            <span>→ Absent</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Horizontal Calendar */}
-      <div className='bg-white rounded-xl shadow-sm p-6 mb-6 overflow-x-auto'>
-        <h3 className='text-lg font-bold text-[#2C5284] mb-4'>
-          {months.find(m => m.value === selectedMonth)?.label} {selectedYear} - Full Month View
-        </h3>
-        <div className='inline-flex gap-1 min-w-full'>
-          {Array.from({ length: getDaysInMonth(selectedYear, selectedMonth) }, (_, i) => i + 1).map(date => {
-            const record = getRecordForDate(date);
-            const dayName = getDayName(date);
-            const isSelected = selectedDate === date;
-            
-            return (
-              <button
-                key={date}
-                onClick={() => setSelectedDate(date)}
-                className={`flex flex-col items-center px-3 py-2 border rounded-lg transition-all min-w-[60px] ${
-                  isSelected 
-                    ? 'bg-[#365F8D] text-white border-[#365F8D]' 
-                    : 'bg-white hover:bg-gray-50 border-gray-300'
-                }`}
-              >
-                <span className='text-xs font-medium mb-1'>{date}</span>
-                <span className='text-[10px] mb-1 opacity-70'>{dayName}</span>
-                {record ? (
-                  <span className={`text-lg font-bold ${
-                    isSelected 
-                      ? 'text-white' 
-                      : record.status === 'Present' 
-                        ? 'text-green-600' 
-                        : record.status === 'Leave'
-                        ? 'text-yellow-600'
-                        : 'text-red-600'
-                  }`}>
-                    {getStatusIcon(record.status)}
-                  </span>
-                ) : (
-                  <span className='text-gray-300 text-xs'>-</span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Details Section when date selected */}
-      {selectedRecord ? (
-        <div className='bg-white rounded-xl shadow-sm p-6 mb-6'>
-          <h3 className='text-lg font-bold text-[#2C5284] mb-6'>
-            Details for {selectedDate}-{String(selectedMonth).padStart(2, '0')}-{selectedYear}
-          </h3>
-          
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-            {/* Left Side */}
-            <div className='space-y-6'>
+      <div className="max-w-3xl mx-auto space-y-6">
+        {/* Main Attendance Card */}
+        <div
+          onClick={handleCardClick}
+          className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer overflow-hidden border border-gray-100"
+        >
+          <div className="p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-6">
               <div>
-                <p className='text-sm text-gray-600 mb-1'>Clock In</p>
-                <p className='text-2xl font-bold text-gray-900'>{selectedRecord.checkIn}</p>
-              </div>
-
-              {/* Circular Progress */}
-              {workDuration && (
-                <div className='flex justify-center'>
-                  <div className='relative w-48 h-48'>
-                    <svg className='w-full h-full transform -rotate-90'>
-                      <circle
-                        cx='96'
-                        cy='96'
-                        r='88'
-                        stroke='#e5e7eb'
-                        strokeWidth='8'
-                        fill='none'
-                      />
-                      <circle
-                        cx='96'
-                        cy='96'
-                        r='88'
-                        stroke='#365F8D'
-                        strokeWidth='8'
-                        fill='none'
-                        strokeDasharray={`${(workDuration.total / 24) * 552.92} 552.92`}
-                        strokeLinecap='round'
-                      />
-                    </svg>
-                    <div className='absolute inset-0 flex items-center justify-center'>
-                      <span className='text-2xl font-bold text-gray-900'>
-                        {selectedRecord.workHours}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div>
-                <p className='text-sm text-gray-600 mb-1'>Clock Out</p>
-                <p className='text-xl font-bold text-gray-900'>
-                  {selectedRecord.checkOut === '------' 
-                    ? '00:00 pm (Did not clock out)' 
-                    : selectedRecord.checkOut}
+                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
+                  {user.name}
+                </h2>
+                <p className="text-gray-600 mt-2 text-base">
+                  Employee ID: <span className="font-medium">EMP{user.employeeId.toString().padStart(3, '0')}</span>
+                </p>
+                <p className="text-gray-600 mt-1">
+                  Email: <span className="font-medium">{user.email}</span>
                 </p>
               </div>
+
+              <div className="flex flex-col items-center sm:items-end">
+                <span className="text-4xl sm:text-5xl font-extrabold text-[#365F8D]">
+                  {user.attendancePercentage}%
+                </span>
+                <span className="text-sm text-gray-500 mt-1 font-medium">Attendance Rate</span>
+              </div>
             </div>
 
-            {/* Right Side - Activity */}
-            <div>
-              <h4 className='text-lg font-bold text-gray-900 mb-4'>Activity</h4>
-              <div className='space-y-4'>
-                <div className='flex items-start gap-3 p-3 bg-green-50 rounded-lg border border-green-200'>
-                  <div className='mt-1'>
-                    {getStatusIconComponent(selectedRecord.status)}
-                  </div>
-                  <div className='flex-1'>
-                    <div className='flex items-center gap-2 mb-1'>
-                      <p className='font-semibold text-gray-900'>Clock In</p>
-                      <span className='px-2 py-0.5 bg-green-600 text-white text-xs rounded-full'>
-                        General Shift
-                      </span>
-                    </div>
-                    <p className='text-sm text-gray-600'>
-                      ⏰ {selectedDate}-01-{selectedYear} {selectedRecord.checkIn}
-                    </p>
-                    {selectedRecord.status === 'Present' && (
-                      <div className='flex items-center gap-1 text-sm text-gray-600 mt-1'>
-                        <FaMapMarkerAlt size={12} />
-                        <span>Lahore, Punjab</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {selectedRecord.checkOut !== '------' && (
-                  <div className='flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200'>
-                    <div className='mt-1'>
-                      <FaTimesCircle className='text-gray-600' size={18} />
-                    </div>
-                    <div className='flex-1'>
-                      <p className='font-semibold text-gray-900 mb-1'>Clock Out</p>
-                      <p className='text-sm text-gray-600'>
-                        ⏰ {selectedDate}-01-{selectedYear} {selectedRecord.checkOut}
-                      </p>
-                      <div className='flex items-center gap-1 text-sm text-gray-600 mt-1'>
-                        <FaMapMarkerAlt size={12} />
-                        <span>Lahore, Punjab</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
+            {/* Progress Bar */}
+            <div className="mb-6">
+              <div className="flex justify-between text-sm mb-2 font-medium">
+                <span className="text-gray-700">Progress</span>
+                <span className="text-gray-900">{user.attendancePercentage}%</span>
               </div>
+              <div className="h-5 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+                <div
+                  className={`h-full rounded-full transition-all duration-1000 ease-out ${getProgressColor(
+                    user.attendancePercentage
+                  )}`}
+                  style={{ width: `${user.attendancePercentage}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Status Badge */}
+            <div className="flex justify-end">
+              <span
+                className={`px-6 py-2 text-base font-semibold rounded-full ${getStatusColor(
+                  user.attendancePercentage
+                )}`}
+              >
+                {user.attendancePercentage >= 90
+                  ? 'Excellent'
+                  : user.attendancePercentage >= 75
+                  ? 'Good'
+                  : 'Needs Improvement'}
+              </span>
             </div>
           </div>
-        </div>
-      ) : null}
 
-      {/* Records Table */}
-      <div className='bg-white rounded-xl shadow-sm overflow-hidden'>
-        <div className='p-4 bg-[#365F8D] flex justify-between items-center'>
-          <h3 className='text-lg font-bold text-white'>Monthly Records</h3>
-          {totalPages > 1 && (
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handlePrevPage}
-                disabled={currentPage === 1}
-                className={`p-2 rounded-lg ${
-                  currentPage === 1
-                    ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                    : 'bg-white text-[#365F8D] hover:bg-gray-100'
-                }`}
-              >
-                <FaChevronLeft size={14} />
-              </button>
-              <span className="text-white text-sm">
-                {currentPage} / {totalPages}
-              </span>
-              <button
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-                className={`p-2 rounded-lg ${
-                  currentPage === totalPages
-                    ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                    : 'bg-white text-[#365F8D] hover:bg-gray-100'
-                }`}
-              >
-                <FaChevronRight size={14} />
-              </button>
-            </div>
-          )}
+          <div className="bg-gray-50 px-6 py-4 text-center text-sm text-gray-600 border-t border-gray-100">
+            Click to view detailed records and apply for leave
+          </div>
         </div>
 
-        {/* Desktop Table View */}
-        <div className='hidden lg:block overflow-x-auto'>
-          <table className='min-w-full divide-y divide-gray-200'>
-            <thead className='bg-gray-50'>
-              <tr>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                  Date
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                  Clock In
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                  Clock Out
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                  Work Hours
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                  Status
-                </th>
-              </tr>
-            </thead>
-            <tbody className='bg-white divide-y divide-gray-200'>
-              {currentRecords.length > 0 ? (
-                currentRecords.map((record) => (
-                  <tr key={record.id} className='hover:bg-gray-50'>
-                    <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
-                      {record.date}
-                    </td>
-                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>
-                      {record.checkIn}
-                    </td>
-                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>
-                      {record.checkOut}
-                    </td>
-                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>
-                      {record.workHours}
-                    </td>
-                    <td className='px-6 py-4 whitespace-nowrap'>
-                      <div className='flex items-center gap-2'>
-                        {getStatusIconComponent(record.status)}
-                        <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          record.status === 'Present' 
-                            ? 'bg-green-100 text-green-800' 
-                            : record.status === 'Leave'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          {record.status}
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={5} className='px-6 py-8 text-center text-sm text-gray-500'>
-                    No records found for this month
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Mobile Card View */}
-        <div className='lg:hidden divide-y divide-gray-200'>
-          {currentRecords.length > 0 ? (
-            currentRecords.map(record => (
-              <div key={record.id} className='p-4'>
-                <div className='flex justify-between items-start mb-3'>
-                  <div>
-                    <p className='font-semibold text-gray-900'>{record.date}</p>
-                  </div>
-                  <div className='flex items-center gap-2'>
-                    {getStatusIconComponent(record.status)}
-                    <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                      record.status === 'Present' 
-                        ? 'bg-green-100 text-green-800' 
-                        : record.status === 'Leave'
-                        ? 'bg-yellow-100 text-yellow-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {record.status}
-                    </span>
-                  </div>
-                </div>
-                <div className='grid grid-cols-2 gap-3'>
-                  <div>
-                    <p className='text-xs text-gray-500'>Clock In</p>
-                    <p className='font-medium text-gray-900'>{record.checkIn}</p>
-                  </div>
-                  <div>
-                    <p className='text-xs text-gray-500'>Clock Out</p>
-                    <p className='font-medium text-gray-900'>{record.checkOut}</p>
-                  </div>
-                  <div className='col-span-2'>
-                    <p className='text-xs text-gray-500'>Work Hours</p>
-                    <p className='font-medium text-gray-900'>{record.workHours}</p>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className='p-8 text-center text-gray-500'>
-              No records found for this month
-            </div>
-          )}
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 text-center">
+            <p className="text-sm text-gray-600">Total Days</p>
+            <p className="text-2xl font-bold text-gray-900 mt-1">5</p> {/* Mock – real mein calculate kar sakte ho */}
+          </div>
+          <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 text-center">
+            <p className="text-sm text-gray-600">Present</p>
+            <p className="text-2xl font-bold text-green-700 mt-1">4</p>
+          </div>
+          <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 text-center">
+            <p className="text-sm text-gray-600">Absent/Leave</p>
+            <p className="text-2xl font-bold text-red-600 mt-1">1</p>
+          </div>
         </div>
       </div>
+
+      {showModal && user && (
+        <EmployeeAttendanceModal
+          employee={user}
+          onClose={() => setShowModal(false)}
+          isAdmin={false}
+        />
+      )}
     </div>
   );
 }
 
 export default UserAttendance;
-

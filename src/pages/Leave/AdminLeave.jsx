@@ -22,7 +22,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { getAllLeaves } from '../../data/mockLeaveData';
-// import './Leave.css';
+import './Leave.css';
 
 const AdminLeave = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
