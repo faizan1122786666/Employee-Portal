@@ -9,6 +9,6 @@
 
 import AdminAttendance from './AdminAttendance'
 import UserAttendance from './UserAttendance'
-import EmployeeAttendanceModal from './EmployeeAttendanceModal'
+// import EmployeeAttendanceModal from './EmployeeAttendanceModal'
 
-export { AdminAttendance, UserAttendance, EmployeeAttendanceModal }
+export { AdminAttendance, UserAttendance}
