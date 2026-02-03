@@ -1611,292 +1611,896 @@
 
 
 
-import React, { useEffect, useState } from 'react';
-import {
-  FaCheckCircle,
-  FaTimesCircle,
-  FaCalendarAlt,
-  FaMapMarkerAlt,
-  FaChevronLeft,
-  FaChevronRight,
-} from 'react-icons/fa';
-import { getEmployeeRecords } from '../../data/mockAttendanceData'; // your helper function
+// import React, { useEffect, useState } from 'react';
+// import {
+//   FaCheckCircle,
+//   FaTimesCircle,
+//   FaCalendarAlt,
+//   FaMapMarkerAlt,
+//   FaChevronLeft,
+//   FaChevronRight,
+// } from 'react-icons/fa';
+// import { getEmployeeRecords } from '../../data/mockAttendanceData'; // your helper function
 
-function UserAttendance({ setTitle }) {
-  // Replace with real user ID from AuthContext later
-  const currentUserEmployeeId = 1; // Ali Hamza (employeeId: 1)
+// function UserAttendance({ setTitle }) {
+//   // Replace with real user ID from AuthContext later
+//   const currentUserEmployeeId = 1; // Ali Hamza (employeeId: 1)
 
-  const [records, setRecords] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+//   const [records, setRecords] = useState([]);
+//   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+//   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+//   const [selectedDate, setSelectedDate] = useState(null);
+//   const [currentPage, setCurrentPage] = useState(1);
 
-  const recordsPerPage = 10;
+//   const recordsPerPage = 10;
 
-  const months = [
-    { value: 1, label: 'January', short: 'Jan' },
-    { value: 2, label: 'February', short: 'Feb' },
-    { value: 3, label: 'March', short: 'Mar' },
-    { value: 4, label: 'April', short: 'Apr' },
-    { value: 5, label: 'May', short: 'May' },
-    { value: 6, label: 'June', short: 'Jun' },
-    { value: 7, label: 'July', short: 'Jul' },
-    { value: 8, label: 'August', short: 'Aug' },
-    { value: 9, label: 'September', short: 'Sep' },
-    { value: 10, label: 'October', short: 'Oct' },
-    { value: 11, label: 'November', short: 'Nov' },
-    { value: 12, label: 'December', short: 'Dec' },
-  ];
+//   const months = [
+//     { value: 1, label: 'January', short: 'Jan' },
+//     { value: 2, label: 'February', short: 'Feb' },
+//     { value: 3, label: 'March', short: 'Mar' },
+//     { value: 4, label: 'April', short: 'Apr' },
+//     { value: 5, label: 'May', short: 'May' },
+//     { value: 6, label: 'June', short: 'Jun' },
+//     { value: 7, label: 'July', short: 'Jul' },
+//     { value: 8, label: 'August', short: 'Aug' },
+//     { value: 9, label: 'September', short: 'Sep' },
+//     { value: 10, label: 'October', short: 'Oct' },
+//     { value: 11, label: 'November', short: 'Nov' },
+//     { value: 12, label: 'December', short: 'Dec' },
+//   ];
 
-  useEffect(() => {
-    setTitle('My Attendance');
-    // Fetch only current user's records
-    const userRecords = getEmployeeRecords(currentUserEmployeeId);
-    setRecords(userRecords || []);
-  }, [setTitle]);
+//   useEffect(() => {
+//     setTitle('My Attendance');
+//     // Fetch only current user's records
+//     const userRecords = getEmployeeRecords(currentUserEmployeeId);
+//     setRecords(userRecords || []);
+//   }, [setTitle]);
 
-  // Days in the selected month
-  const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+//   // Days in the selected month
+//   const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
 
-  // Get record for a specific day in the selected month/year
-  const getRecordForDate = (day) => {
-    const dateStr = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    return records.find(r => r.date === dateStr);
-  };
+//   // Get record for a specific day in the selected month/year
+//   const getRecordForDate = (day) => {
+//     const dateStr = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+//     return records.find(r => r.date === dateStr);
+//   };
 
-  const getStatusIcon = (status) => {
-    switch (status?.toLowerCase()) {
-      case 'present':
-        return <FaCheckCircle className="text-green-600" size={20} />;
-      case 'leave':
-        return <FaCalendarAlt className="text-amber-600" size={20} />;
-      case 'absent':
-        return <FaTimesCircle className="text-red-600" size={20} />;
-      default:
-        return <span className="text-gray-400 text-lg">-</span>;
-    }
-  };
+//   const getStatusIcon = (status) => {
+//     switch (status?.toLowerCase()) {
+//       case 'present':
+//         return <FaCheckCircle className="text-green-600" size={20} />;
+//       case 'leave':
+//         return <FaCalendarAlt className="text-amber-600" size={20} />;
+//       case 'absent':
+//         return <FaTimesCircle className="text-red-600" size={20} />;
+//       default:
+//         return <span className="text-gray-400 text-lg">-</span>;
+//     }
+//   };
 
-  // Selected day's record
-  const selectedRecord = selectedDate ? getRecordForDate(selectedDate) : null;
+//   // Selected day's record
+//   const selectedRecord = selectedDate ? getRecordForDate(selectedDate) : null;
 
-  // All records for the selected month/year (for the table)
-  const filteredRecords = records.filter(r => {
-    const d = new Date(r.date);
-    return d.getFullYear() === selectedYear && (d.getMonth() + 1) === selectedMonth;
-  });
+//   // All records for the selected month/year (for the table)
+//   const filteredRecords = records.filter(r => {
+//     const d = new Date(r.date);
+//     return d.getFullYear() === selectedYear && (d.getMonth() + 1) === selectedMonth;
+//   });
 
-  // Pagination
-  const totalPages = Math.ceil(filteredRecords.length / recordsPerPage);
-  const currentRecords = filteredRecords.slice(
-    (currentPage - 1) * recordsPerPage,
-    currentPage * recordsPerPage
-  );
+//   // Pagination
+//   const totalPages = Math.ceil(filteredRecords.length / recordsPerPage);
+//   const currentRecords = filteredRecords.slice(
+//     (currentPage - 1) * recordsPerPage,
+//     currentPage * recordsPerPage
+//   );
 
-  return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
-      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2C5284] mb-6">
-        My Attendance
-      </h1>
+//   return (
+//     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
+//       <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2C5284] mb-6">
+//         My Attendance
+//       </h1>
 
-      {/* Month & Year Selector */}
-      <div className="bg-white rounded-xl shadow p-5 sm:p-6 mb-6 grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Month</label>
-          <select
-            value={selectedMonth}
-            onChange={(e) => {
-              setSelectedMonth(Number(e.target.value));
-              setSelectedDate(null);
-              setCurrentPage(1);
-            }}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-[#365F8D] text-sm sm:text-base"
-          >
-            {months.map(m => (
-              <option key={m.value} value={m.value}>{m.label}</option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Year</label>
-          <select
-            value={selectedYear}
-            onChange={(e) => {
-              setSelectedYear(Number(e.target.value));
-              setSelectedDate(null);
-              setCurrentPage(1);
-            }}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-[#365F8D] text-sm sm:text-base"
-          >
-            {[2024, 2025, 2026, 2027].map(y => (
-              <option key={y} value={y}>{y}</option>
-            ))}
-          </select>
-        </div>
-      </div>
+//       {/* Month & Year Selector */}
+//       <div className="bg-white rounded-xl shadow p-5 sm:p-6 mb-6 grid grid-cols-1 sm:grid-cols-2 gap-5">
+//         <div>
+//           <label className="block text-sm font-medium text-gray-700 mb-2">Month</label>
+//           <select
+//             value={selectedMonth}
+//             onChange={(e) => {
+//               setSelectedMonth(Number(e.target.value));
+//               setSelectedDate(null);
+//               setCurrentPage(1);
+//             }}
+//             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-[#365F8D] text-sm sm:text-base"
+//           >
+//             {months.map(m => (
+//               <option key={m.value} value={m.value}>{m.label}</option>
+//             ))}
+//           </select>
+//         </div>
+//         <div>
+//           <label className="block text-sm font-medium text-gray-700 mb-2">Year</label>
+//           <select
+//             value={selectedYear}
+//             onChange={(e) => {
+//               setSelectedYear(Number(e.target.value));
+//               setSelectedDate(null);
+//               setCurrentPage(1);
+//             }}
+//             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#365F8D] focus:border-[#365F8D] text-sm sm:text-base"
+//           >
+//             {[2024, 2025, 2026, 2027].map(y => (
+//               <option key={y} value={y}>{y}</option>
+//             ))}
+//           </select>
+//         </div>
+//       </div>
 
-      {/* Legend */}
-      <div className="bg-white rounded-xl shadow p-4 sm:p-5 mb-6">
-        <div className="flex flex-wrap gap-6 text-sm font-medium">
-          <div className="flex items-center gap-2">
-            <FaCheckCircle className="text-green-600" size={18} /> Present
-          </div>
-          <div className="flex items-center gap-2">
-            <FaCalendarAlt className="text-amber-600" size={18} /> Leave
-          </div>
-          <div className="flex items-center gap-2">
-            <FaTimesCircle className="text-red-600" size={18} /> Absent
-          </div>
-        </div>
-      </div>
+//       {/* Legend */}
+//       <div className="bg-white rounded-xl shadow p-4 sm:p-5 mb-6">
+//         <div className="flex flex-wrap gap-6 text-sm font-medium">
+//           <div className="flex items-center gap-2">
+//             <FaCheckCircle className="text-green-600" size={18} /> Present
+//           </div>
+//           <div className="flex items-center gap-2">
+//             <FaCalendarAlt className="text-amber-600" size={18} /> Leave
+//           </div>
+//           <div className="flex items-center gap-2">
+//             <FaTimesCircle className="text-red-600" size={18} /> Absent
+//           </div>
+//         </div>
+//       </div>
 
-      {/* Horizontal Scrollable Calendar */}
-      <div className="bg-white rounded-xl shadow p-4 sm:p-6 mb-8 overflow-x-auto">
-        <h2 className="text-lg sm:text-xl font-bold text-[#2C5284] mb-4">
-          {months.find(m => m.value === selectedMonth)?.label} {selectedYear}
-        </h2>
+//       {/* Horizontal Scrollable Calendar */}
+//       <div className="bg-white rounded-xl shadow p-4 sm:p-6 mb-8 overflow-x-auto">
+//         <h2 className="text-lg sm:text-xl font-bold text-[#2C5284] mb-4">
+//           {months.find(m => m.value === selectedMonth)?.label} {selectedYear}
+//         </h2>
 
-        <div className="flex gap-2 pb-4 min-w-max">
-          {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(day => {
-            const record = getRecordForDate(day);
-            const isSelected = selectedDate === day;
+//         <div className="flex gap-2 pb-4 min-w-max">
+//           {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(day => {
+//             const record = getRecordForDate(day);
+//             const isSelected = selectedDate === day;
 
-            return (
-              <button
-                key={day}
-                onClick={() => setSelectedDate(day)}
-                className={`min-w-[64px] sm:min-w-[70px] flex flex-col items-center p-2 sm:p-3 border rounded-lg transition-all ${
-                  isSelected
-                    ? 'bg-[#365F8D] text-white border-[#365F8D] shadow-md'
-                    : 'border-gray-200 hover:bg-gray-50'
-                }`}
-              >
-                <span className="text-sm font-medium">{day}</span>
-                <span className="text-[10px] sm:text-xs opacity-70 mb-1">
-                  {new Date(selectedYear, selectedMonth - 1, day).toLocaleString('en-US', { weekday: 'short' })}
-                </span>
-                <div className="mt-1">{getStatusIcon(record?.status)}</div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
+//             return (
+//               <button
+//                 key={day}
+//                 onClick={() => setSelectedDate(day)}
+//                 className={`min-w-[64px] sm:min-w-[70px] flex flex-col items-center p-2 sm:p-3 border rounded-lg transition-all ${
+//                   isSelected
+//                     ? 'bg-[#365F8D] text-white border-[#365F8D] shadow-md'
+//                     : 'border-gray-200 hover:bg-gray-50'
+//                 }`}
+//               >
+//                 <span className="text-sm font-medium">{day}</span>
+//                 <span className="text-[10px] sm:text-xs opacity-70 mb-1">
+//                   {new Date(selectedYear, selectedMonth - 1, day).toLocaleString('en-US', { weekday: 'short' })}
+//                 </span>
+//                 <div className="mt-1">{getStatusIcon(record?.status)}</div>
+//               </button>
+//             );
+//           })}
+//         </div>
+//       </div>
 
-      {/* Selected Date Details */}
-      {selectedRecord && (
-        <div className="bg-white rounded-xl shadow p-5 sm:p-6 mb-8">
-          <h3 className="text-lg sm:text-xl font-bold text-[#2C5284] mb-4">
-            Details — {selectedDate} {months.find(m => m.value === selectedMonth)?.short} {selectedYear}
-          </h3>
+//       {/* Selected Date Details */}
+//       {selectedRecord && (
+//         <div className="bg-white rounded-xl shadow p-5 sm:p-6 mb-8">
+//           <h3 className="text-lg sm:text-xl font-bold text-[#2C5284] mb-4">
+//             Details — {selectedDate} {months.find(m => m.value === selectedMonth)?.short} {selectedYear}
+//           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm text-gray-600">Clock In</p>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900">{selectedRecord.checkIn || '—'}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Clock Out</p>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900">
-                  {selectedRecord.checkOut || 'Not Clocked Out'}
-                </p>
-              </div>
-            </div>
+//           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+//             <div className="space-y-4">
+//               <div>
+//                 <p className="text-sm text-gray-600">Clock In</p>
+//                 <p className="text-xl sm:text-2xl font-bold text-gray-900">{selectedRecord.checkIn || '—'}</p>
+//               </div>
+//               <div>
+//                 <p className="text-sm text-gray-600">Clock Out</p>
+//                 <p className="text-xl sm:text-2xl font-bold text-gray-900">
+//                   {selectedRecord.checkOut || 'Not Clocked Out'}
+//                 </p>
+//               </div>
+//             </div>
 
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <FaMapMarkerAlt className="text-gray-500" />
-                <span>Lahore, Punjab</span>
-              </div>
+//             <div className="space-y-4">
+//               <div className="flex items-center gap-2 text-sm text-gray-600">
+//                 <FaMapMarkerAlt className="text-gray-500" />
+//                 <span>Lahore, Punjab</span>
+//               </div>
 
-              {selectedRecord.workHours && selectedRecord.workHours !== '------' && (
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-sm text-gray-600 mb-1">Work Hours</p>
-                  <p className="text-xl font-bold text-gray-900">{selectedRecord.workHours}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+//               {selectedRecord.workHours && selectedRecord.workHours !== '------' && (
+//                 <div className="bg-gray-50 p-4 rounded-lg">
+//                   <p className="text-sm text-gray-600 mb-1">Work Hours</p>
+//                   <p className="text-xl font-bold text-gray-900">{selectedRecord.workHours}</p>
+//                 </div>
+//               )}
+//             </div>
+//           </div>
+//         </div>
+//       )}
 
-      {/* Monthly Records Table */}
-      <div className="bg-white rounded-xl shadow overflow-hidden">
-        <div className="bg-[#365F8D] p-4 sm:p-5 text-white flex flex-col sm:flex-row justify-between items-center gap-4">
-          <h3 className="text-lg sm:text-xl font-bold">Monthly Records</h3>
+//       {/* Monthly Records Table */}
+//       <div className="bg-white rounded-xl shadow overflow-hidden">
+//         <div className="bg-[#365F8D] p-4 sm:p-5 text-white flex flex-col sm:flex-row justify-between items-center gap-4">
+//           <h3 className="text-lg sm:text-xl font-bold">Monthly Records</h3>
 
-          {totalPages > 1 && (
-            <div className="flex items-center gap-3">
-              <button
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                className={`p-2 rounded-lg ${currentPage === 1 ? 'bg-gray-500 cursor-not-allowed' : 'bg-white text-[#365F8D] hover:bg-gray-100'}`}
-              >
-                <FaChevronLeft size={14} />
-              </button>
-              <span className="font-medium">
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                disabled={currentPage === totalPages}
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                className={`p-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-500 cursor-not-allowed' : 'bg-white text-[#365F8D] hover:bg-gray-100'}`}
-              >
-                <FaChevronRight size={14} />
-              </button>
-            </div>
-          )}
-        </div>
+//           {totalPages > 1 && (
+//             <div className="flex items-center gap-3">
+//               <button
+//                 disabled={currentPage === 1}
+//                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+//                 className={`p-2 rounded-lg ${currentPage === 1 ? 'bg-gray-500 cursor-not-allowed' : 'bg-white text-[#365F8D] hover:bg-gray-100'}`}
+//               >
+//                 <FaChevronLeft size={14} />
+//               </button>
+//               <span className="font-medium">
+//                 Page {currentPage} of {totalPages}
+//               </span>
+//               <button
+//                 disabled={currentPage === totalPages}
+//                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+//                 className={`p-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-500 cursor-not-allowed' : 'bg-white text-[#365F8D] hover:bg-gray-100'}`}
+//               >
+//                 <FaChevronRight size={14} />
+//               </button>
+//             </div>
+//           )}
+//         </div>
 
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clock In</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clock Out</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hours</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {currentRecords.length > 0 ? (
-                currentRecords.map(record => (
-                  <tr key={record.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{record.date}</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{record.checkIn || '—'}</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{record.checkOut || '—'}</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{record.workHours || '—'}</td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-2">
-                        {getStatusIcon(record.status)}
-                        <span
-                          className={`px-3 py-1 inline-flex text-xs font-semibold rounded-full ${
-                            record.status === 'Present' ? 'bg-green-100 text-green-800' :
-                            record.status === 'Leave' ? 'bg-amber-100 text-amber-800' :
-                            'bg-red-100 text-red-800'
-                          }`}
-                        >
-                          {record.status}
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={5} className="px-6 py-10 text-center text-gray-500">
-                    No attendance records found for {months.find(m => m.value === selectedMonth)?.label} {selectedYear}
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
-}
+//         <div className="overflow-x-auto">
+//           <table className="min-w-full divide-y divide-gray-200">
+//             <thead className="bg-gray-50">
+//               <tr>
+//                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+//                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clock In</th>
+//                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clock Out</th>
+//                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hours</th>
+//                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+//               </tr>
+//             </thead>
+//             <tbody className="divide-y divide-gray-200">
+//               {currentRecords.length > 0 ? (
+//                 currentRecords.map(record => (
+//                   <tr key={record.id} className="hover:bg-gray-50 transition-colors">
+//                     <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{record.date}</td>
+//                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{record.checkIn || '—'}</td>
+//                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{record.checkOut || '—'}</td>
+//                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{record.workHours || '—'}</td>
+//                     <td className="px-4 py-4 whitespace-nowrap">
+//                       <div className="flex items-center gap-2">
+//                         {getStatusIcon(record.status)}
+//                         <span
+//                           className={`px-3 py-1 inline-flex text-xs font-semibold rounded-full ${
+//                             record.status === 'Present' ? 'bg-green-100 text-green-800' :
+//                             record.status === 'Leave' ? 'bg-amber-100 text-amber-800' :
+//                             'bg-red-100 text-red-800'
+//                           }`}
+//                         >
+//                           {record.status}
+//                         </span>
+//                       </div>
+//                     </td>
+//                   </tr>
+//                 ))
+//               ) : (
+//                 <tr>
+//                   <td colSpan={5} className="px-6 py-10 text-center text-gray-500">
+//                     No attendance records found for {months.find(m => m.value === selectedMonth)?.label} {selectedYear}
+//                   </td>
+//                 </tr>
+//               )}
+//             </tbody>
+//           </table>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
-export default UserAttendance;
+// export default UserAttendance;
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useState } from 'react';
+// import {
+//   FaCheckCircle,
+//   FaTimesCircle,
+//   FaCalendarAlt,
+//   FaMapMarkerAlt,
+//   FaChevronLeft,
+//   FaChevronRight,
+//   FaClock,
+//   FaBusinessTime,
+//   FaCalendarCheck,
+// } from 'react-icons/fa';
+// import { getEmployeeRecords } from '../../data/mockAttendanceData';
+
+// function UserAttendance({ setTitle }) {
+//   // Replace with real user ID from AuthContext later
+//   const currentUserEmployeeId = 1; // Ali Hamza (employeeId: 1)
+
+//   const [records, setRecords] = useState([]);
+//   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+//   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+//   const [selectedDate, setSelectedDate] = useState(null);
+//   const [currentPage, setCurrentPage] = useState(1);
+
+//   const recordsPerPage = 10;
+
+//   const months = [
+//     { value: 1, label: 'January', short: 'Jan' },
+//     { value: 2, label: 'February', short: 'Feb' },
+//     { value: 3, label: 'March', short: 'Mar' },
+//     { value: 4, label: 'April', short: 'Apr' },
+//     { value: 5, label: 'May', short: 'May' },
+//     { value: 6, label: 'June', short: 'Jun' },
+//     { value: 7, label: 'July', short: 'Jul' },
+//     { value: 8, label: 'August', short: 'Aug' },
+//     { value: 9, label: 'September', short: 'Sep' },
+//     { value: 10, label: 'October', short: 'Oct' },
+//     { value: 11, label: 'November', short: 'Nov' },
+//     { value: 12, label: 'December', short: 'Dec' },
+//   ];
+
+//   useEffect(() => {
+//     setTitle('My Attendance');
+//     const userRecords = getEmployeeRecords(currentUserEmployeeId);
+//     setRecords(userRecords || []);
+//   }, [setTitle, currentUserEmployeeId]);
+
+//   // Days in the selected month
+//   const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+
+//   // Get record for a specific day in the selected month/year
+//   const getRecordForDate = (day) => {
+//     const dateStr = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+//     return records.find(r => r.date === dateStr);
+//   };
+
+//   const getStatusIcon = (status) => {
+//     switch (status?.toLowerCase()) {
+//       case 'present':
+//         return <FaCheckCircle className="text-green-600" size={16} />;
+//       case 'leave':
+//         return <FaCalendarAlt className="text-amber-600" size={16} />;
+//       case 'absent':
+//         return <FaTimesCircle className="text-red-600" size={16} />;
+//       default:
+//         return <span className="text-gray-400 text-sm">-</span>;
+//     }
+//   };
+
+//   // Calculate statistics
+//   const filteredRecords = records.filter(r => {
+//     const d = new Date(r.date);
+//     return d.getFullYear() === selectedYear && (d.getMonth() + 1) === selectedMonth;
+//   });
+
+//   const stats = {
+//     present: filteredRecords.filter(r => r.status === 'Present').length,
+//     absent: filteredRecords.filter(r => r.status === 'Absent').length,
+//     leave: filteredRecords.filter(r => r.status === 'Leave').length,
+//     total: filteredRecords.length,
+//   };
+
+//   // Selected day's record
+//   const selectedRecord = selectedDate ? getRecordForDate(selectedDate) : null;
+
+//   // Pagination
+//   const totalPages = Math.ceil(filteredRecords.length / recordsPerPage);
+//   const currentRecords = filteredRecords.slice(
+//     (currentPage - 1) * recordsPerPage,
+//     currentPage * recordsPerPage
+//   );
+
+//   return (
+//     <div className="w-full min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
+//       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8">
+//         {/* Header Section */}
+//         <div className="mb-6 sm:mb-8">
+//           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2C5284] mb-2">
+//             My Attendance
+//           </h1>
+//           <p className="text-sm sm:text-base text-gray-600">
+//             Track your attendance records and work hours
+//           </p>
+//         </div>
+
+//         {/* Statistics Cards */}
+//         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8">
+//           <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-lg p-4 sm:p-5 lg:p-6 text-white transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+//             <div className="flex items-center justify-between mb-2 sm:mb-3">
+//               <FaCheckCircle className="text-green-100" size={20} />
+//               <span className="text-xs sm:text-sm font-medium opacity-90">Present</span>
+//             </div>
+//             <p className="text-2xl sm:text-3xl lg:text-4xl font-bold">{stats.present}</p>
+//             <p className="text-xs sm:text-sm opacity-80 mt-1">days</p>
+//           </div>
+
+//           <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl shadow-lg p-4 sm:p-5 lg:p-6 text-white transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+//             <div className="flex items-center justify-between mb-2 sm:mb-3">
+//               <FaTimesCircle className="text-red-100" size={20} />
+//               <span className="text-xs sm:text-sm font-medium opacity-90">Absent</span>
+//             </div>
+//             <p className="text-2xl sm:text-3xl lg:text-4xl font-bold">{stats.absent}</p>
+//             <p className="text-xs sm:text-sm opacity-80 mt-1">days</p>
+//           </div>
+
+//           <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl shadow-lg p-4 sm:p-5 lg:p-6 text-white transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+//             <div className="flex items-center justify-between mb-2 sm:mb-3">
+//               <FaCalendarAlt className="text-amber-100" size={20} />
+//               <span className="text-xs sm:text-sm font-medium opacity-90">Leave</span>
+//             </div>
+//             <p className="text-2xl sm:text-3xl lg:text-4xl font-bold">{stats.leave}</p>
+//             <p className="text-xs sm:text-sm opacity-80 mt-1">days</p>
+//           </div>
+
+//           <div className="bg-gradient-to-br from-[#365F8D] to-[#2C5284] rounded-2xl shadow-lg p-4 sm:p-5 lg:p-6 text-white transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+//             <div className="flex items-center justify-between mb-2 sm:mb-3">
+//               <FaCalendarCheck className="text-blue-100" size={20} />
+//               <span className="text-xs sm:text-sm font-medium opacity-90">Total</span>
+//             </div>
+//             <p className="text-2xl sm:text-3xl lg:text-4xl font-bold">{stats.total}</p>
+//             <p className="text-xs sm:text-sm opacity-80 mt-1">records</p>
+//           </div>
+//         </div>
+
+//         {/* Month & Year Selector */}
+//         <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-gray-100">
+//           <h2 className="text-base sm:text-lg lg:text-xl font-bold text-[#2C5284] mb-4 sm:mb-6 flex items-center gap-2">
+//             <FaCalendarAlt className="text-[#365F8D]" />
+//             Select Period
+//           </h2>
+//           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+//             <div>
+//               <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3">
+//                 Month
+//               </label>
+//               <select
+//                 value={selectedMonth}
+//                 onChange={(e) => {
+//                   setSelectedMonth(Number(e.target.value));
+//                   setSelectedDate(null);
+//                   setCurrentPage(1);
+//                 }}
+//                 className="w-full px-4 py-3 sm:py-3.5 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#365F8D] focus:border-[#365F8D] text-sm sm:text-base font-medium text-gray-900 bg-gray-50 transition-all duration-200 hover:border-gray-300"
+//               >
+//                 {months.map(m => (
+//                   <option key={m.value} value={m.value}>{m.label}</option>
+//                 ))}
+//               </select>
+//             </div>
+//             <div>
+//               <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3">
+//                 Year
+//               </label>
+//               <select
+//                 value={selectedYear}
+//                 onChange={(e) => {
+//                   setSelectedYear(Number(e.target.value));
+//                   setSelectedDate(null);
+//                   setCurrentPage(1);
+//                 }}
+//                 className="w-full px-4 py-3 sm:py-3.5 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#365F8D] focus:border-[#365F8D] text-sm sm:text-base font-medium text-gray-900 bg-gray-50 transition-all duration-200 hover:border-gray-300"
+//               >
+//                 {[2024, 2025, 2026, 2027].map(y => (
+//                   <option key={y} value={y}>{y}</option>
+//                 ))}
+//               </select>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Calendar View */}
+//         <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-gray-100">
+//           <div className="flex items-center justify-between mb-4 sm:mb-6">
+//             <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#2C5284]">
+//               {months.find(m => m.value === selectedMonth)?.label} {selectedYear}
+//             </h2>
+//             <div className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-[#365F8D] to-[#2C5284] rounded-full">
+//               <FaCalendarAlt className="text-white" size={14} />
+//               <span className="text-xs sm:text-sm font-semibold text-white">
+//                 {daysInMonth} Days
+//               </span>
+//             </div>
+//           </div>
+
+//           {/* Legend */}
+//           <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-gradient-to-r from-gray-50 to-blue-50/50 rounded-xl border border-gray-200">
+//             <div className="flex flex-wrap gap-3 sm:gap-4 lg:gap-6 text-xs sm:text-sm font-medium">
+//               <div className="flex items-center gap-2">
+//                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
+//                 <span className="text-gray-700">Present</span>
+//               </div>
+//               <div className="flex items-center gap-2">
+//                 <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+//                 <span className="text-gray-700">Leave</span>
+//               </div>
+//               <div className="flex items-center gap-2">
+//                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
+//                 <span className="text-gray-700">Absent</span>
+//               </div>
+//               <div className="flex items-center gap-2">
+//                 <div className="w-3 h-3 rounded-full bg-gray-300 border-2 border-gray-400"></div>
+//                 <span className="text-gray-700">No Record</span>
+//               </div>
+//             </div>
+//           </div>
+
+//           {/* Horizontal Scrollable Calendar */}
+//           <div className="overflow-x-auto pb-2 -mx-2 px-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+//             <div className="flex gap-2 sm:gap-3 min-w-max">
+//               {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(day => {
+//                 const record = getRecordForDate(day);
+//                 const isSelected = selectedDate === day;
+//                 const dayOfWeek = new Date(selectedYear, selectedMonth - 1, day).getDay();
+//                 const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+//                 return (
+//                   <button
+//                     key={day}
+//                     onClick={() => setSelectedDate(day)}
+//                     className={`min-w-[60px] sm:min-w-[70px] lg:min-w-[80px] flex flex-col items-center p-2.5 sm:p-3 lg:p-4 border-2 rounded-xl transition-all duration-300 flex-shrink-0 ${
+//                       isSelected
+//                         ? 'bg-gradient-to-br from-[#365F8D] to-[#2C5284] text-white border-[#365F8D] shadow-xl scale-105 transform'
+//                         : isWeekend
+//                         ? 'border-gray-200 bg-gray-50 hover:bg-gray-100 hover:border-gray-300'
+//                         : 'border-gray-200 bg-white hover:bg-blue-50 hover:border-blue-300 hover:shadow-md'
+//                     }`}
+//                   >
+//                     <span className={`text-base sm:text-lg font-bold mb-1 ${isSelected ? 'text-white' : 'text-gray-900'}`}>
+//                       {day}
+//                     </span>
+//                     <span className={`text-[10px] sm:text-xs mb-2 ${isSelected ? 'text-blue-100' : 'text-gray-500'}`}>
+//                       {new Date(selectedYear, selectedMonth - 1, day).toLocaleString('en-US', { weekday: 'short' })}
+//                     </span>
+//                     <div className="mt-1 flex items-center justify-center">
+//                       {record ? (
+//                         <div className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full ${
+//                           record.status === 'Present' ? 'bg-green-400' :
+//                           record.status === 'Leave' ? 'bg-amber-400' :
+//                           'bg-red-400'
+//                         } ${isSelected ? 'ring-2 ring-white' : ''}`}></div>
+//                       ) : (
+//                         <div className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full border-2 ${
+//                           isSelected ? 'border-white' : 'border-gray-400'
+//                         } bg-transparent`}></div>
+//                       )}
+//                     </div>
+//                   </button>
+//                 );
+//               })}
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Selected Date Details */}
+//         {selectedRecord && (
+//           <div className="bg-gradient-to-br from-white to-blue-50/30 rounded-2xl shadow-lg p-5 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-blue-100 transform transition-all duration-300 animate-fadeIn">
+//             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-5 sm:mb-6 gap-3">
+//               <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#2C5284] flex items-center gap-2 sm:gap-3">
+//                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#365F8D] to-[#2C5284] flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-md">
+//                   {selectedDate}
+//                 </div>
+//                 <span className="text-base sm:text-lg lg:text-xl">
+//                   {new Date(selectedYear, selectedMonth - 1, selectedDate).toLocaleDateString('en-US', { 
+//                     weekday: 'long', 
+//                     month: 'long', 
+//                     day: 'numeric', 
+//                     year: 'numeric' 
+//                   })}
+//                 </span>
+//               </h3>
+//               <div className="flex items-center gap-2">
+//                 {getStatusIcon(selectedRecord.status)}
+//                 <span
+//                   className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-full shadow-sm ${
+//                     selectedRecord.status === 'Present' ? 'bg-green-100 text-green-800 border border-green-300' :
+//                     selectedRecord.status === 'Leave' ? 'bg-amber-100 text-amber-800 border border-amber-300' :
+//                     'bg-red-100 text-red-800 border border-red-300'
+//                   }`}
+//                 >
+//                   {selectedRecord.status}
+//                 </span>
+//               </div>
+//             </div>
+
+//             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+//               <div className="bg-white rounded-xl p-4 sm:p-5 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+//                 <div className="flex items-center gap-3 mb-3">
+//                   <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+//                     <FaClock className="text-green-600" size={18} />
+//                   </div>
+//                   <p className="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wide">Clock In</p>
+//                 </div>
+//                 <p className="text-2xl sm:text-3xl font-bold text-gray-900">
+//                   {selectedRecord.checkIn || '—'}
+//                 </p>
+//               </div>
+
+//               <div className="bg-white rounded-xl p-4 sm:p-5 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+//                 <div className="flex items-center gap-3 mb-3">
+//                   <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+//                     <FaClock className="text-red-600" size={18} />
+//                   </div>
+//                   <p className="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wide">Clock Out</p>
+//                 </div>
+//                 <p className="text-2xl sm:text-3xl font-bold text-gray-900">
+//                   {selectedRecord.checkOut === '------' ? 'Pending' : selectedRecord.checkOut || '—'}
+//                 </p>
+//               </div>
+
+//               <div className="bg-white rounded-xl p-4 sm:p-5 shadow-md border border-gray-100 hover:shadow-lg transition-shadow sm:col-span-2 lg:col-span-1">
+//                 <div className="flex items-center gap-3 mb-3">
+//                   <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+//                     <FaBusinessTime className="text-blue-600" size={18} />
+//                   </div>
+//                   <p className="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wide">Work Hours</p>
+//                 </div>
+//                 <p className="text-2xl sm:text-3xl font-bold text-gray-900">
+//                   {selectedRecord.workHours && selectedRecord.workHours !== '------' 
+//                     ? selectedRecord.workHours 
+//                     : '—'}
+//                 </p>
+//               </div>
+//             </div>
+
+//             <div className="mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-gray-200">
+//               <div className="flex items-center gap-2 sm:gap-3 text-sm sm:text-base text-gray-600">
+//                 <FaMapMarkerAlt className="text-[#365F8D] flex-shrink-0" size={16} />
+//                 <span className="font-medium">Location: Lahore, Punjab, Pakistan</span>
+//               </div>
+//             </div>
+//           </div>
+//         )}
+
+//         {/* Monthly Records - Desktop Table */}
+//         <div className="bg-white rounded-2xl shadow-lg overflow-hidden hidden md:block border border-gray-100">
+//           <div className="bg-gradient-to-r from-[#365F8D] to-[#2C5284] px-6 lg:px-8 py-4 lg:py-5 text-white flex justify-between items-center">
+//             <h3 className="text-lg lg:text-xl font-bold flex items-center gap-3">
+//               <FaCalendarCheck size={20} />
+//               Monthly Records
+//             </h3>
+
+//             {totalPages > 1 && (
+//               <div className="flex items-center gap-4">
+//                 <button
+//                   disabled={currentPage === 1}
+//                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+//                   className={`p-2.5 rounded-lg transition-all duration-200 ${
+//                     currentPage === 1 
+//                       ? 'bg-gray-600 cursor-not-allowed opacity-50' 
+//                       : 'bg-white/20 hover:bg-white/30 backdrop-blur-sm'
+//                   }`}
+//                   aria-label="Previous page"
+//                 >
+//                   <FaChevronLeft size={14} />
+//                 </button>
+//                 <span className="text-sm font-semibold min-w-[60px] text-center bg-white/20 px-4 py-2 rounded-lg backdrop-blur-sm">
+//                   {currentPage} / {totalPages}
+//                 </span>
+//                 <button
+//                   disabled={currentPage === totalPages}
+//                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+//                   className={`p-2.5 rounded-lg transition-all duration-200 ${
+//                     currentPage === totalPages 
+//                       ? 'bg-gray-600 cursor-not-allowed opacity-50' 
+//                       : 'bg-white/20 hover:bg-white/30 backdrop-blur-sm'
+//                   }`}
+//                   aria-label="Next page"
+//                 >
+//                   <FaChevronRight size={14} />
+//                 </button>
+//               </div>
+//             )}
+//           </div>
+
+//           <div className="overflow-x-auto">
+//             <table className="min-w-full divide-y divide-gray-200">
+//               <thead className="bg-gradient-to-r from-gray-50 to-blue-50/50">
+//                 <tr>
+//                   <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+//                     Date
+//                   </th>
+//                   <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+//                     Clock In
+//                   </th>
+//                   <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+//                     Clock Out
+//                   </th>
+//                   <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+//                     Work Hours
+//                   </th>
+//                   <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+//                     Status
+//                   </th>
+//                 </tr>
+//               </thead>
+//               <tbody className="divide-y divide-gray-100 bg-white">
+//                 {currentRecords.length > 0 ? (
+//                   currentRecords.map((record, index) => (
+//                     <tr 
+//                       key={record.id} 
+//                       className={`transition-all duration-200 hover:bg-blue-50/50 ${
+//                         index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
+//                       }`}
+//                     >
+//                       <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
+//                         {new Date(record.date).toLocaleDateString('en-US', { 
+//                           weekday: 'short', 
+//                           year: 'numeric', 
+//                           month: 'short', 
+//                           day: 'numeric' 
+//                         })}
+//                       </td>
+//                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
+//                         {record.checkIn || '—'}
+//                       </td>
+//                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
+//                         {record.checkOut === '------' ? '—' : record.checkOut}
+//                       </td>
+//                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
+//                         {record.workHours === '------' ? '—' : record.workHours}
+//                       </td>
+//                       <td className="px-6 py-4 whitespace-nowrap">
+//                         <div className="flex items-center gap-2">
+//                           {getStatusIcon(record.status)}
+//                           <span
+//                             className={`px-3 py-1.5 inline-flex text-xs font-bold rounded-full ${
+//                               record.status === 'Present' ? 'bg-green-100 text-green-800 border border-green-300' :
+//                               record.status === 'Leave' ? 'bg-amber-100 text-amber-800 border border-amber-300' :
+//                               'bg-red-100 text-red-800 border border-red-300'
+//                             }`}
+//                           >
+//                             {record.status}
+//                           </span>
+//                         </div>
+//                       </td>
+//                     </tr>
+//                   ))
+//                 ) : (
+//                   <tr>
+//                     <td colSpan={5} className="px-6 py-12 text-center">
+//                       <div className="flex flex-col items-center gap-3">
+//                         <FaCalendarAlt className="text-gray-400" size={48} />
+//                         <p className="text-base text-gray-500 font-medium">
+//                           No attendance records found for {months.find(m => m.value === selectedMonth)?.label} {selectedYear}
+//                         </p>
+//                       </div>
+//                     </td>
+//                   </tr>
+//                 )}
+//               </tbody>
+//             </table>
+//           </div>
+//         </div>
+
+//         {/* Monthly Records - Mobile Cards */}
+//         <div className="md:hidden space-y-4">
+//           {/* Mobile Pagination Header */}
+//           {totalPages > 1 && (
+//             <div className="bg-gradient-to-r from-[#365F8D] to-[#2C5284] rounded-2xl shadow-lg p-4 flex justify-between items-center text-white">
+//               <span className="text-sm font-semibold">
+//                 Page {currentPage} of {totalPages}
+//               </span>
+//               <div className="flex items-center gap-2">
+//                 <button
+//                   disabled={currentPage === 1}
+//                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+//                   className={`p-2.5 rounded-lg transition-all ${
+//                     currentPage === 1 
+//                       ? 'bg-gray-600 cursor-not-allowed opacity-50' 
+//                       : 'bg-white/20 hover:bg-white/30'
+//                   }`}
+//                   aria-label="Previous page"
+//                 >
+//                   <FaChevronLeft size={14} />
+//                 </button>
+//                 <button
+//                   disabled={currentPage === totalPages}
+//                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+//                   className={`p-2.5 rounded-lg transition-all ${
+//                     currentPage === totalPages 
+//                       ? 'bg-gray-600 cursor-not-allowed opacity-50' 
+//                       : 'bg-white/20 hover:bg-white/30'
+//                   }`}
+//                   aria-label="Next page"
+//                 >
+//                   <FaChevronRight size={14} />
+//                 </button>
+//               </div>
+//             </div>
+//           )}
+
+//           {currentRecords.length > 0 ? (
+//             currentRecords.map(record => (
+//               <div 
+//                 key={record.id} 
+//                 className="bg-white rounded-2xl shadow-lg p-5 border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+//               >
+//                 <div className="flex justify-between items-start mb-4">
+//                   <div>
+//                     <p className="text-base font-bold text-gray-900 mb-1">
+//                       {new Date(record.date).toLocaleDateString('en-US', { 
+//                         weekday: 'short', 
+//                         month: 'short', 
+//                         day: 'numeric',
+//                         year: 'numeric'
+//                       })}
+//                     </p>
+//                     <div className="flex items-center gap-2 mt-2">
+//                       {getStatusIcon(record.status)}
+//                       <span
+//                         className={`px-3 py-1 inline-flex text-xs font-bold rounded-full ${
+//                           record.status === 'Present' ? 'bg-green-100 text-green-800 border border-green-300' :
+//                           record.status === 'Leave' ? 'bg-amber-100 text-amber-800 border border-amber-300' :
+//                           'bg-red-100 text-red-800 border border-red-300'
+//                         }`}
+//                       >
+//                         {record.status}
+//                       </span>
+//                     </div>
+//                   </div>
+//                 </div>
+                
+//                 <div className="grid grid-cols-2 gap-4 text-sm">
+//                   <div className="bg-gradient-to-br from-green-50 to-green-100/50 rounded-xl p-3 border border-green-200">
+//                     <div className="flex items-center gap-2 mb-1">
+//                       <FaClock className="text-green-600" size={14} />
+//                       <p className="text-xs text-green-700 font-semibold uppercase">Clock In</p>
+//                     </div>
+//                     <p className="font-bold text-gray-900 text-base">{record.checkIn || '—'}</p>
+//                   </div>
+//                   <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-3 border border-red-200">
+//                     <div className="flex items-center gap-2 mb-1">
+//                       <FaClock className="text-red-600" size={14} />
+//                       <p className="text-xs text-red-700 font-semibold uppercase">Clock Out</p>
+//                     </div>
+//                     <p className="font-bold text-gray-900 text-base">
+//                       {record.checkOut === '------' ? 'Pending' : record.checkOut || '—'}
+//                     </p>
+//                   </div>
+//                   <div className="col-span-2 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl p-3 border border-blue-200">
+//                     <div className="flex items-center gap-2 mb-1">
+//                       <FaBusinessTime className="text-blue-600" size={14} />
+//                       <p className="text-xs text-blue-700 font-semibold uppercase">Work Hours</p>
+//                     </div>
+//                     <p className="font-bold text-gray-900 text-base">
+//                       {record.workHours === '------' ? '—' : record.workHours || '—'}
+//                     </p>
+//                   </div>
+//                 </div>
+//               </div>
+//             ))
+//           ) : (
+//             <div className="bg-white rounded-2xl shadow-lg p-12 text-center border border-gray-100">
+//               <FaCalendarAlt className="mx-auto text-gray-400 mb-4" size={48} />
+//               <p className="text-base text-gray-500 font-medium">
+//                 No attendance records found for {months.find(m => m.value === selectedMonth)?.label} {selectedYear}
+//               </p>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default UserAttendance;
+
+
+
+
+
+
+
