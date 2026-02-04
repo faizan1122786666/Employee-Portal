@@ -1,51 +1,1025 @@
-import React, { useRef, useState } from 'react';
+// import { useState, useEffect } from 'react';
+// import Modal from 'react-modal';
 
-const customStyles = {
+// // Required for accessibility
+// Modal.setAppElement('#root');
+
+// const customModalStyles = {
+//   content: {
+//     top: '50%',
+//     left: '50%',
+//     right: 'auto',
+//     bottom: 'auto',
+//     marginRight: '-50%',
+//     transform: 'translate(-50%, -50%)',
+//     border: 'none',
+//     borderRadius: '12px',
+//     padding: '0',
+//     maxWidth: '520px',
+//     width: '90%',
+//     maxHeight: '90vh',
+//     overflowY: 'auto',
+//     boxShadow: '0 20px 25px -5px rgba(0,0,0,0.2)',
+//   },
+//   overlay: {
+//     backgroundColor: '#2C5284',
+//     zIndex: 1000,
+//   },
+// };
+
+// function UserLeave() {
+//   const [modalIsOpen, setIsOpen] = useState(false);
+//   const [formData, setFormData] = useState({
+//     leaveType: '',
+//     startDate: '',
+//     endDate: '',
+//     reason: '',
+//   });
+
+//   const [daysRequested, setDaysRequested] = useState(0);
+//   const [submitMessage, setSubmitMessage] = useState(null);
+
+//   // Calculate number of days
+//   useEffect(() => {
+//     if (formData.startDate && formData.endDate) {
+//       const start = new Date(formData.startDate);
+//       const end = new Date(formData.endDate);
+//       if (end >= start) {
+//         const diffTime = Math.abs(end - start);
+//         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+//         setDaysRequested(diffDays);
+//       } else {
+//         setDaysRequested(0);
+//       }
+//     } else {
+//       setDaysRequested(0);
+//     }
+//   }, [formData.startDate, formData.endDate]);
+
+//   const openModal = () => {
+//     setIsOpen(true);
+//     setSubmitMessage(null); // reset message when opening
+//   };
+
+//   const closeModal = () => {
+//     setIsOpen(false);
+//   };
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({
+//       ...prev,
+//       [name]: value,
+//     }));
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+
+//     // Basic validation
+//     if (!formData.leaveType) {
+//       setSubmitMessage({ type: 'error', text: 'Please select leave type' });
+//       return;
+//     }
+//     if (!formData.startDate || !formData.endDate) {
+//       setSubmitMessage({ type: 'error', text: 'Please select both dates' });
+//       return;
+//     }
+//     if (daysRequested <= 0) {
+//       setSubmitMessage({ type: 'error', text: 'End date must be after start date' });
+//       return;
+//     }
+//     if (!formData.reason.trim()) {
+//       setSubmitMessage({ type: 'error', text: 'Please enter reason for leave' });
+//       return;
+//     }
+
+//     // Simulate successful submission
+//     setSubmitMessage({
+//       type: 'success',
+//       text: 'Leave request submitted successfully!',
+//     });
+
+//     // Reset form & close modal after 2 seconds
+//     setTimeout(() => {
+//       setFormData({
+//         leaveType: '',
+//         startDate: '',
+//         endDate: '',
+//         reason: '',
+//       });
+//       setIsOpen(false);
+//       setSubmitMessage(null);
+//     }, 1800);
+//   };
+
+//   return (
+//     <div className="max-h-screen p-4 sm:p-6 lg:p-8">
+//       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+//         <h1 className="text-2xl sm:text-3xl font-bold text-[#2C5284]">
+//           Leave Request
+//         </h1>
+
+//         <button
+//           onClick={openModal}
+//           className="bg-[#2C5284] hover:bg-[#23416a] text-white px-8 py-4 rounded-lg font-medium shadow-md transition-colors duration-200 text-lg cursor-pointer"
+//         >
+//           Apply for Leave
+//         </button>
+//       </div>
+
+
+//       {/* Table */}
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//       {/* Modal */}
+//       <Modal
+//         isOpen={modalIsOpen}
+//         onRequestClose={closeModal}
+//         style={customModalStyles}
+//         contentLabel="Apply for Leave"
+//       >
+//         <div className="p-6 md:p-8">
+//           {/* Header */}
+//           <div className="flex justify-between items-center mb-6">
+//             <h2 className="text-2xl md:text-3xl font-bold text-[#2C5284]">
+//               Apply for Leave
+//             </h2>
+//             <button
+//               onClick={closeModal}
+//               className="text-gray-600 hover:text-gray-900 text-3xl leading-none cursor-pointer"
+//             >
+//               ×
+//             </button>
+//           </div>
+
+//           {/* Status Message */}
+//           {submitMessage && (
+//             <div
+//               className={`mb-6 p-4 rounded-lg text-center font-medium ${
+//                 submitMessage.type === 'success'
+//                   ? 'bg-green-100 text-green-800'
+//                   : 'bg-red-100 text-red-800'
+//               }`}
+//             >
+//               {submitMessage.text}
+//             </div>
+//           )}
+
+//           {/* Form */}
+//           <form onSubmit={handleSubmit} className="space-y-6">
+//             {/* Leave Type */}
+//             <div>
+//               <label className="block text-gray-700 font-medium mb-2">
+//                 Leave Type <span className="text-red-500">*</span>
+//               </label>
+//               <select
+//                 name="leaveType"
+//                 value={formData.leaveType}
+//                 onChange={handleChange}
+//                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2C5284] focus:border-[#2C5284]"
+//                 required
+//               >
+//                 <option value="">Select leave type</option>
+//                 <option value="casual">Casual Leave</option>
+//                 <option value="sick">Sick Leave</option>
+//                 <option value="annual">Annual/Earned Leave</option>
+//                 <option value="emergency">Emergency Leave</option>
+//                 <option value="unpaid">Unpaid Leave</option>
+//               </select>
+//             </div>
+
+//             {/* Dates */}
+//             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+//               <div>
+//                 <label className="block text-gray-700 font-medium mb-2">
+//                   Start Date <span className="text-red-500">*</span>
+//                 </label>
+//                 <input
+//                   type="date"
+//                   name="startDate"
+//                   value={formData.startDate}
+//                   onChange={handleChange}
+//                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2C5284]"
+//                   required
+//                 />
+//               </div>
+//               <div>
+//                 <label className="block text-gray-700 font-medium mb-2">
+//                   End Date <span className="text-red-500">*</span>
+//                 </label>
+//                 <input
+//                   type="date"
+//                   name="endDate"
+//                   value={formData.endDate}
+//                   onChange={handleChange}
+//                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2C5284]"
+//                   required
+//                 />
+//               </div>
+//             </div>
+
+//             {/* Days Info */}
+//             {daysRequested > 0 && (
+//               <div className="text-gray-700 font-medium">
+//                 Number of days: <span className="text-[#2C5284]">{daysRequested}</span>
+//               </div>
+//             )}
+
+//             {/* Reason */}
+//             <div>
+//               <label className="block text-gray-700 font-medium mb-2">
+//                 Reason for Leave <span className="text-red-500">*</span>
+//               </label>
+//               <textarea
+//                 name="reason"
+//                 value={formData.reason}
+//                 onChange={handleChange}
+//                 rows={4}
+//                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2C5284] resize-y"
+//                 placeholder="Please explain the reason for your leave..."
+//                 required
+//               />
+//             </div>
+
+//             {/* Action Buttons */}
+//             <div className="flex justify-end gap-4 mt-8">
+//               <button
+//                 type="button"
+//                 onClick={closeModal}
+//                 className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition cursor-pointer"
+//               >
+//                 Cancel
+//               </button>
+//               <button
+//                 type="submit"
+//                 className="px-6 py-3 bg-[#2C5284] hover:bg-[#23416a] text-white rounded-lg font-medium transition cursor-pointer"
+//               >
+//                 Submit Request
+//               </button>
+//             </div>
+//           </form>
+//         </div>
+//       </Modal>
+//     </div>
+//   );
+// }
+
+// export default UserLeave;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useState, useEffect } from 'react';
+// import Modal from 'react-modal';
+
+// // Required for accessibility
+// Modal.setAppElement('#root');
+
+// const customModalStyles = {
+//   content: {
+//     top: '50%',
+//     left: '50%',
+//     right: 'auto',
+//     bottom: 'auto',
+//     marginRight: '-50%',
+//     transform: 'translate(-50%, -50%)',
+//     border: 'none',
+//     borderRadius: '12px',
+//     padding: '0',
+//     maxWidth: '520px',
+//     width: '90%',
+//     maxHeight: '90vh',
+//     overflowY: 'auto',
+//     boxShadow: '0 20px 25px -5px rgba(0,0,0,0.2)',
+//   },
+//   overlay: {
+//     backgroundColor: '#2C5284',
+//     zIndex: 1000,
+//   },
+// };
+
+// function UserLeave() {
+//   const [modalIsOpen, setIsOpen] = useState(false);
+//   const [formData, setFormData] = useState({
+//     leaveType: '',
+//     startDate: '',
+//     endDate: '',
+//     reason: '',
+//   });
+
+//   const [daysRequested, setDaysRequested] = useState(0);
+//   const [submitMessage, setSubmitMessage] = useState(null);
+
+//   // Sample leave requests data
+//   const [leaveRequests] = useState([
+//     {
+//       id: 1,
+//       leaveType: 'Annual Leave',
+//       startDate: '2026-01-15',
+//       endDate: '2026-01-20',
+//       days: 6,
+//       reason: 'Family vacation',
+//       status: 'Approved',
+//       appliedOn: '2026-01-05',
+//     },
+//     {
+//       id: 2,
+//       leaveType: 'Sick Leave',
+//       startDate: '2026-01-08',
+//       endDate: '2026-01-09',
+//       days: 2,
+//       reason: 'Medical appointment',
+//       status: 'Approved',
+//       appliedOn: '2026-01-07',
+//     },
+//     {
+//       id: 3,
+//       leaveType: 'Casual Leave',
+//       startDate: '2026-02-10',
+//       endDate: '2026-02-12',
+//       days: 3,
+//       reason: 'Personal matters',
+//       status: 'Pending',
+//       appliedOn: '2026-02-01',
+//     },
+//     {
+//       id: 4,
+//       leaveType: 'Emergency Leave',
+//       startDate: '2025-12-28',
+//       endDate: '2025-12-29',
+//       days: 2,
+//       reason: 'Family emergency',
+//       status: 'Approved',
+//       appliedOn: '2025-12-27',
+//     },
+//     {
+//       id: 5,
+//       leaveType: 'Annual Leave',
+//       startDate: '2026-03-01',
+//       endDate: '2026-03-05',
+//       days: 5,
+//       reason: 'Personal trip',
+//       status: 'Rejected',
+//       appliedOn: '2026-02-15',
+//     },
+//   ]);
+
+//   // Calculate number of days
+//   useEffect(() => {
+//     if (formData.startDate && formData.endDate) {
+//       const start = new Date(formData.startDate);
+//       const end = new Date(formData.endDate);
+//       if (end >= start) {
+//         const diffTime = Math.abs(end - start);
+//         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+//         setDaysRequested(diffDays);
+//       } else {
+//         setDaysRequested(0);
+//       }
+//     } else {
+//       setDaysRequested(0);
+//     }
+//   }, [formData.startDate, formData.endDate]);
+
+//   const openModal = () => {
+//     setIsOpen(true);
+//     setSubmitMessage(null);
+//   };
+
+//   const closeModal = () => {
+//     setIsOpen(false);
+//   };
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({
+//       ...prev,
+//       [name]: value,
+//     }));
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+
+//     if (!formData.leaveType) {
+//       setSubmitMessage({ type: 'error', text: 'Please select leave type' });
+//       return;
+//     }
+//     if (!formData.startDate || !formData.endDate) {
+//       setSubmitMessage({ type: 'error', text: 'Please select both dates' });
+//       return;
+//     }
+//     if (daysRequested <= 0) {
+//       setSubmitMessage({ type: 'error', text: 'End date must be after start date' });
+//       return;
+//     }
+//     if (!formData.reason.trim()) {
+//       setSubmitMessage({ type: 'error', text: 'Please enter reason for leave' });
+//       return;
+//     }
+
+//     setSubmitMessage({
+//       type: 'success',
+//       text: 'Leave request submitted successfully!',
+//     });
+
+//     setTimeout(() => {
+//       setFormData({
+//         leaveType: '',
+//         startDate: '',
+//         endDate: '',
+//         reason: '',
+//       });
+//       setIsOpen(false);
+//       setSubmitMessage(null);
+//     }, 1800);
+//   };
+
+//   const getStatusColor = (status) => {
+//     switch (status.toLowerCase()) {
+//       case 'approved':
+//         return 'bg-green-100 text-green-800';
+//       case 'pending':
+//         return 'bg-yellow-100 text-yellow-800';
+//       case 'rejected':
+//         return 'bg-red-100 text-red-800';
+//       default:
+//         return 'bg-gray-100 text-gray-800';
+//     }
+//   };
+
+//   return (
+//     <div className="max-h-screen p-4 sm:p-6 lg:p-8">
+//       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+//         <h1 className="text-2xl sm:text-3xl font-bold text-[#2C5284]">
+//           Leave Request
+//         </h1>
+
+//         <button
+//           onClick={openModal}
+//           className="bg-[#2C5284] hover:bg-[#23416a] text-white px-8 py-4 rounded-lg font-medium shadow-md transition-colors duration-200 text-lg cursor-pointer"
+//         >
+//           Apply for Leave
+//         </button>
+//       </div>
+
+//       {/* Table Container with Overflow */}
+//       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+//         <div className="p-4 bg-[#2C5284] border-b border-white">
+//           <h3 className="text-lg font-semibold text-white">
+//             Leave Request History
+//           </h3>
+//         </div>
+//         <div className="overflow-x-auto">
+//           <table className="min-w-full divide-y divide-gray-200">
+//             <thead className="bg-[#2C5284]">
+//               <tr>
+//                 <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+//                   ID
+//                 </th>
+//                 <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+//                   Leave Type
+//                 </th>
+//                 <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+//                   Start Date
+//                 </th>
+//                 <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+//                   End Date
+//                 </th>
+//                 <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+//                   Days
+//                 </th>
+//                 <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+//                   Reason
+//                 </th>
+//                 <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+//                   Status
+//                 </th>
+//                 <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+//                   Applied On
+//                 </th>
+//               </tr>
+//             </thead>
+//             <tbody className="bg-white divide-y divide-gray-200">
+//               {leaveRequests.map((request, index) => (
+//                 <tr
+//                   key={request.id}
+//                   className={`hover:bg-gray-50 transition-colors ${
+//                     index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+//                   }`}
+//                 >
+//                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+//                     {request.id}
+//                   </td>
+//                   <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+//                     {request.leaveType}
+//                   </td>
+//                   <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+//                     {new Date(request.startDate).toLocaleDateString('en-US', {
+//                       year: 'numeric',
+//                       month: 'short',
+//                       day: 'numeric',
+//                     })}
+//                   </td>
+//                   <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+//                     {new Date(request.endDate).toLocaleDateString('en-US', {
+//                       year: 'numeric',
+//                       month: 'short',
+//                       day: 'numeric',
+//                     })}
+//                   </td>
+//                   <td className="px-6 py-4 whitespace-nowrap text-sm text-black font-medium">
+//                     {request.days}
+//                   </td>
+//                   <td className="px-6 py-4 text-sm text-black max-w-xs">
+//                     <div className="truncate" title={request.reason}>
+//                       {request.reason}
+//                     </div>
+//                   </td>
+//                   <td className="px-6 py-4 whitespace-nowrap text-sm">
+//                     <span
+//                       className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
+//                         request.status
+//                       )}`}
+//                     >
+//                       {request.status}
+//                     </span>
+//                   </td>
+//                   <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+//                     {new Date(request.appliedOn).toLocaleDateString('en-US', {
+//                       year: 'numeric',
+//                       month: 'short',
+//                       day: 'numeric',
+//                     })}
+//                   </td>
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </table>
+//         </div>
+//       </div>
+
+//       {/* Modal */}
+//       <Modal
+//         isOpen={modalIsOpen}
+//         onRequestClose={closeModal}
+//         style={customModalStyles}
+//         contentLabel="Apply for Leave"
+//       >
+//         <div className="p-6 md:p-8">
+//           {/* Header */}
+//           <div className="flex justify-between items-center mb-6">
+//             <h2 className="text-2xl md:text-3xl font-bold text-[#2C5284]">
+//               Apply for Leave
+//             </h2>
+//             <button
+//               onClick={closeModal}
+//               className="text-gray-600 hover:text-gray-900 text-3xl leading-none cursor-pointer"
+//             >
+//               ×
+//             </button>
+//           </div>
+
+//           {/* Status Message */}
+//           {submitMessage && (
+//             <div
+//               className={`mb-6 p-4 rounded-lg text-center font-medium ${
+//                 submitMessage.type === 'success'
+//                   ? 'bg-green-100 text-green-800'
+//                   : 'bg-red-100 text-red-800'
+//               }`}
+//             >
+//               {submitMessage.text}
+//             </div>
+//           )}
+
+//           {/* Form */}
+//           <form onSubmit={handleSubmit} className="space-y-6">
+//             {/* Leave Type */}
+//             <div>
+//               <label className="block text-gray-700 font-medium mb-2">
+//                 Leave Type <span className="text-red-500">*</span>
+//               </label>
+//               <select
+//                 name="leaveType"
+//                 value={formData.leaveType}
+//                 onChange={handleChange}
+//                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2C5284] focus:border-[#2C5284]"
+//                 required
+//               >
+//                 <option value="">Select leave type</option>
+//                 <option value="casual">Casual Leave</option>
+//                 <option value="sick">Sick Leave</option>
+//                 <option value="annual">Annual/Earned Leave</option>
+//                 <option value="emergency">Emergency Leave</option>
+//                 <option value="unpaid">Unpaid Leave</option>
+//               </select>
+//             </div>
+
+//             {/* Dates */}
+//             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+//               <div>
+//                 <label className="block text-gray-700 font-medium mb-2">
+//                   Start Date <span className="text-red-500">*</span>
+//                 </label>
+//                 <input
+//                   type="date"
+//                   name="startDate"
+//                   value={formData.startDate}
+//                   onChange={handleChange}
+//                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2C5284]"
+//                   required
+//                 />
+//               </div>
+//               <div>
+//                 <label className="block text-gray-700 font-medium mb-2">
+//                   End Date <span className="text-red-500">*</span>
+//                 </label>
+//                 <input
+//                   type="date"
+//                   name="endDate"
+//                   value={formData.endDate}
+//                   onChange={handleChange}
+//                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2C5284]"
+//                   required
+//                 />
+//               </div>
+//             </div>
+
+//             {/* Days Info */}
+//             {daysRequested > 0 && (
+//               <div className="text-gray-700 font-medium">
+//                 Number of days: <span className="text-[#2C5284]">{daysRequested}</span>
+//               </div>
+//             )}
+
+//             {/* Reason */}
+//             <div>
+//               <label className="block text-gray-700 font-medium mb-2">
+//                 Reason for Leave <span className="text-red-500">*</span>
+//               </label>
+//               <textarea
+//                 name="reason"
+//                 value={formData.reason}
+//                 onChange={handleChange}
+//                 rows={4}
+//                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2C5284] resize-y"
+//                 placeholder="Please explain the reason for your leave..."
+//                 required
+//               />
+//             </div>
+
+//             {/* Action Buttons */}
+//             <div className="flex justify-end gap-4 mt-8">
+//               <button
+//                 type="button"
+//                 onClick={closeModal}
+//                 className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition cursor-pointer"
+//               >
+//                 Cancel
+//               </button>
+//               <button
+//                 type="submit"
+//                 className="px-6 py-3 bg-[#2C5284] hover:bg-[#23416a] text-white rounded-lg font-medium transition cursor-pointer"
+//               >
+//                 Submit Request
+//               </button>
+//             </div>
+//           </form>
+//         </div>
+//       </Modal>
+//     </div>
+//   );
+// }
+
+// export default UserLeave;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { useState, useEffect } from 'react';
+import Modal from 'react-modal';
+
+// Required for accessibility
+Modal.setAppElement('#root');
+
+const customModalStyles = {
   content: {
     top: '50%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
     transform: 'translate(-50%, -50%)',
-    padding: '20px',
+    border: 'none',
     borderRadius: '12px',
-    width: '400px',
+    padding: '0',
+    maxWidth: '520px',
+    width: '90%',
+    maxHeight: '90vh',
+    overflowY: 'auto',
+    WebkitOverflowScrolling: 'touch', // ✅ smooth iOS scroll
+    boxShadow: '0 20px 25px -5px rgba(0,0,0,0.2)',
+  },
+  overlay: {
+    backgroundColor: 'rgba(44, 82, 132, 0.85)',
+    zIndex: 1000,
   },
 };
 
 function UserLeave() {
-  const subtitleRef = useRef(null);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    leaveType: '',
+    startDate: '',
+    endDate: '',
+    reason: '',
+  });
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const [daysRequested, setDaysRequested] = useState(0);
+  const [submitMessage, setSubmitMessage] = useState(null);
 
-  const afterOpenModal = () => {
-    if (subtitleRef.current) {
-      subtitleRef.current.style.color = '#2C5284';
+  // ✅ LOCK BACKGROUND SCROLL ON MOBILE
+  useEffect(() => {
+    if (modalIsOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [modalIsOpen]);
+
+  const [leaveRequests] = useState([
+    {
+      id: 1,
+      leaveType: 'Annual Leave',
+      startDate: '2026-01-15',
+      endDate: '2026-01-20',
+      days: 6,
+      reason: 'Family vacation',
+      status: 'Approved',
+      appliedOn: '2026-01-05',
+    },
+    {
+      id: 2,
+      leaveType: 'Sick Leave',
+      startDate: '2026-01-08',
+      endDate: '2026-01-09',
+      days: 2,
+      reason: 'Medical appointment',
+      status: 'Approved',
+      appliedOn: '2026-01-07',
+    },
+    {
+      id: 3,
+      leaveType: 'Casual Leave',
+      startDate: '2026-02-10',
+      endDate: '2026-02-12',
+      days: 3,
+      reason: 'Personal matters',
+      status: 'Pending',
+      appliedOn: '2026-02-01',
+    },
+  ]);
+
+  // Calculate days
+  useEffect(() => {
+    if (formData.startDate && formData.endDate) {
+      const start = new Date(formData.startDate);
+      const end = new Date(formData.endDate);
+      if (end >= start) {
+        const diff =
+          Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+        setDaysRequested(diff);
+      } else {
+        setDaysRequested(0);
+      }
+    } else {
+      setDaysRequested(0);
+    }
+  }, [formData.startDate, formData.endDate]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((p) => ({ ...p, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.leaveType || !formData.startDate || !formData.endDate || !formData.reason.trim()) {
+      setSubmitMessage({ type: 'error', text: 'Please fill all required fields' });
+      return;
+    }
+
+    setSubmitMessage({ type: 'success', text: 'Leave request submitted successfully!' });
+
+    setTimeout(() => {
+      setFormData({ leaveType: '', startDate: '', endDate: '', reason: '' });
+      setIsOpen(false);
+      setSubmitMessage(null);
+    }, 1600);
+  };
+
+  const getStatusColor = (status) => {
+    switch (status.toLowerCase()) {
+      case 'approved':
+        return 'bg-green-100 text-green-800';
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'rejected':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
   return (
-    <div>
-      <button onClick={openModal}>Open Modal</button>
+    <div className="max-h-screen p-4 sm:p-6 lg:p-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-[#2C5284]">Leave Request</h1>
+        <button
+          onClick={() => setIsOpen(true)}
+          className="bg-[#2C5284] text-white px-6 py-3 rounded-lg shadow"
+        >
+          Apply for Leave
+        </button>
+      </div>
+
+      {/* ✅ MOBILE SCROLLABLE TABLE */}
+      <div className="bg-white border rounded-lg overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y">
+            <thead className="bg-[#2C5284] text-white">
+              <tr>
+                {['ID', 'Type', 'Start', 'End', 'Days', 'Reason', 'Status'].map((h) => (
+                  <th key={h} className="px-6 py-3 text-left text-xs uppercase whitespace-nowrap">
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {leaveRequests.map((r, i) => (
+                <tr key={r.id} className={i % 2 ? 'bg-gray-50' : 'bg-white'}>
+                  <td className="px-6 py-4">{r.id}</td>
+                  <td className="px-6 py-4">{r.leaveType}</td>
+                  <td className="px-6 py-4">{r.startDate}</td>
+                  <td className="px-6 py-4">{r.endDate}</td>
+                  <td className="px-6 py-4 font-semibold">{r.days}</td>
+                  <td className="px-6 py-4 max-w-xs truncate">{r.reason}</td>
+                  <td className="px-6 py-4">
+                    <span className={`px-3 py-1 rounded-full text-xs ${getStatusColor(r.status)}`}>
+                      {r.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* ✅ MODAL */}
       <Modal
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
+        onRequestClose={() => setIsOpen(false)}
+        style={customModalStyles}
       >
+        <div className="p-6 overflow-y-auto overscroll-contain">
+          <h2 className="text-2xl font-bold mb-4 text-[#2C5284]">Apply for Leave</h2>
 
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
+          {submitMessage && (
+            <div
+              className={`mb-4 p-3 rounded ${
+                submitMessage.type === 'success'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-red-100 text-red-800'
+              }`}
+            >
+              {submitMessage.text}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <select
+              name="leaveType"
+              value={formData.leaveType}
+              onChange={handleChange}
+              className="w-full p-3 border rounded"
+              required
+            >
+              <option value="">Select Leave Type</option>
+              <option value="casual">Casual</option>
+              <option value="sick">Sick</option>
+              <option value="annual">Annual</option>
+            </select>
+
+            <input
+              type="date"
+              name="startDate"
+              value={formData.startDate}
+              onChange={handleChange}
+              className="w-full p-3 border rounded"
+              required
+            />
+
+            <input
+              type="date"
+              name="endDate"
+              value={formData.endDate}
+              onChange={handleChange}
+              className="w-full p-3 border rounded"
+              required
+            />
+
+            {daysRequested > 0 && (
+              <p className="font-medium">
+                Days Requested: <span className="text-[#2C5284]">{daysRequested}</span>
+              </p>
+            )}
+
+            <textarea
+              name="reason"
+              value={formData.reason}
+              onChange={handleChange}
+              rows={4}
+              className="w-full p-3 border rounded"
+              placeholder="Reason"
+              required
+            />
+
+            <div className="flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="px-5 py-2 border rounded"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-5 py-2 bg-[#2C5284] text-white rounded"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
       </Modal>
     </div>
   );
@@ -54,465 +1028,3 @@ function UserLeave() {
 export default UserLeave;
 
 
-// import { useEffect, useState } from 'react';
-// import Select from 'react-select';
-// import DatePicker from 'react-datepicker';
-// import { getEmployeeLeaves, leaveTypes } from '../../data/mockLeaveData';
-// import { FaPlus, FaEdit, FaTrash, FaEye } from 'react-icons/fa';
-// import UserLeaveDetailModal from './UserLeaveDetailModal';
-// import 'react-datepicker/dist/react-datepicker.css';
-
-// function UserLeave({ setTitle }) {
-//   // In a real app, get this from auth context
-//   const currentUserId = 1;
-
-//   const [leaves, setLeaves] = useState([]);
-//   const [showApplyForm, setShowApplyForm] = useState(false);
-//   const [selectedLeave, setSelectedLeave] = useState(null);
-//   const [showDetailModal, setShowDetailModal] = useState(false);
-//   const [editingLeave, setEditingLeave] = useState(null);
-
-//   // Form state
-//   const [leaveType, setLeaveType] = useState(null);
-//   const [startDate, setStartDate] = useState(null);
-//   const [endDate, setEndDate] = useState(null);
-//   const [reason, setReason] = useState('');
-
-//   useEffect(() => {
-//     setTitle('My Leave Requests');
-//     const userLeaves = getEmployeeLeaves(currentUserId);
-//     setLeaves(userLeaves);
-//   }, [setTitle, currentUserId]);
-
-//   // Calculate days between dates
-//   const calculateDays = (start, end) => {
-//     if (!start || !end) return 0;
-//     const diffTime = Math.abs(end - start);
-//     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-//     return diffDays;
-//   };
-
-//   const days = calculateDays(startDate, endDate);
-
-//   // Handle form submit
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-
-//     const newLeave = {
-//       id: editingLeave ? editingLeave.id : Date.now(),
-//       employeeId: currentUserId,
-//       employeeName: 'Ali Hamza', // In real app, get from auth
-//       email: 'alihamza@gmail.com', // In real app, get from auth
-//       leaveType: leaveType.value,
-//       startDate: startDate.toISOString().split('T')[0],
-//       endDate: endDate.toISOString().split('T')[0],
-//       days,
-//       reason,
-//       status: 'Pending',
-//       appliedDate: new Date().toISOString().split('T')[0],
-//       adminComment: '',
-//     };
-
-//     if (editingLeave) {
-//       // Update existing leave
-//       setLeaves(leaves.map((l) => (l.id === editingLeave.id ? newLeave : l)));
-//     } else {
-//       // Add new leave
-//       setLeaves([newLeave, ...leaves]);
-//     }
-
-//     // Reset form
-//     resetForm();
-//   };
-
-//   const resetForm = () => {
-//     setLeaveType(null);
-//     setStartDate(null);
-//     setEndDate(null);
-//     setReason('');
-//     setShowApplyForm(false);
-//     setEditingLeave(null);
-//   };
-
-//   // Handle edit
-//   const handleEdit = (leave) => {
-//     if (leave.status !== 'Pending') {
-//       alert('You can only edit pending leave requests');
-//       return;
-//     }
-
-//     setEditingLeave(leave);
-//     setLeaveType(leaveTypes.find((t) => t.value === leave.leaveType));
-//     setStartDate(new Date(leave.startDate));
-//     setEndDate(new Date(leave.endDate));
-//     setReason(leave.reason);
-//     setShowApplyForm(true);
-//   };
-
-//   // Handle delete
-//   const handleDelete = (leaveId) => {
-//     const leave = leaves.find((l) => l.id === leaveId);
-//     if (leave.status !== 'Pending') {
-//       alert('You can only delete pending leave requests');
-//       return;
-//     }
-
-//     if (window.confirm('Are you sure you want to delete this leave request?')) {
-//       setLeaves(leaves.filter((l) => l.id !== leaveId));
-//     }
-//   };
-
-//   // View details
-//   const viewDetails = (leave) => {
-//     setSelectedLeave(leave);
-//     setShowDetailModal(true);
-//   };
-
-//   // Get status color
-//   const getStatusColor = (status) => {
-//     switch (status) {
-//       case 'Approved':
-//         return 'bg-green-100 text-green-800';
-//       case 'Rejected':
-//         return 'bg-red-100 text-red-800';
-//       case 'Pending':
-//         return 'bg-yellow-100 text-yellow-800';
-//       default:
-//         return 'bg-gray-100 text-gray-800';
-//     }
-//   };
-
-//   return (
-//     <div className="max-h-screen p-4 sm:p-6 lg:p-8">
-//       <div className="flex justify-between items-center mb-6">
-//         <h1 className="text-2xl sm:text-3xl font-bold text-[#2C5284]">
-//           My Leave Requests
-//         </h1>
-//         <button
-//           onClick={() => setShowApplyForm(true)}
-//           className="px-4 py-2 bg-[#2C5284] text-white rounded-lg font-medium 
-//             hover:bg-[#365F8D] transition-colors flex items-center gap-2"
-//         >
-//           <FaPlus size={16} />
-//           Apply Leave
-//         </button>
-//       </div>
-
-//       {/* Apply/Edit Leave Form */}
-//       {showApplyForm && (
-//         <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6">
-//           <h2 className="text-xl font-bold text-[#2C5284] mb-4">
-//             {editingLeave ? 'Edit Leave Request' : 'Apply for Leave'}
-//           </h2>
-//           <form onSubmit={handleSubmit} className="space-y-4">
-//             {/* Leave Type */}
-//             <div>
-//               <label className="block text-sm font-medium text-gray-700 mb-2">
-//                 Leave Type <span className="text-red-500">*</span>
-//               </label>
-//               <Select
-//                 value={leaveType}
-//                 onChange={setLeaveType}
-//                 options={leaveTypes}
-//                 required
-//                 placeholder="Select leave type"
-//                 className="react-select-container"
-//                 classNamePrefix="react-select"
-//                 styles={{
-//                   control: (base) => ({
-//                     ...base,
-//                     borderColor: '#d1d5db',
-//                     '&:hover': { borderColor: '#365F8D' },
-//                   }),
-//                   option: (base, state) => ({
-//                     ...base,
-//                     backgroundColor: state.isSelected
-//                       ? '#365F8D'
-//                       : state.isFocused
-//                       ? '#f3f4f6'
-//                       : 'white',
-//                     color: state.isSelected ? 'white' : '#1f2937',
-//                   }),
-//                 }}
-//               />
-//             </div>
-
-//             {/* Date Range */}
-//             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-//               <div>
-//                 <label className="block text-sm font-medium text-gray-700 mb-2">
-//                   Start Date <span className="text-red-500">*</span>
-//                 </label>
-//                 <DatePicker
-//                   selected={startDate}
-//                   onChange={(date) => setStartDate(date)}
-//                   minDate={new Date()}
-//                   dateFormat="yyyy-MM-dd"
-//                   required
-//                   className="w-full px-4 py-2.5 border border-gray-300 rounded-lg 
-//                     focus:ring-2 focus:ring-[#365F8D] focus:border-transparent 
-//                     outline-none transition-all"
-//                   placeholderText="Select start date"
-//                 />
-//               </div>
-//               <div>
-//                 <label className="block text-sm font-medium text-gray-700 mb-2">
-//                   End Date <span className="text-red-500">*</span>
-//                 </label>
-//                 <DatePicker
-//                   selected={endDate}
-//                   onChange={(date) => setEndDate(date)}
-//                   minDate={startDate || new Date()}
-//                   dateFormat="yyyy-MM-dd"
-//                   required
-//                   className="w-full px-4 py-2.5 border border-gray-300 rounded-lg 
-//                     focus:ring-2 focus:ring-[#365F8D] focus:border-transparent 
-//                     outline-none transition-all"
-//                   placeholderText="Select end date"
-//                 />
-//               </div>
-//             </div>
-
-//             {/* Days Display */}
-//             {days > 0 && (
-//               <div className="bg-blue-50 rounded-lg p-3 text-center">
-//                 <p className="text-sm text-blue-900">
-//                   Total Days: <span className="font-bold text-lg">{days}</span>
-//                 </p>
-//               </div>
-//             )}
-
-//             {/* Reason */}
-//             <div>
-//               <label className="block text-sm font-medium text-gray-700 mb-2">
-//                 Reason <span className="text-red-500">*</span>
-//               </label>
-//               <textarea
-//                 value={reason}
-//                 onChange={(e) => setReason(e.target.value)}
-//                 required
-//                 rows={4}
-//                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg 
-//                   focus:ring-2 focus:ring-[#365F8D] focus:border-transparent 
-//                   outline-none transition-all resize-none"
-//                 placeholder="Enter the reason for your leave..."
-//               />
-//             </div>
-
-//             {/* Action Buttons */}
-//             <div className="flex gap-3">
-//               <button
-//                 type="submit"
-//                 className="flex-1 px-6 py-3 bg-[#2C5284] text-white rounded-lg 
-//                   font-medium hover:bg-[#365F8D] transition-colors"
-//               >
-//                 {editingLeave ? 'Update Leave' : 'Submit Application'}
-//               </button>
-//               <button
-//                 type="button"
-//                 onClick={resetForm}
-//                 className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg 
-//                   font-medium hover:bg-gray-300 transition-colors"
-//               >
-//                 Cancel
-//               </button>
-//             </div>
-//           </form>
-//         </div>
-//       )}
-
-//       {/* Leave History */}
-//       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-//         <div className="p-4 bg-[#2C5284]">
-//           <h2 className="text-lg font-semibold text-white">Leave History</h2>
-//         </div>
-
-//         {/* Desktop Table */}
-//         <div className="hidden lg:block overflow-x-auto">
-//           <table className="min-w-full divide-y divide-gray-200">
-//             <thead className="bg-gray-50">
-//               <tr>
-//                 <th className="px-6 py-3 text-left text-xs font-medium 
-//                   text-gray-500 uppercase tracking-wider">
-//                   Leave Type
-//                 </th>
-//                 <th className="px-6 py-3 text-left text-xs font-medium 
-//                   text-gray-500 uppercase tracking-wider">
-//                   Duration
-//                 </th>
-//                 <th className="px-6 py-3 text-left text-xs font-medium 
-//                   text-gray-500 uppercase tracking-wider">
-//                   Applied Date
-//                 </th>
-//                 <th className="px-6 py-3 text-left text-xs font-medium 
-//                   text-gray-500 uppercase tracking-wider">
-//                   Status
-//                 </th>
-//                 <th className="px-6 py-3 text-left text-xs font-medium 
-//                   text-gray-500 uppercase tracking-wider">
-//                   Actions
-//                 </th>
-//               </tr>
-//             </thead>
-//             <tbody className="bg-white divide-y divide-gray-200">
-//               {leaves.length > 0 ? (
-//                 leaves.map((leave) => (
-//                   <tr key={leave.id} className="hover:bg-gray-50">
-//                     <td className="px-6 py-4 whitespace-nowrap text-sm 
-//                       text-gray-900">
-//                       {leave.leaveType}
-//                     </td>
-//                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <div className="text-sm text-gray-900">
-//                         {leave.startDate} to {leave.endDate}
-//                       </div>
-//                       <div className="text-sm text-gray-500">
-//                         {leave.days} day(s)
-//                       </div>
-//                     </td>
-//                     <td className="px-6 py-4 whitespace-nowrap text-sm 
-//                       text-gray-900">
-//                       {leave.appliedDate}
-//                     </td>
-//                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <span
-//                         className={`px-3 py-1 inline-flex text-xs leading-5 
-//                           font-semibold rounded-full ${getStatusColor(
-//                             leave.status
-//                           )}`}
-//                       >
-//                         {leave.status}
-//                       </span>
-//                     </td>
-//                     <td className="px-6 py-4 whitespace-nowrap text-sm">
-//                       <div className="flex items-center gap-2">
-//                         <button
-//                           onClick={() => viewDetails(leave)}
-//                           className="p-2 text-blue-600 hover:bg-blue-50 
-//                             rounded-lg transition-colors"
-//                           title="View Details"
-//                         >
-//                           <FaEye size={16} />
-//                         </button>
-//                         {leave.status === 'Pending' && (
-//                           <>
-//                             <button
-//                               onClick={() => handleEdit(leave)}
-//                               className="p-2 text-green-600 hover:bg-green-50 
-//                                 rounded-lg transition-colors"
-//                               title="Edit"
-//                             >
-//                               <FaEdit size={16} />
-//                             </button>
-//                             <button
-//                               onClick={() => handleDelete(leave.id)}
-//                               className="p-2 text-red-600 hover:bg-red-50 
-//                                 rounded-lg transition-colors"
-//                               title="Delete"
-//                             >
-//                               <FaTrash size={16} />
-//                             </button>
-//                           </>
-//                         )}
-//                       </div>
-//                     </td>
-//                   </tr>
-//                 ))
-//               ) : (
-//                 <tr>
-//                   <td colSpan={5} className="px-6 py-12 text-center">
-//                     <p className="text-gray-500">No leave requests yet</p>
-//                   </td>
-//                 </tr>
-//               )}
-//             </tbody>
-//           </table>
-//         </div>
-
-//         {/* Mobile Cards */}
-//         <div className="lg:hidden p-4 space-y-4">
-//           {leaves.length > 0 ? (
-//             leaves.map((leave) => (
-//               <div
-//                 key={leave.id}
-//                 className="bg-gray-50 rounded-lg p-4 space-y-3"
-//               >
-//                 <div className="flex justify-between items-start">
-//                   <div>
-//                     <h3 className="font-semibold text-gray-900">
-//                       {leave.leaveType}
-//                     </h3>
-//                     <p className="text-sm text-gray-600">
-//                       {leave.startDate} to {leave.endDate}
-//                     </p>
-//                   </div>
-//                   <span
-//                     className={`px-3 py-1 text-xs font-semibold rounded-full 
-//                       ${getStatusColor(leave.status)}`}
-//                   >
-//                     {leave.status}
-//                   </span>
-//                 </div>
-
-//                 <div className="text-sm">
-//                   <div className="flex justify-between">
-//                     <span className="text-gray-600">Days:</span>
-//                     <span className="font-medium">{leave.days}</span>
-//                   </div>
-//                   <div className="flex justify-between">
-//                     <span className="text-gray-600">Applied:</span>
-//                     <span className="font-medium">{leave.appliedDate}</span>
-//                   </div>
-//                 </div>
-
-//                 <div className="flex gap-2 pt-2 border-t">
-//                   <button
-//                     onClick={() => viewDetails(leave)}
-//                     className="flex-1 px-3 py-2 bg-blue-50 text-blue-600 
-//                       rounded-lg text-sm font-medium hover:bg-blue-100 
-//                       transition-colors flex items-center justify-center gap-2"
-//                   >
-//                     <FaEye size={14} />
-//                     View
-//                   </button>
-//                   {leave.status === 'Pending' && (
-//                     <>
-//                       <button
-//                         onClick={() => handleEdit(leave)}
-//                         className="px-3 py-2 bg-green-50 text-green-600 
-//                           rounded-lg text-sm hover:bg-green-100"
-//                       >
-//                         <FaEdit size={14} />
-//                       </button>
-//                       <button
-//                         onClick={() => handleDelete(leave.id)}
-//                         className="px-3 py-2 bg-red-50 text-red-600 
-//                           rounded-lg text-sm hover:bg-red-100"
-//                       >
-//                         <FaTrash size={14} />
-//                       </button>
-//                     </>
-//                   )}
-//                 </div>
-//               </div>
-//             ))
-//           ) : (
-//             <div className="text-center py-8">
-//               <p className="text-gray-500">No leave requests yet</p>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-
-//       {/* Detail Modal */}
-//       {showDetailModal && selectedLeave && (
-//         <UserLeaveDetailModal
-//           leave={selectedLeave}
-//           onClose={() => setShowDetailModal(false)}
-//         />
-//       )}
-//     </div>
-//   );
-// }
-
-// export default UserLeave;
