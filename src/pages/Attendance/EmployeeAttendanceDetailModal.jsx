@@ -66,8 +66,8 @@ const selectedDayRecord = useMemo(() => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-5xl w-full max-h-[95vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-[#2C5284] bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white hover:shadow-2xl max-w-5xl w-full max-h-[95vh] overflow-y-auto">
         
         {/* Header */}
         <div className="bg-linear-to-r  p-6 flex justify-between items-start
