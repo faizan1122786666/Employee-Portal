@@ -8,7 +8,7 @@ import { Doughnut,Line } from 'react-chartjs-2';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 ChartJS.register(ArcElement, Tooltip, Legend)
-import { LineElement, PointElement, CategoryScale, LinearScale, Title } from 'chart.js'
+import { LineElement, PointElement, CategoryScale, LinearScale, Title ,Filler} from 'chart.js'
 ChartJS.register(
   ArcElement,
   LineElement,
@@ -17,7 +17,8 @@ ChartJS.register(
   LinearScale,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 )
 const mockdata = {
   totalemployees: 110,
