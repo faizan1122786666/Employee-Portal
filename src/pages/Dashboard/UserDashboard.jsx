@@ -734,8 +734,8 @@ function UserDashboard({ setTitle }) {
       </div>
 
       {/* Quick Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white p-4 sm:p-5 rounded-xl border-l-4 border-[#2C5284] shadow-sm hover:shadow-md transition-shadow">
+     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-5 mb-4">
+       <div className="bg-white p-5 rounded-xl border-l-4 border-[#2C5284] shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs sm:text-sm text-gray-600 mb-1">This Month</p>
@@ -743,46 +743,46 @@ function UserDashboard({ setTitle }) {
               <p className="text-xs text-gray-500">Present Days</p>
             </div>
             <div className="bg-[#365F8D] w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center">
-              <FaRegCheckCircle size={20} className="text-white" />
+              <FaRegCheckCircle size={24} className="text-white" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-4 sm:p-5 rounded-xl border-l-4 border-red-500 shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-white p-5 rounded-xl border-l-4 border-[#2C5284] shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs sm:text-sm text-gray-600 mb-1">This Month</p>
-              <p className="text-2xl sm:text-3xl font-bold text-red-600">1</p>
+              <p className="text-2xl sm:text-3xl font-bold text-[#2C5284]">1</p>
               <p className="text-xs text-gray-500">Absent Days</p>
             </div>
-            <div className="bg-red-500 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center">
-              <RxCrossCircled size={20} className="text-white" />
+            <div className="bg-[#2C5284] w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center">
+              <RxCrossCircled size={24} className="text-white" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-4 sm:p-5 rounded-xl border-l-4 border-yellow-500 shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-white p-5 rounded-xl border-l-4 border-[#2C5284] shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs sm:text-sm text-gray-600 mb-1">Leave Days</p>
-              <p className="text-2xl sm:text-3xl font-bold text-yellow-600">2</p>
+              <p className="text-2xl sm:text-3xl font-bold text-[#2C5284]">2</p>
               <p className="text-xs text-gray-500">This Month</p>
             </div>
-            <div className="bg-yellow-500 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center">
-              <FaCalendarAlt size={20} className="text-white" />
+            <div className="bg-[#2C5284] w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center">
+              <FaCalendarAlt size={24} className="text-white" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-4 sm:p-5 rounded-xl border-l-4 border-amber-500 shadow-sm hover:shadow-md transition-shadow">
+         <div className="bg-white p-5 rounded-xl border-l-4 border-[#2C5284] shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs sm:text-sm text-gray-600 mb-1">Pending</p>
-              <p className="text-2xl sm:text-3xl font-bold text-amber-600">1</p>
+              <p className="text-2xl sm:text-3xl font-bold text-[#2C5284]">1</p>
               <p className="text-xs text-gray-500">Leave Request</p>
             </div>
-            <div className="bg-amber-500 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center">
-              <FaClock size={20} className="text-white" />
+            <div className="bg-[#2C5284] w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center">
+              <FaClock size={24} className="text-white" />
             </div>
           </div>
         </div>
@@ -794,7 +794,7 @@ function UserDashboard({ setTitle }) {
         <div className="lg:col-span-2 bg-white p-6 rounded-xl border-l-4 border-[#2C5284] shadow-sm hover:shadow-md transition-shadow">
           <div className="flex flex-col items-center">
             <div className="bg-[#365F8D] w-16 h-16 rounded-full flex items-center justify-center mb-6">
-              <FaClock size={32} className="text-white" />
+              <FaClock size={24} className="text-white" />
             </div>
 
             <h2 className="text-xl sm:text-2xl font-bold text-[#2C5284] mb-4">
@@ -834,7 +834,7 @@ function UserDashboard({ setTitle }) {
                       : 'bg-[#365F8D] text-white hover:bg-[#2C5284]'
                   }`}
               >
-                <FaSignInAlt size={20} />
+                <FaSignInAlt size={24} />
                 Clock In
               </button>
 

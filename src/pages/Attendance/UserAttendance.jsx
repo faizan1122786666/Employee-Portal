@@ -102,7 +102,7 @@ function UserAttendance({ setTitle }) {
 
       {/* Monthly Statistics Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-[#2C5284]">
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-xl p-5 border-l-4 border-[#2C5284]">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm sm:text-base text-[#2C5284]">Present Days</p>
@@ -113,7 +113,7 @@ function UserAttendance({ setTitle }) {
         </div>
           </div>
         </div>
-        <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-[#2C5284]">
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-xl p-5 border-l-4 border-[#2C5284]">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm sm:text-base text-[#2C5284]">Absent Days</p>
@@ -124,7 +124,7 @@ function UserAttendance({ setTitle }) {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-[#2C5284]">
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-xl p-5 border-l-4 border-[#2C5284]">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm sm:text-base text-[#2C5284]">Leave Days</p>
