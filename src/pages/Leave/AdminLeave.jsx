@@ -2604,7 +2604,7 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { FaEye, FaCheck, FaTimes, FaFilter } from 'react-icons/fa';
-import LeaveDetailModal from './LeaveDetailModal';
+import Leavedetailmodal from './Leavedetailmodal';
 import { MdOutlinePendingActions } from "react-icons/md";
 import { VscRequestChanges } from "react-icons/vsc";
 import { MdApproval } from "react-icons/md";
@@ -2699,6 +2699,7 @@ function AdminLeave({ setTitle }) {
 
   useEffect(() => {
     setTitle('Leave Management');
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLeaves(mockLeaveData);
     setFilteredLeaves(mockLeaveData);
   }, [setTitle]);
@@ -3188,7 +3189,7 @@ function AdminLeave({ setTitle }) {
 
       {/* Leave Detail Modal */}
       {showModal && selectedLeave && (
-        <LeaveDetailModal
+        <Leavedetailmodal
           leave={selectedLeave}
           onClose={() => setShowModal(false)}
           onStatusChange={handleStatusChange}
