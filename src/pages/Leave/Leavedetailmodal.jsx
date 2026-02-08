@@ -223,20 +223,20 @@ function Leavedetailmodal({ leave, onClose, onStatusChange }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center 
+    <div className="fixed inset-0 bg-[#2C5284] bg-opacity-50 flex items-center 
       justify-center z-50 p-4 overflow-y-auto">
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl 
         my-8">
         
         {/* Header */}
         <div className="bg-[#2C5284] p-4 sm:p-6 flex justify-between items-center 
-          rounded-t-xl">
+          ">
           <h2 className="text-xl sm:text-2xl font-bold text-white">
             Leave Request Details
           </h2>
           <button
             onClick={onClose}
-            className="text-white hover:text-gray-200 transition-colors p-2"
+            className="text-white cursor-pointer transition-colors p-2"
           >
             <FaTimes size={24} />
           </button>

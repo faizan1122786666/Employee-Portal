@@ -667,9 +667,9 @@ const attendanceDistribution = {
     {
       data: [19, 1, 2],
       backgroundColor: [
-        'rgb(54, 95, 141)',
-        'rgb(239, 68, 68)',
-        'rgb(251, 191, 36)',
+       'rgb(54, 95, 141)',
+        'rgb(148, 163, 184)',
+        'rgb(203, 213, 225)',
       ],
       borderWidth: 0,
       hoverOffset: 4,
@@ -722,9 +722,9 @@ function UserDashboard({ setTitle }) {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen px-1">
       {/* Current Time Display */}
-      <div className="bg-white rounded-xl shadow-sm p-6 mb-6 text-center">
+      <div className="bg-white rounded-xl shadow-sm p-5 mb-6 text-center mt-3">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#365F8D]">
           {format(currentTime, 'hh:mm:ss a')}
         </h1>
@@ -791,7 +791,7 @@ function UserDashboard({ setTitle }) {
       {/* Clock In/Out Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Main Clock Card */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-xl border-l-4 border-[#2C5284] shadow-sm hover:shadow-md transition-shadow">
+        <div className="lg:col-span-2 bg-white p-6 rounded-xl border-l-4 border-[#2C5284] shadow-sm hover:shadow-xl transition-shadow">
           <div className="flex flex-col items-center">
             <div className="bg-[#365F8D] w-16 h-16 rounded-full flex items-center justify-center mb-6">
               <FaClock size={24} className="text-white" />
@@ -856,7 +856,7 @@ function UserDashboard({ setTitle }) {
         </div>
 
         {/* Attendance Distribution */}
-        <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-xl transition-shadow">
           <h3 className="text-lg font-bold text-[#2C5284] mb-4 flex items-center gap-2">
             <FaChartLine />
             This Month
@@ -917,13 +917,13 @@ function UserDashboard({ setTitle }) {
       </div>
 
       {/* Recent Attendance Table */}
-      <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+       {/* <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
         <h2 className="text-lg font-bold text-[#2C5284] mb-5">
           Recent Attendance
-        </h2>
+        </h2> */}
 
         {/* Desktop Table */}
-        <div className="hidden md:block overflow-x-auto">
+         {/* <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b text-gray-600">
@@ -933,14 +933,14 @@ function UserDashboard({ setTitle }) {
                 <th className="pb-3 font-medium text-left">Duration</th>
                 <th className="pb-3 font-medium text-left">Status</th>
               </tr>
-            </thead>
+            </thead> 
             <tbody>
               {mockRecentAttendance.map((record, index) => (
                 <tr key={index} className="border-b last:border-0">
                   <td className="py-4">
                     {format(new Date(record.date), 'MMM dd, yyyy')}
-                  </td>
-                  <td className="py-4">{record.clockIn}</td>
+                  </td> 
+                   <td className="py-4">{record.clockIn}</td>
                   <td className="py-4">{record.clockOut}</td>
                   <td className="py-4">{record.duration}</td>
                   <td className="py-4">
@@ -964,10 +964,10 @@ function UserDashboard({ setTitle }) {
               ))}
             </tbody>
           </table>
-        </div>
+         </div> */}
 
         {/* Mobile Cards */}
-        <div className="md:hidden space-y-3">
+         {/* <div className="md:hidden space-y-3">
           {mockRecentAttendance.map((record, index) => (
             <div key={index} className="border rounded-lg p-4">
               <div className="flex justify-between items-start mb-3">
@@ -981,30 +981,30 @@ function UserDashboard({ setTitle }) {
                       : record.status === 'leave'
                       ? 'bg-yellow-100 text-yellow-700'
                       : 'bg-gray-100 text-gray-600'
-                  }`}
-                >
-                  {record.status === 'present'
-                    ? 'Present'
-                    : record.status === 'leave'
-                    ? 'Leave'
-                    : 'Absent'}
-                </span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div>
-                  <span className="text-gray-600">In:</span> {record.clockIn}
-                </div>
-                <div>
-                  <span className="text-gray-600">Out:</span> {record.clockOut}
-                </div>
-                <div className="col-span-2">
-                  <span className="text-gray-600">Duration:</span> {record.duration}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+                  }`} 
+                 >
+                   {record.status === 'present'
+                     ? 'Present'
+                     : record.status === 'leave'
+                     ? 'Leave'
+                     : 'Absent'}
+                 </span> 
+               </div>
+               <div className="grid grid-cols-2 gap-2 text-sm">
+                 <div>
+                   <span className="text-gray-600">In:</span> {record.clockIn}
+                 </div>
+                 <div>
+                   <span className="text-gray-600">Out:</span> {record.clockOut}
+                 </div>
+                 <div className="col-span-2">
+                   <span className="text-gray-600">Duration:</span> {record.duration}
+                 </div>
+               </div>
+             </div>
+           ))}
+         </div> */}
+       {/* </div> */}
     </div>
   );
 }

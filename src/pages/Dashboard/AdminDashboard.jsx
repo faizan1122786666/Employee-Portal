@@ -5,7 +5,7 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { SlCalender } from "react-icons/sl";
 import { Doughnut,Line } from 'react-chartjs-2';
-
+import {FaChartLine} from 'react-icons/fa';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 ChartJS.register(ArcElement, Tooltip, Legend)
 import { LineElement, PointElement, CategoryScale, LinearScale, Title ,Filler} from 'chart.js'
@@ -160,7 +160,8 @@ function AdminDashboard({ setTitle }) {
 
    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
    <div className="bg-white p-6 rounded-xl shadow hover:shadow-xl transform transition duration-300 ease-in-out">
-    <h2 className="text-lg font-bold text-[#2C5284] mb-4">
+    <h2 className="text-lg font-bold gap-2 items-center flex text-[#2C5284] mb-4">
+      <FaChartLine />
       Today Attendance Overview
     </h2>
 
@@ -172,7 +173,8 @@ function AdminDashboard({ setTitle }) {
     </div>
 
     <div className="bg-white p-6 rounded-xl shadow hover:shadow-xl transform transition  duration-300 ease-in-out">
-    <h2 className="text-lg font-bold text-[#2C5284] mb-4">
+    <h2 className="text-lg flex gap-2 items-center font-bold text-[#2C5284] mb-4">
+       <FaChartLine />
       Today Employee Task Performance
     </h2>
 
@@ -186,7 +188,8 @@ function AdminDashboard({ setTitle }) {
 
   <div className="grid grid-cols-1 mt-10 hover:shadow-xl transform transition duration-300 ease-in-out">
     <div  className="bg-white p-6 rounded-xl ">
-      <h2  className="text-lg font-bold text-[#2C5284] mb-4">
+      <h2  className="text-lg font-bold gap-2 items-center flex text-[#2C5284] mb-4">
+        <FaChartLine />
         Weekly Attendance Overview</h2>
       <div className="w-full flex justify-center">
       <div className="h-72 sm:h-80 md:h-96 w-full">
