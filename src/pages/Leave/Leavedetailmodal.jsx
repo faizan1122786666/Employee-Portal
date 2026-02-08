@@ -204,7 +204,7 @@ import { useState } from 'react';
 import Select from 'react-select';
 import { FaTimes } from 'react-icons/fa';
 
-function LeaveDetailModal({ leave, onClose, onStatusChange }) {
+function Leavedetailmodal({ leave, onClose, onStatusChange }) {
   const [status, setStatus] = useState({
     value: leave.status,
     label: leave.status,
@@ -396,4 +396,4 @@ function LeaveDetailModal({ leave, onClose, onStatusChange }) {
   );
 }
 
-export default LeaveDetailModal;
+export default Leavedetailmodal;
