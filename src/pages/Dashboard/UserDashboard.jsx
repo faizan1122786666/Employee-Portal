@@ -722,9 +722,9 @@ function UserDashboard({ setTitle }) {
   };
 
   return (
-    <div className="min-h-screen px-1">
+    <div className="max-h-screen">
       {/* Current Time Display */}
-      <div className="bg-white rounded-xl shadow-sm p-5 mb-6 text-center mt-3">
+      <div className="bg-white rounded-xl shadow-sm p-5 mb-6 text-center mt-3 mr-4">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#365F8D]">
           {format(currentTime, 'hh:mm:ss a')}
         </h1>
@@ -734,7 +734,7 @@ function UserDashboard({ setTitle }) {
       </div>
 
       {/* Quick Stats Grid */}
-     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-5 mb-4">
+     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-5 mb-4 mr-4">
        <div className="bg-white p-5 rounded-xl border-l-4 border-[#2C5284] shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
           <div className="flex items-center justify-between">
             <div>
@@ -789,12 +789,12 @@ function UserDashboard({ setTitle }) {
       </div>
 
       {/* Clock In/Out Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 mr-4">
         {/* Main Clock Card */}
         <div className="lg:col-span-2 bg-white p-6 rounded-xl border-l-4 border-[#2C5284] shadow-sm hover:shadow-xl transition-shadow">
           <div className="flex flex-col items-center">
             <div className="bg-[#365F8D] w-16 h-16 rounded-full flex items-center justify-center mb-6">
-              <FaClock size={24} className="text-white" />
+              <FaClock size={30} className="text-white" />
             </div>
 
             <h2 className="text-xl sm:text-2xl font-bold text-[#2C5284] mb-4">
@@ -887,8 +887,9 @@ function UserDashboard({ setTitle }) {
       </div>
 
       {/* Weekly Work Hours Chart */}
-      <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow mb-6">
-        <h2 className="text-lg font-bold text-[#2C5284] mb-6">
+      <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-xl transition-shadow">
+        <h2 className="text-lg font-bold text-[#2C5284] mb-6 flex items-center gap-2">
+           <FaChartLine />
           Weekly Work Hours
         </h2>
         <div className="h-64 sm:h-80">

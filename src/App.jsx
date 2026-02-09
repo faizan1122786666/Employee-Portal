@@ -157,6 +157,7 @@ function App () {
 
 
   return (
+   
     <AuthContextProvider value={{user, handleLogin, handleLogout}}>
       <div className="flex h-screen overflow-hidden">
       { user ? (
@@ -217,6 +218,7 @@ function App () {
 
         </div>
     </AuthContextProvider>
+   
   )
 }
 
