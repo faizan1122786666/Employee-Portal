@@ -1,7 +1,9 @@
 import React from 'react'
 import { AiOutlineMenu } from 'react-icons/ai'
+// import { FiSun } from "react-icons/fi";
+// import { FiMoon } from "react-icons/fi";
 
-export default function Header({ title, handleSlidebar }) {
+export default function Header({ title, handleSlidebar}) {
   return (
     <header
       className="
@@ -16,6 +18,14 @@ export default function Header({ title, handleSlidebar }) {
       <h1 className="text-xl font-semibold text-[#2C5282]">
         {title}
       </h1>
+
+      {/* <button
+      onClick={toggleDarkMode}
+      className="text-gray-700 dark:text-yellow-400">
+        {darkMode ? <FiSun size={22}/> : <FiMoon size={22}/>}
+      </button> */}
     </header>
   )
 }
+
+

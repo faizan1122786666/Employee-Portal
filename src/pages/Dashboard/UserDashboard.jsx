@@ -724,17 +724,17 @@ function UserDashboard({ setTitle }) {
   return (
     <div className="max-h-screen">
       {/* Current Time Display */}
-      <div className="bg-white rounded-xl shadow-sm p-5 mb-6 text-center mt-3 mr-4">
+      {/* <div className="bg-white rounded-xl shadow-sm p-5 mb-6 text-center mt-3 mr-4">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#365F8D]">
           {format(currentTime, 'hh:mm:ss a')}
         </h1>
         <p className="text-gray-600 mt-2 text-base sm:text-lg">
           {format(currentTime, 'EEEE, MMMM d, yyyy')}
         </p>
-      </div>
+      </div> */}
 
       {/* Quick Stats Grid */}
-     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-5 mb-4 mr-4">
+     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-5 mb-5 mr-4">
        <div className="bg-white p-5 rounded-xl border-l-4 border-[#2C5284] shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
           <div className="flex items-center justify-between">
             <div>
@@ -764,9 +764,9 @@ function UserDashboard({ setTitle }) {
         <div className="bg-white p-5 rounded-xl border-l-4 border-[#2C5284] shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs sm:text-sm text-gray-600 mb-1">Leave Days</p>
+              <p className="text-xs sm:text-sm text-gray-600 mb-1">This Month</p>
               <p className="text-2xl sm:text-3xl font-bold text-[#2C5284]">2</p>
-              <p className="text-xs text-gray-500">This Month</p>
+              <p className="text-xs text-gray-500">Leave Days</p>
             </div>
             <div className="bg-[#2C5284] w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center">
               <FaCalendarAlt size={24} className="text-white" />

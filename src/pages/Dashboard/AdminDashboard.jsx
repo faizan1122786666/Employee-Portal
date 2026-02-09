@@ -98,7 +98,7 @@ function AdminDashboard({ setTitle }) {
   return (
   <>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-5">
-      <div className="bg-white p-5 rounded-xl border-l-4 border-[#2C5284] flex items-center justify-between shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
+      <div className="bg-white dark:bg-gray-900 dark:text-gray-200 p-5 rounded-xl border-l-4 border-[#2C5284] flex items-center justify-between shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
         <div>
           <p className="text-sm sm:text-base text-[#2C5284]">
             Total Employees
@@ -160,7 +160,7 @@ function AdminDashboard({ setTitle }) {
 
    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
    <div className="bg-white p-6 rounded-xl shadow hover:shadow-xl transform transition duration-300 ease-in-out">
-    <h2 className="text-lg font-bold gap-2 items-center flex text-[#2C5284] mb-4">
+    <h2 className="text-lg font-bold gap-2 dark:text-blue-300 items-center flex text-[#2C5284] mb-4">
       <FaChartLine />
       Today Attendance Overview
     </h2>
@@ -204,10 +204,6 @@ function AdminDashboard({ setTitle }) {
 }
 
 export default AdminDashboard
-
-
-
-
 
 
 
