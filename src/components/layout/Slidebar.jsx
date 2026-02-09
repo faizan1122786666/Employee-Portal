@@ -2,6 +2,7 @@ import React from 'react';
 import { AiOutlineClose, AiOutlineDashboard, AiOutlineClockCircle, AiOutlineCalendar, AiOutlineTeam, AiOutlineLogout } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
 import { NavLink } from 'react-router-dom';
+import { FaUsers } from "react-icons/fa6";
 
 export default function Slidebar({ isOpen, handleSlidebar, userEmail, onLogout }) {
   const menuItems = [
@@ -36,7 +37,7 @@ export default function Slidebar({ isOpen, handleSlidebar, userEmail, onLogout }
         
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-slate-800">
-          <AiOutlineTeam size={30} className="text-white mr-4"/>
+          <FaUsers size={50} className="text-white mr-4"/>
           <h1 className="font-bold text-2xl">
             Employee Portal
           </h1>
