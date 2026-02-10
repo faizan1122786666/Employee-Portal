@@ -2722,6 +2722,7 @@ function AdminLeave({ setTitle }) {
       filtered = filtered.filter((leave) => leave.status === statusFilter.value);
     }
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setFilteredLeaves(filtered);
     setCurrentPage(1);
   }, [searchTerm, statusFilter, leaves]);
