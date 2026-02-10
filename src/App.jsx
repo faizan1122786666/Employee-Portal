@@ -120,11 +120,11 @@ import { useEffect, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Slidebar from './components/layout/Slidebar'
 import Header from './components/layout/Header'
-import Login from './pages/Auth/Login'
+import Login from './pages/auth/Login'
 import { AuthContextProvider} from './context'
-import {AdminDashboard,UserDashboard} from './pages/Dashboard/index'
-import {AdminAttendance,UserAttendance} from './pages/Attendance/index'
-import { AdminLeave,UserLeave } from './pages/Leave/index'
+import {AdminDashboard,UserDashboard} from './pages/dashboard/index'
+import {AdminAttendance,UserAttendance} from './pages/attendance/index'
+import { AdminLeave,UserLeave } from './pages/leave/index'
 // import EmployeeAttendanceModal from './pages/Attendance/EmployeeAttendanceModal'
 
 function App () {
@@ -188,7 +188,8 @@ function App () {
    darkMode={darkMode}  toggleDarkMode={toggleDarkMode}
    />
 
-   <main className="pt-16 px-6 bg-gray-50 flex-1 overflow-y-auto">
+   {/* <main className="pt-16 px-6 bg-gray-50 flex-1 overflow-y-auto"> */}
+   <main className="pt-16 px-6 bg-gray-50 dark:bg-gray-900 flex-1 overflow-y-auto">
        <Routes>
            <Route path="/" element={ 
             user.role === 'admin' ? (

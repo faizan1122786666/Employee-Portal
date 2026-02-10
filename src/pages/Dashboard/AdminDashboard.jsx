@@ -113,12 +113,12 @@ function AdminDashboard({ setTitle, darkMode }) {
         </div>
       </div>
 
-         <div className="bg-white p-5 rounded-xl border-l-4 border-[#2C5284] flex items-center justify-between shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
+         <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border-l-4 border-[#2C5284] flex items-center justify-between shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
           <div>
-          <p className="text-sm sm:text-base text-[#2C5284]">
+          <p className="text-sm sm:text-base text-[#2C5284] dark:text-blue-300">
             Today Present
           </p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#365F8D]">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#365F8D] dark:text-blue-400">
             {data.todaypresent}
           </h1>
         </div>
@@ -127,12 +127,12 @@ function AdminDashboard({ setTitle, darkMode }) {
         </div>
       </div>
 
-        <div className="bg-white p-5 rounded-xl border-l-4 border-[#2C5284] flex items-center justify-between shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
+        <div className="bg-white p-5 dark:bg-slate-900 rounded-xl border-l-4 border-[#2C5284] flex items-center justify-between shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
           <div>
-          <p className="text-sm sm:text-base text-[#2C5284]">
+          <p className="text-sm sm:text-base text-[#2C5284]  dark:text-blue-300">
             Today Absent
           </p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#365F8D]">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#365F8D] dark:text-blue-400">
             {data.todayabsent}
           </h1>
         </div>
@@ -141,12 +141,12 @@ function AdminDashboard({ setTitle, darkMode }) {
         </div>
       </div>
 
-       <div className="bg-white p-5 rounded-xl border-l-4 border-[#2C5284] flex items-center justify-between shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
+       <div className="bg-white p-5 dark:bg-slate-900 rounded-xl border-l-4 border-[#2C5284] flex items-center justify-between shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
           <div>
-          <p className="text-sm sm:text-base text-[#2C5284]">
+          <p className="text-sm sm:text-base text-[#2C5284] dark:text-blue-300">
             onLeave
           </p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#365F8D]">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#365F8D] dark:text-blue-400">
             {data.todayleave}
           </h1>
         </div>
@@ -159,7 +159,7 @@ function AdminDashboard({ setTitle, darkMode }) {
 
 
    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-   <div className="bg-white p-6 rounded-xl shadow hover:shadow-xl transform transition duration-300 ease-in-out">
+   <div className="bg-white p-6 dark:bg-slate-900 rounded-xl shadow hover:shadow-xl transform transition duration-300 ease-in-out">
     <h2 className="text-lg font-bold gap-2 dark:text-blue-300 items-center flex text-[#2C5284] mb-4">
       <FaChartLine />
       Today Attendance Overview
@@ -172,8 +172,8 @@ function AdminDashboard({ setTitle, darkMode }) {
      </div>
     </div>
 
-    <div className="bg-white p-6 rounded-xl shadow hover:shadow-xl transform transition  duration-300 ease-in-out">
-    <h2 className="text-lg flex gap-2 items-center font-bold text-[#2C5284] mb-4">
+    <div className="bg-white p-6 dark:bg-slate-900 rounded-xl shadow hover:shadow-xl transform transition  duration-300 ease-in-out">
+    <h2 className="text-lg flex gap-2 dark:text-blue-300 items-center font-bold text-[#2C5284] mb-4">
        <FaChartLine />
       Today Employee Task Performance
     </h2>
@@ -186,9 +186,9 @@ function AdminDashboard({ setTitle, darkMode }) {
     </div>
   </div>
 
-  <div className="grid grid-cols-1 mt-10 hover:shadow-xl transform transition duration-300 ease-in-out">
-    <div  className="bg-white p-6 rounded-xl ">
-      <h2  className="text-lg font-bold gap-2 items-center flex text-[#2C5284] mb-4">
+  <div className="grid grid-cols-1  mt-10 hover:shadow-xl transform transition duration-300 ease-in-out">
+    <div  className="bg-white p-6 rounded-xl dark:bg-slate-900">
+      <h2  className="text-lg font-bold dark:text-blue-300 gap-2 items-center flex text-[#2C5284] mb-4">
         <FaChartLine />
         Weekly Attendance Overview</h2>
       <div className="w-full flex justify-center">

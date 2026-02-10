@@ -5,9 +5,10 @@ import { FiMoon } from "react-icons/fi";
 
 export default function Header({ title, handleSlidebar,darkMode,toggleDarkMode}) {
   return (
+    // fixed top-0 right-0 h-16 bg-white z-40 flex items-center gap-4 px-6 border-b border-gray-200 left-0 lg:left-64
     <header
       className="
-        fixed top-0 right-0 h-16 bg-white z-40 flex items-center gap-4 px-6 border-b border-gray-200 left-0 lg:left-64">
+        fixed top-0 right-0 h-16 bg-white dark:bg-gray-900 dark:text-gray-200 z-40 flex items-center gap-4 px-6 border-b border-gray-200 left-0 lg:left-64">
             
        {/* Icon */}
       <button onClick={handleSlidebar} className="lg:hidden">
