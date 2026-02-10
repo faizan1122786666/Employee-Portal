@@ -3,7 +3,7 @@ import React, { useContext} from "react";
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = React.createContext({
   user: null,
-  Login: (userData) => {},
+  Login: (_userData) => {},
   Logout: () => {},
 });
 
