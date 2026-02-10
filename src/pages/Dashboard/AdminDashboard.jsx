@@ -88,7 +88,7 @@ const EmployeeTaskPerformanceDate = {
     },
    ],
 }
-function AdminDashboard({ setTitle }) {
+function AdminDashboard({ setTitle, darkMode }) {
   const [data, setData] = useState(mockdata)
 
   useEffect(() => {
@@ -98,12 +98,12 @@ function AdminDashboard({ setTitle }) {
   return (
   <>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-5">
-      <div className="bg-white dark:bg-gray-900 dark:text-gray-200 p-5 rounded-xl border-l-4 border-[#2C5284] flex items-center justify-between shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
+      <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border-l-4 border-[#2C5284] flex items-center justify-between shadow w-full min-h-30 hover:shadow-xl transform transition duration-300 ease-in-out">
         <div>
-          <p className="text-sm sm:text-base text-[#2C5284]">
+          <p className="text-sm sm:text-base text-[#2C5284] dark:text-blue-300">
             Total Employees
           </p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#365F8D]">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#365F8D] dark:text-blue-400">
             {data.totalemployees}
           </h1>
         </div>

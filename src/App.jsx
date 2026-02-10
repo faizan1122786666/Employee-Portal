@@ -131,7 +131,7 @@ function App () {
   const [isOpen, setIsOpen] = useState(false)
   const [title, setTitle] = useState('Dashboard')
   const [user, setUser] = useState(null)
-  // const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(false)
   
   const handleSlidebar = () => {
     setIsOpen(!isOpen)
@@ -156,16 +156,16 @@ function App () {
     setUser(null)
   }
 
-  // const toggleDarkMode = () => {
-  //   setDarkMode(prev => !prev);
+  const toggleDarkMode = () => {
+    setDarkMode(prev => !prev);
+  }
 
-  // }
 
-  // useEffect(() => {
-  //   const html  = document.documentElement
-  //   darkMode ? html.classList.add('dark')
-  //   : html.classList.remove('dark')
-  // }, [darkMode])
+  useEffect(() => {
+    const html  = document.documentElement
+    darkMode ? html.classList.add('dark')
+    : html.classList.remove('dark')
+  }, [darkMode])
   
 
 
@@ -185,22 +185,23 @@ function App () {
            <div className="flex-1 flex flex-col">
 
    <Header title={title} handleSlidebar={handleSlidebar} 
+   darkMode={darkMode}  toggleDarkMode={toggleDarkMode}
    />
 
    <main className="pt-16 px-6 bg-gray-50 flex-1 overflow-y-auto">
        <Routes>
            <Route path="/" element={ 
             user.role === 'admin' ? (
-               <AdminDashboard setTitle={setTitle} />
+               <AdminDashboard setTitle={setTitle} darkMode={darkMode} />
             ) : (
-              <UserDashboard setTitle={setTitle} />
+              <UserDashboard setTitle={setTitle} darkMode={darkMode}/>
             )
             } 
             />
            <Route path="/attendance" element={
             user.role === 'admin' ? (
 
-            <AdminAttendance setTitle={setTitle} />)
+            <AdminAttendance setTitle={setTitle}  />)
             : (
             <UserAttendance setTitle={setTitle} />
             )
@@ -238,9 +239,6 @@ function App () {
 }
 
 export default App
-
-
-
 
 
 
